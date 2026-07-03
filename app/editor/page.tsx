@@ -11,6 +11,8 @@ import { CVForm } from '@/components/CVForm';
 import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type } from 'lucide-react';
 import { AnalysisDashboard } from '@/components/AnalysisDashboard';
 import { ResumeStrengthMeter } from '@/components/ResumeStrengthMeter';
+import { toast } from 'sonner';
+import { motion, AnimatePresence } from 'framer-motion';
 
 const CVDownloadButton = dynamic(() => import('@/components/CVDownloadButton'), { 
   ssr: false,
@@ -67,7 +69,7 @@ export default function MatchEditor() {
     } catch (e: unknown) {
       console.error(e);
       const message = e instanceof Error ? e.message : 'Unknown error';
-      alert(`Analysis failed: ${message}`);
+      toast.error(`Analysis failed: ${message}`);
     } finally {
       setIsAnalyzing(false);
     }
@@ -98,9 +100,10 @@ export default function MatchEditor() {
     } catch (error: unknown) {
       console.error(error);
       const message = error instanceof Error ? error.message : 'Unknown error';
-      alert(`Failed to optimize CV: ${message}`);
+      toast.error(`Failed to optimize CV: ${message}`);
     } finally {
       setIsGenerating(false);
+      if (jobDescription) toast.success("Optimization complete!");
     }
   };
 
@@ -124,9 +127,9 @@ export default function MatchEditor() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-       <header className="bg-white border-b py-3 px-6 flex items-center justify-between sticky top-0 z-10 shadow-sm">
+      <header className="bg-white/70 backdrop-blur-md border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0">
         <h1 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-blue-600"/> Match Editor
+          <Sparkles className="w-5 h-5 text-indigo-600"/> Match Editor
         </h1>
         {optimizedCV && (
           <CVDownloadButton 
@@ -137,10 +140,10 @@ export default function MatchEditor() {
           />
         )}
       </header>
-      <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-0 overflow-hidden h-[calc(100vh-60px)]">
+      <div className="flex-1 flex flex-col lg:flex-row lg:h-[calc(100vh-60px)] lg:overflow-hidden h-auto">
         
         {/* Left Panel: Inputs */}
-        <div className="p-6 overflow-y-auto border-r bg-white h-full pb-20">
+        <div className="p-4 lg:p-6 lg:overflow-y-auto border-b lg:border-r lg:border-b-0 border-slate-200 bg-white h-auto lg:h-full lg:w-1/2 w-full pb-10">
           <div className="space-y-6 max-w-xl mx-auto">
             
             {/* Resume Strength Meter - Always visible at top */}
@@ -216,34 +219,34 @@ export default function MatchEditor() {
         </div>
 
         {/* Right Panel: Preview/Edit */}
-        <div className="bg-slate-100 p-6 overflow-y-auto h-full pb-20">
-           <div className="max-w-3xl mx-auto h-full flex flex-col">
+        <div className="bg-slate-100 p-4 lg:p-6 lg:overflow-y-auto h-auto lg:h-full lg:w-1/2 w-full pb-20 flex flex-col">
+           <div className="max-w-3xl mx-auto w-full h-full flex flex-col min-h-[500px]">
              
-             {/* Tabs */}
-             <div className="flex items-center justify-between mb-4 flex-wrap gap-4">
-               <div className="bg-white rounded-lg p-1 border border-slate-200 inline-flex">
+             {/* Tabs - Sticky Bottom on Mobile, Top on Desktop */}
+             <div className="fixed bottom-0 left-0 right-0 z-30 lg:static lg:mb-4 bg-white/80 lg:bg-transparent backdrop-blur-md border-t lg:border-t-0 border-slate-200 p-3 lg:p-0 flex justify-center lg:justify-between items-center w-full shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] lg:shadow-none">
+               <div className="bg-slate-100/80 lg:bg-white rounded-full lg:rounded-lg p-1 border border-slate-200 inline-flex shadow-sm w-full lg:w-auto max-w-sm justify-between">
                   <button 
                     onClick={() => setActiveTab('editor')}
-                    className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${activeTab === 'editor' ? 'bg-blue-100 text-blue-700' : 'text-slate-600 hover:bg-slate-50'}`}
+                    className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'editor' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
                     Editor
                   </button>
                   <button 
                     onClick={() => setActiveTab('design')}
-                    className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${activeTab === 'design' ? 'bg-blue-100 text-blue-700' : 'text-slate-600 hover:bg-slate-50'}`}
+                    className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'design' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
                     Design
                   </button>
                   <button 
                     onClick={() => setActiveTab('preview')}
-                    className={`px-4 py-1.5 text-sm font-medium rounded-md transition-colors ${activeTab === 'preview' ? 'bg-blue-100 text-blue-700' : 'text-slate-600 hover:bg-slate-50'}`}
+                    className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'preview' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
-                    PDF Preview
+                    PDF
                   </button>
                </div>
              </div>
-
-             <div className="flex-1 bg-white rounded-lg shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+             
+             <div className="flex-1 bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col mb-16 lg:mb-0">
                {optimizedCV ? (
                  <>
                   {activeTab === 'editor' && (
@@ -346,8 +349,16 @@ export default function MatchEditor() {
                   )}
                  </>
                ) : (
-                 <div className="h-full flex items-center justify-center text-slate-400 p-10">
-                   Waiting for optimization...
+                 <div className="h-full flex flex-col items-center justify-center text-slate-500 p-10 text-center">
+                   <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    className="bg-indigo-50 p-6 rounded-full mb-6"
+                   >
+                     <Wand2 className="w-12 h-12 text-indigo-400" />
+                   </motion.div>
+                   <h3 className="text-xl font-bold text-slate-800 mb-2">Ready to Optimize</h3>
+                   <p className="max-w-xs mx-auto">Paste a Job Description on the left and click Optimize to generate a tailored CV instantly.</p>
                  </div>
                )}
              </div>
