@@ -25,7 +25,7 @@ const CVPreview = dynamic(() => import('@/components/CVPreview'), {
 });
 
 export default function MatchEditor() {
-  const [activeTab, setActiveTab] = React.useState<'editor' | 'preview' | 'design'>('editor');
+  const [activeTab, setActiveTab] = React.useState<'editor' | 'preview' | 'design'>('preview');
   const { profile, setThemeColor, setFontFamily } = useProfileStore();
   const { 
     jobDescription, 
@@ -50,37 +50,14 @@ export default function MatchEditor() {
     }
   }, [profile, optimizedCV, setOptimizedCV]);
 
-  const handleAnalyze = async () => {
-    if (!jobDescription) return;
-    setIsAnalyzing(true);
-    setAnalysis(null);
-    try {
-       const response = await fetch('/api/analyze', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ masterProfile: optimizedCV || profile, jobDescription })
-      });
-      if (!response.ok) {
-        const err = await response.json();
-        throw new Error(err.error || 'Analysis failed');
-      }
-      const data = await response.json();
-      setAnalysis(data);
-    } catch (e: unknown) {
-      console.error(e);
-      const message = e instanceof Error ? e.message : 'Unknown error';
-      toast.error(`Analysis failed: ${message}`);
-    } finally {
-      setIsAnalyzing(false);
-    }
-  };
-
   const handleOptimize = async () => {
     if (!jobDescription) return;
 
     setIsGenerating(true);
+    setIsAnalyzing(true);
     try {
-      const response = await fetch('/api/optimize', {
+      // 1. Generate the tailored CV
+      const optimizeResponse = await fetch('/api/optimize', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -90,20 +67,34 @@ export default function MatchEditor() {
         })
       });
 
-      if (!response.ok) {
-        const err = await response.json();
+      if (!optimizeResponse.ok) {
+        const err = await optimizeResponse.json();
         throw new Error(err.error || 'Optimization failed');
       }
+      const optimizedData = await optimizeResponse.json();
+      setOptimizedCV(optimizedData);
 
-      const data = await response.json();
-      setOptimizedCV(data);
+      // 2. Run analysis on the newly tailored CV for the dashboard
+      const analyzeResponse = await fetch('/api/analyze', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ masterProfile: optimizedData, jobDescription })
+      });
+      
+      if (analyzeResponse.ok) {
+        const analyzeData = await analyzeResponse.json();
+        setAnalysis(analyzeData);
+      }
+
+      toast.success("Optimization complete! Your CV is ready.");
+      setActiveTab('preview'); // Automatically switch to preview
     } catch (error: unknown) {
       console.error(error);
       const message = error instanceof Error ? error.message : 'Unknown error';
-      toast.error(`Failed to optimize CV: ${message}`);
+      toast.error(`Failed to tailor CV: ${message}`);
     } finally {
       setIsGenerating(false);
-      if (jobDescription) toast.success("Optimization complete!");
+      setIsAnalyzing(false);
     }
   };
 
@@ -179,28 +170,19 @@ export default function MatchEditor() {
                   />
                 </div>
                 
-                <div className="flex gap-3">
-                   <Button 
-                    onClick={handleAnalyze}
-                    disabled={isAnalyzing || !jobDescription}
-                    variant="outline"
-                    className="flex-1 border-blue-200 text-blue-700 hover:bg-blue-50"
-                  >
-                    {isAnalyzing ? <Loader2 className="w-4 h-4 animate-spin"/> : "Analyze Match"}
-                  </Button>
-                  
+                <div className="flex flex-col gap-3">
                   <Button 
                     onClick={handleOptimize} 
                     disabled={isGenerating || !jobDescription} 
-                    className="flex-[2] bg-blue-600 hover:bg-blue-700 text-white"
+                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-200 py-6 text-lg rounded-xl transition-all hover:-translate-y-1"
                   >
                     {isGenerating ? (
                       <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" /> Optimizing...
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" /> Tailoring your CV...
                       </>
                     ) : (
                       <>
-                        Optimize <ArrowRight className="w-4 h-4 ml-2" />
+                        <Wand2 className="w-5 h-5 mr-2" /> Tailor My CV <ArrowRight className="w-5 h-5 ml-2" />
                       </>
                     )}
                   </Button>
@@ -229,7 +211,7 @@ export default function MatchEditor() {
                     onClick={() => setActiveTab('editor')}
                     className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'editor' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
-                    Editor
+                    Manual Edit
                   </button>
                   <button 
                     onClick={() => setActiveTab('design')}
