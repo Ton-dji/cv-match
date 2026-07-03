@@ -76,7 +76,7 @@ export default function Dashboard() {
                 <li>Use bullet points for experience.</li>
                 <li>Generate a new CV for every specific job offer.</li>
               </ul>
-            </div>
+            </motion.div>
           </div>
 
           {/* Master Profile Editor - Main Column */}
