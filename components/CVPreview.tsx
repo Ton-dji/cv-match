@@ -15,7 +15,7 @@ interface CVPreviewProps {
 export default function CVPreview({ data, language, themeName }: CVPreviewProps) {
   // Add key to PDFViewer to force full remount on theme/language change
   return (
-    <div className="w-full h-full pointer-events-none lg:pointer-events-auto">
+    <div className="w-full h-auto aspect-[210/297] lg:h-full lg:aspect-auto pointer-events-none lg:pointer-events-auto">
       <PDFViewer key={`${themeName}-${language}`} style={{ width: '100%', height: '100%', border: 'none' }} showToolbar={false}>
         <CVDocument data={data} language={language} themeName={themeName} />
       </PDFViewer>
