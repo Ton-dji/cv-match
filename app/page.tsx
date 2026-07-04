@@ -74,7 +74,6 @@ export default function Dashboard() {
           {/* Quick Stats or Welcome - Right Column (lg:col-span-1) */}
           <div className="lg:col-span-1 order-2 lg:order-2 space-y-6">
             <motion.div 
-              whileHover={{ y: -5 }}
               className="bg-gradient-to-br from-indigo-600 to-blue-700 rounded-2xl p-6 text-white shadow-xl shadow-indigo-200"
             >
               <h3 className="text-lg font-semibold mb-2">{t('start_new_app')}</h3>
@@ -91,7 +90,6 @@ export default function Dashboard() {
             </motion.div>
 
             <motion.div 
-              whileHover={{ y: -5 }}
               className="bg-white/95 lg:bg-white/60 lg:backdrop-blur-sm rounded-2xl p-6 border border-white shadow-xl shadow-slate-100"
             >
               <h3 className="text-lg font-semibold mb-4 text-slate-800">{t('pro_tips')}</h3>
