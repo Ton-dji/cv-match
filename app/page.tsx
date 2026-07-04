@@ -21,7 +21,7 @@ export default function Dashboard() {
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-slate-100">
-      <header className="bg-white/95 lg:bg-white/70 lg:backdrop-blur-md border-b border-slate-200/50 py-4 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20">
+      <header className="bg-white lg:bg-white/70 lg:backdrop-blur-md border-b border-slate-200/50 py-4 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20">
         <div className="flex items-center gap-2">
           <div className="bg-indigo-600 p-2 rounded-xl shadow-indigo-200 shadow-lg">
             <FileText className="text-white w-6 h-6" />

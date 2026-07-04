@@ -331,10 +331,10 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <CardTitle>{t.personalInfo}</CardTitle>
           {!readOnly && (
-             <div className="flex items-center gap-2">
+             <div className="flex flex-wrap items-center gap-2">
                <Button 
                  variant="destructive" 
                  size="sm" 

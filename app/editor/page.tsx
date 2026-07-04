@@ -121,7 +121,7 @@ export default function MatchEditor() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white/95 lg:bg-white/70 lg:backdrop-blur-md border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0">
+      <header className="bg-white lg:bg-white/70 lg:backdrop-blur-md border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0">
         <h1 className="text-lg font-bold text-slate-900 flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-indigo-600"/> {t('match_editor')}
         </h1>
