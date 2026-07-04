@@ -228,6 +228,7 @@ export default function MatchEditor() {
                       </>
                     )}
                   </Button>
+                </div>
               </CardContent>
             </Card>
 

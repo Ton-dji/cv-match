@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import * as cheerio from 'cheerio';
 
 export async function POST(req: Request) {
   try {
@@ -9,36 +8,22 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Invalid URL provided.' }, { status: 400 });
     }
 
-    const response = await fetch(url, {
+    // Use Jina Reader API to bypass bot protection and extract clean text/markdown
+    const response = await fetch(`https://r.jina.ai/${url}`, {
       headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-        'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8',
-        'Accept-Language': 'en-US,en;q=0.5',
+        'Accept': 'text/plain',
       },
       next: { revalidate: 3600 } // Cache for an hour
     });
 
     if (!response.ok) {
       return NextResponse.json(
-        { error: `Failed to fetch URL: ${response.statusText}` },
+        { error: `Failed to fetch URL: ${response.statusText}. Job boards like LinkedIn often block automated scrapers. Please try copying and pasting the text instead.` },
         { status: response.status }
       );
     }
 
-    const html = await response.text();
-    const $ = cheerio.load(html);
-
-    // Remove unwanted elements
-    $('script, style, noscript, iframe, img, svg, nav, footer, header, .nav, .footer, .header, form').remove();
-
-    // Extract text from the main body or specific likely containers
-    // Some job boards use main, article, or specific classes
-    let content = $('main').text() || $('article').text() || $('body').text();
-    
-    // Clean up whitespace
-    content = content
-      .replace(/\s+/g, ' ') // Replace multiple spaces/newlines with a single space
-      .trim();
+    let content = await response.text();
 
     if (!content) {
       return NextResponse.json({ error: 'No content found on the page.' }, { status: 404 });
