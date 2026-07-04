@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { MasterProfile, Experience, Education } from '@/store/useProfileStore';
+import { useI18nStore } from '@/store/useI18nStore';
 import { LANGUAGES_LIST } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -65,7 +66,11 @@ const formTranslations: Record<string, Record<string, string>> = {
     noLanguages: "No languages listed.",
     noCertifications: "No certifications listed.",
     noProjects: "No projects listed.",
-    noLinks: "No social links listed."
+    noLinks: "No social links listed.",
+    clearProfile: "Clear Profile",
+    clearWarning: "Are you sure you want to clear your entire CV? This cannot be undone.",
+    aiInterviewMode: "AI Interview Mode",
+    noPhoto: "No Photo"
   },
   French: {
     personalInfo: "Informations Personnelles",
@@ -110,7 +115,11 @@ const formTranslations: Record<string, Record<string, string>> = {
     noLanguages: "Aucune langue listée.",
     noCertifications: "Aucune certification listée.",
     noProjects: "Aucun projet listé.",
-    noLinks: "Aucun lien social listé."
+    noLinks: "Aucun lien social listé.",
+    clearProfile: "Effacer le Profil",
+    clearWarning: "Êtes-vous sûr de vouloir effacer tout votre CV ? Cette action est irréversible.",
+    aiInterviewMode: "Mode Entretien IA",
+    noPhoto: "Pas de Photo"
   },
   Spanish: {
     personalInfo: "Información Personal",
@@ -155,7 +164,11 @@ const formTranslations: Record<string, Record<string, string>> = {
     noLanguages: "No hay idiomas listados.",
     noCertifications: "No hay certificaciones listadas.",
     noProjects: "No hay proyectos listados.",
-    noLinks: "No hay enlaces sociales listados."
+    noLinks: "No hay enlaces sociales listados.",
+    clearProfile: "Borrar Perfil",
+    clearWarning: "¿Estás seguro de que deseas borrar todo tu CV? Esto no se puede deshacer.",
+    aiInterviewMode: "Modo Entrevista IA",
+    noPhoto: "Sin Foto"
   }
 };
 
@@ -168,7 +181,9 @@ interface CVFormProps {
 }
 
 export function CVForm({ data, onChange, readOnly = false, language = "English", themeName }: CVFormProps) {
-  const t = formTranslations[language] || formTranslations["English"];
+  const { language: uiLanguage } = useI18nStore();
+  const langKey = uiLanguage === 'es' ? 'Spanish' : uiLanguage === 'fr' ? 'French' : 'English';
+  const t = formTranslations[langKey];
   
   const handleInputChange = (field: keyof MasterProfile, value: string | Experience[] | Education[] | string[]) => {
     onChange({ ...data, [field]: value });
@@ -289,7 +304,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                  variant="destructive" 
                  size="sm" 
                  onClick={() => {
-                   if (confirm("Are you sure you want to clear your entire CV? This cannot be undone.")) {
+                   if (confirm(t.clearWarning)) {
                      onChange({
                        fullName: "", title: "", email: "", phone: "", location: "", summary: "",
                        experience: [], education: [], skills: [], languages: [],
@@ -300,12 +315,12 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                    }
                  }}
                >
-                 <Trash2 className="w-4 h-4 mr-2" /> Clear Profile
+                 <Trash2 className="w-4 h-4 mr-2" /> {t.clearProfile}
                </Button>
                <Dialog>
                  <DialogTrigger asChild>
                    <Button variant="outline" size="sm" className="bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border-indigo-200">
-                     <Wand2 className="w-4 h-4 mr-2" /> AI Interview Mode
+                     <Wand2 className="w-4 h-4 mr-2" /> {t.aiInterviewMode}
                    </Button>
                  </DialogTrigger>
                  <DialogContent className="sm:max-w-2xl p-0 overflow-hidden border-0">
@@ -354,7 +369,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                 // eslint-disable-next-line @next/next/no-img-element
                 <img src={data.picture} alt="Profile" className="h-full w-full object-cover"/>
               ) : (
-                <span className="text-slate-400 text-xs">No Photo</span>
+                <span className="text-slate-400 text-xs">{t.noPhoto}</span>
               )}
             </div>
             {!readOnly && (
