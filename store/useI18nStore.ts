@@ -77,9 +77,14 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Analysis
     'match_analysis': 'Match Analysis',
+    'ai_match_analysis': 'AI Match Analysis',
+    'based_on_job_desc': 'Based on job description',
     'match_score': 'Match Score',
     'missing_skills': 'Missing Skills',
+    'missing_key_skills': 'Missing Key Skills',
+    'no_missing_skills': 'Perfect match! No missing skills.',
     'key_strengths': 'Key Strengths',
+    'ai_recommendation': 'AI Recommendation',
     
     // Resume Strength
     'resume_strength': 'Profile Completeness',
@@ -163,9 +168,14 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Analysis
     'match_analysis': 'Análisis de Coincidencia',
+    'ai_match_analysis': 'Análisis de Coincidencia por IA',
+    'based_on_job_desc': 'Basado en la descripción del trabajo',
     'match_score': 'Puntuación de Coincidencia',
     'missing_skills': 'Habilidades Faltantes',
+    'missing_key_skills': 'Habilidades Clave Faltantes',
+    'no_missing_skills': '¡Coincidencia perfecta! Sin habilidades faltantes.',
     'key_strengths': 'Fortalezas Clave',
+    'ai_recommendation': 'Recomendación de la IA',
     
     // Resume Strength
     'resume_strength': 'Completitud del Perfil',
@@ -249,9 +259,14 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Analysis
     'match_analysis': 'Analyse de Correspondance',
+    'ai_match_analysis': 'Analyse de Correspondance IA',
+    'based_on_job_desc': 'Basé sur la description du poste',
     'match_score': 'Score de Correspondance',
     'missing_skills': 'Compétences Manquantes',
+    'missing_key_skills': 'Compétences Clés Manquantes',
+    'no_missing_skills': 'Correspondance parfaite ! Aucune compétence manquante.',
     'key_strengths': 'Points Forts',
+    'ai_recommendation': 'Recommandation de l\'IA',
     
     // Resume Strength
     'resume_strength': 'Complétude du Profil',
