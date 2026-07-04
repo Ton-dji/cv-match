@@ -331,7 +331,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <CardHeader className="flex flex-wrap items-center justify-between gap-4">
           <CardTitle>{t.personalInfo}</CardTitle>
           {!readOnly && (
              <div className="flex flex-wrap items-center gap-2">
@@ -514,7 +514,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
       </Card>
 
       <Card>
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <CardHeader className="flex flex-wrap items-center justify-between gap-4">
           <CardTitle>{t.workExperience}</CardTitle>
           {!readOnly && (
             <Button onClick={addNewExperience} size="sm" variant="outline">
@@ -713,7 +713,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
       </Card>
       
       <Card>
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <CardHeader className="flex flex-wrap items-center justify-between gap-4">
           <CardTitle>{t.education}</CardTitle>
           {!readOnly && (
             <Button onClick={addNewEducation} size="sm" variant="outline">
@@ -806,7 +806,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
         </CardContent>
       </Card>
       <Card>
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <CardHeader className="flex flex-wrap items-center justify-between gap-4">
           <CardTitle>{t.languages}</CardTitle>
           {!readOnly && (
             <Button onClick={() => onChange({ ...data, languages: [...(data.languages || []), { language: '', proficiency: 'Fluent' }] })} size="sm" variant="outline">
@@ -859,7 +859,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
       </Card>
 
       <Card>
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <CardHeader className="flex flex-wrap items-center justify-between gap-4">
           <CardTitle>{t.certifications}</CardTitle>
           {!readOnly && (
             <Button onClick={() => onChange({ ...data, certifications: [...(data.certifications || []), { name: '', issuer: '', date: '' }] })} size="sm" variant="outline">
@@ -912,7 +912,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
       </Card>
 
       <Card>
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <CardHeader className="flex flex-wrap items-center justify-between gap-4">
           <CardTitle>{t.projects}</CardTitle>
           {!readOnly && (
             <Button onClick={() => onChange({ ...data, projects: [...(data.projects || []), { name: '', description: '', url: '' }] })} size="sm" variant="outline">
@@ -967,7 +967,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
       </Card>
 
       <Card>
-        <CardHeader className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <CardHeader className="flex flex-wrap items-center justify-between gap-4">
           <CardTitle>{t.socialLinks}</CardTitle>
           {!readOnly && (
             <Button onClick={() => onChange({ ...data, socialLinks: [...(data.socialLinks || []), { platform: '', url: '' }] })} size="sm" variant="outline">
