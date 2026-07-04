@@ -171,7 +171,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                   <Text style={styles.sectionTitle}>{t?.workExperience || "WORK EXPERIENCE"}</Text>
                   {data.experience && data.experience.length > 0 ? (
                       data.experience.map((exp, i) => (
-                    <View key={i} style={styles.experienceBlock} wrap={false}>
+                    <View key={i} style={styles.experienceBlock}>
                       <View style={styles.roleRow}>
                         <Text style={styles.roleTitle}>{exp.role || "No Role"}</Text>
                         <Text style={styles.dateText}>
@@ -222,7 +222,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                     <Text style={styles.sectionTitle}>{t.projects}</Text>
                     {data.projects && data.projects.length > 0 ? (
                         data.projects.map((proj, i) => (
-                        <View key={i} style={styles.experienceBlock} wrap={false}>
+                        <View key={i} style={styles.experienceBlock}>
                             <View style={styles.roleRow}>
                                 <Text style={styles.roleTitle}>{proj.name}</Text>
                                 {proj.url && <Text style={styles.dateText}>{breakString(proj.url)}</Text>}
@@ -238,7 +238,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                   <Text style={styles.sectionTitle}>{t.education}</Text>
                   {data.education && data.education.length > 0 ? (
                       data.education.map((edu, i) => (
-                    <View key={i} style={styles.experienceBlock} wrap={false}>
+                    <View key={i} style={styles.experienceBlock}>
                         <View style={styles.roleRow}>
                             <Text style={styles.roleTitle}>{edu.degree}</Text>
                             <Text style={styles.dateText}>
@@ -254,7 +254,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
               );
            case 'languages':
                 return (
-                  <View key="languages" style={styles.sectionContent} wrap={false}>
+                  <View key="languages" style={styles.sectionContent}>
                      <Text style={styles.sectionTitle}>{t.languages}</Text>
                      <View style={{flexDirection: 'row', justifyContent: 'center', gap: 15}}>
                         {data.languages && data.languages.length > 0 ? (
@@ -266,7 +266,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                 );
            case 'skills':
                  return (
-                     <View key="skills" style={[styles.sectionContent, { marginTop: 10, marginBottom: 50 }]} wrap={false}>
+                     <View key="skills" style={[styles.sectionContent, { marginTop: 10, marginBottom: 50 }]}>
                          <Text style={styles.sectionTitle}>{t.skills}</Text>
                          <View style={styles.skillsContainer}>
                              {data.skills && data.skills.length > 0 ? (
@@ -278,7 +278,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                  );
            case 'certifications':
                  return (
-                     <View key="certifications" style={[styles.sectionContent, { marginTop: 30, marginBottom: 15 }]} wrap={false}>
+                     <View key="certifications" style={[styles.sectionContent, { marginTop: 30, marginBottom: 15 }]}>
                          <Text style={styles.sectionTitle}>{t.certifications}</Text>
                          {data.certifications && data.certifications.length > 0 ? (
                              data.certifications.map((cert, i) => (

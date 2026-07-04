@@ -167,7 +167,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                   <Text style={styles.sectionTitle}>{t?.workExperience || "WORK EXPERIENCE"}</Text>
                   {data.experience && data.experience.length > 0 ? (
                       data.experience.map((exp, i) => (
-                    <View key={i} style={styles.experienceBlock} wrap={false}>
+                    <View key={i} style={styles.experienceBlock}>
                       <View style={styles.roleRow}>
                         <Text style={styles.roleTitle}>{exp.role || "No Role"}</Text>
                         <Text style={styles.dateText}>
@@ -218,7 +218,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                     <Text style={styles.sectionTitle}>{t.projects}</Text>
                     {data.projects && data.projects.length > 0 ? (
                         data.projects.map((proj, i) => (
-                        <View key={i} style={styles.experienceBlock} wrap={false}>
+                        <View key={i} style={styles.experienceBlock}>
                             <View style={styles.roleRow}>
                                 <Text style={styles.roleTitle}>{proj.name}</Text>
                                 {proj.url && <Text style={styles.dateText}>{breakString(proj.url)}</Text>}
@@ -234,7 +234,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                   <Text style={styles.sectionTitle}>{t.education}</Text>
                   {data.education && data.education.length > 0 ? (
                       data.education.map((edu, i) => (
-                    <View key={i} style={styles.experienceBlock} wrap={false}>
+                    <View key={i} style={styles.experienceBlock}>
                         <View style={styles.roleRow}>
                             <Text style={styles.roleTitle}>{edu.degree}</Text>
                             <Text style={styles.dateText}>
@@ -250,7 +250,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
               );
            case 'languages':
                 return (
-                  <View key="languages" style={{ marginBottom: 20 }} wrap={false}>
+                  <View key="languages" style={{ marginBottom: 20 }}>
                      <Text style={styles.sectionTitle}>{t.languages}</Text>
                      <View style={{ flexDirection: 'row', gap: 20, flexWrap: 'wrap' }}>
                         {data.languages && data.languages.length > 0 ? (
@@ -264,7 +264,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                 );
            case 'skills':
                  return (
-                     <View key="skills" style={{ marginBottom: 50 }} wrap={false}>
+                     <View key="skills" style={{ marginBottom: 50 }}>
                          <Text style={styles.sectionTitle}>{t.skills}</Text>
                          <View style={styles.skillsContainer}>
                              {data.skills && data.skills.length > 0 ? (
@@ -276,7 +276,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                  );
            case 'certifications':
                  return (
-                     <View key="certifications" style={{ marginBottom: 25, marginTop: 20 }} wrap={false}>
+                     <View key="certifications" style={{ marginBottom: 25, marginTop: 20 }}>
                          <Text style={styles.sectionTitle}>{t.certifications}</Text>
                          {data.certifications && data.certifications.length > 0 ? (
                              data.certifications.map((cert, i) => (

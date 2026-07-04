@@ -48,10 +48,18 @@ export default function MatchEditor() {
 
   // Initialize optimizedCV with Master Profile if empty
   useEffect(() => {
-    if (!optimizedCV && profile.fullName) {
-      setOptimizedCV(JSON.parse(JSON.stringify(profile)));
+    if (!optimizedCV && profile) {
+      setOptimizedCV(profile);
     }
   }, [profile, optimizedCV, setOptimizedCV]);
+
+  // Sync Target Language dropdown with UI language automatically
+  const uiLanguage = useI18nStore((state) => state.language);
+  useEffect(() => {
+    if (uiLanguage === 'es') setTargetLanguage('Spanish');
+    else if (uiLanguage === 'fr') setTargetLanguage('French');
+    else if (uiLanguage === 'en') setTargetLanguage('English');
+  }, [uiLanguage, setTargetLanguage]);
 
   const handleJobDescriptionChange = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;

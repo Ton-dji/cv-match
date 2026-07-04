@@ -235,7 +235,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                   </View>
                   {data.experience && data.experience.length > 0 ? (
                       data.experience.map((exp, i) => (
-                    <View key={i} style={styles.experienceBlock} wrap={false}>
+                    <View key={i} style={styles.experienceBlock}>
                       <View style={styles.roleRow}>
                         <Text style={styles.roleTitle}>{exp.role || "No Role"}</Text>
                         <Text style={styles.dateText}>
@@ -293,7 +293,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                     </View>
                     {data.projects && data.projects.length > 0 ? (
                         data.projects.map((proj, i) => (
-                        <View key={i} style={styles.experienceBlock} wrap={false}>
+                        <View key={i} style={styles.experienceBlock}>
                             <View style={styles.roleRow}>
                                 <Text style={styles.roleTitle}>{proj.name}</Text>
                                 {proj.url && <Text style={styles.dateText}>{breakString(proj.url)}</Text>}
@@ -312,7 +312,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                   </View>
                   {data.education && data.education.length > 0 ? (
                       data.education.map((edu, i) => (
-                    <View key={i} style={styles.experienceBlock} wrap={false}>
+                    <View key={i} style={styles.experienceBlock}>
                         <View style={styles.roleRow}>
                             <Text style={styles.roleTitle}>{edu.degree}</Text>
                             <Text style={styles.dateText}>
@@ -329,7 +329,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
            case 'languages':
                 if (!data.languages || data.languages.length === 0) return null;
                 return (
-                  <View style={containerStyle} key="languages" wrap={false}>
+                  <View style={containerStyle} key="languages">
                      <View style={titleContainerStyle}>
                          <Text style={titleTextStyle}>{t.languages}</Text>
                      </View>
@@ -344,7 +344,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
            case 'skills':
                  if (!data.skills || data.skills.length === 0) return null;
                  return (
-                     <View style={containerStyle} key="skills" wrap={false}>
+                     <View style={containerStyle} key="skills">
                          <View style={titleContainerStyle}>
                              <Text style={titleTextStyle}>{t.skills}</Text>
                          </View>
@@ -358,7 +358,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
            case 'certifications':
                  if (!data.certifications || data.certifications.length === 0) return null;
                  return (
-                     <View style={containerStyle} key="certifications" wrap={false}>
+                     <View style={containerStyle} key="certifications">
                          <View style={titleContainerStyle}>
                              <Text style={titleTextStyle}>{t.certifications}</Text>
                          </View>
@@ -376,7 +376,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                 // Keeping it always rendered for now unless user really blanked everything.
                 if (!data.email && !data.phone && !data.location && (!data.socialLinks || data.socialLinks.length === 0)) return null;
                return (
-                   <View style={containerStyle} key="contact" wrap={false}>
+                   <View style={containerStyle} key="contact">
                      <View style={titleContainerStyle}>
                          <Text style={titleTextStyle}>{t.contact}</Text>
                      </View>
