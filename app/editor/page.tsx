@@ -28,6 +28,7 @@ const CVPreview = dynamic(() => import('@/components/CVPreview'), {
 
 export default function MatchEditor() {
   const [activeTab, setActiveTab] = React.useState<'editor' | 'preview' | 'design'>('preview');
+  const [isScraping, setIsScraping] = React.useState(false);
   const { profile, setThemeColor, setFontFamily } = useProfileStore();
   const { t } = useI18nStore();
   const { 
@@ -52,6 +53,36 @@ export default function MatchEditor() {
       setOptimizedCV(JSON.parse(JSON.stringify(profile)));
     }
   }, [profile, optimizedCV, setOptimizedCV]);
+
+  const handleJobDescriptionChange = async (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setJobDescription(value);
+
+    // If it looks like a single URL, try to scrape it
+    if (value.trim().startsWith('http') && !value.includes(' ')) {
+      setIsScraping(true);
+      try {
+        const res = await fetch('/api/scrape', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url: value.trim() })
+        });
+        
+        const data = await res.json();
+        
+        if (res.ok && data.text) {
+          setJobDescription(data.text);
+          toast.success('Successfully extracted job description from URL');
+        } else {
+          toast.error(data.error || 'Failed to extract text from URL');
+        }
+      } catch (error) {
+        toast.error('An error occurred while fetching the URL');
+      } finally {
+        setIsScraping(false);
+      }
+    }
+  };
 
   const handleOptimize = async () => {
     if (!jobDescription) return;
@@ -166,14 +197,23 @@ export default function MatchEditor() {
                   </select>
                 </div>
 
-                <div className="space-y-2">
+                <div className="space-y-2 relative">
                   <label className="text-sm font-medium text-slate-700">{t('job_description')}</label>
                   <Textarea 
                     placeholder={t('job_description_placeholder')}
-                    className="min-h-[200px] resize-none focus:ring-2 focus:ring-blue-500"
+                    className={`min-h-[200px] resize-none focus:ring-2 focus:ring-blue-500 ${isScraping ? 'opacity-50' : ''}`}
                     value={jobDescription}
-                    onChange={(e) => setJobDescription(e.target.value)}
+                    onChange={handleJobDescriptionChange}
+                    disabled={isScraping || isGenerating}
                   />
+                  {isScraping && (
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none mt-6">
+                      <div className="bg-white/80 p-2 rounded-lg flex items-center shadow-sm">
+                        <Loader2 className="w-5 h-5 mr-2 text-indigo-600 animate-spin" /> 
+                        <span className="text-sm font-medium text-slate-700">Extracting text from URL...</span>
+                      </div>
+                    </div>
+                  )}
                 </div>
                 
                 <div className="flex flex-col gap-3">
