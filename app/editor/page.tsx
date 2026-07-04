@@ -228,10 +228,6 @@ export default function MatchEditor() {
                       </>
                     )}
                   </Button>
-                </div>
-
-                <AnalysisDashboard />
-
               </CardContent>
             </Card>
 
@@ -244,7 +240,7 @@ export default function MatchEditor() {
 
         {/* Preview/Edit Panel (Now on Left / Top) */}
         <div className="order-1 lg:order-1 bg-slate-100 p-4 lg:p-6 lg:overflow-y-auto h-auto lg:h-full lg:w-1/2 w-full pb-20 flex flex-col">
-           <div className="max-w-3xl mx-auto w-full h-full flex flex-col min-h-[500px]">
+           <div className="max-w-3xl mx-auto w-full h-full flex flex-col min-h-[800px] lg:min-h-0">
              
              {/* Tabs - Sticky Bottom on Mobile, Top on Desktop */}
              <div className="fixed bottom-0 left-0 right-0 z-30 lg:static lg:mb-4 bg-white/95 lg:bg-transparent lg:backdrop-blur-md border-t lg:border-t-0 border-slate-200 p-3 lg:p-0 flex justify-center lg:justify-between items-center w-full shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] lg:shadow-none">
@@ -370,7 +366,10 @@ export default function MatchEditor() {
 
                   {activeTab === 'preview' && (
                      <div className="flex flex-col h-full">
-                       <div className="flex-1 overflow-auto">
+                       <div className="px-4">
+                         <AnalysisDashboard />
+                       </div>
+                       <div className="flex-1 overflow-auto min-h-[800px] lg:min-h-0">
                          <CVPreview data={optimizedCV} language={targetLanguage} themeName={currentTheme} />
                        </div>
                        <div className="p-4 border-t bg-white flex justify-center gap-4">
