@@ -7,8 +7,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
+import { useI18nStore } from "@/store/useI18nStore";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export default function Login() {
+  const { t } = useI18nStore();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -35,18 +38,21 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 relative">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md shadow-lg border-indigo-100">
         <CardHeader className="text-center pb-6">
-          <CardTitle className="text-2xl font-bold text-slate-900">Sign In</CardTitle>
+          <CardTitle className="text-2xl font-bold text-slate-900">{t('sign_in')}</CardTitle>
           <CardDescription>
-            Welcome back to CV-Match. Please enter your details.
+            {t('welcome_back')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700">Email</label>
+              <label className="text-sm font-medium text-slate-700">{t('email')}</label>
               <Input
                 type="email"
                 placeholder="you@example.com"
@@ -58,7 +64,7 @@ export default function Login() {
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <label className="text-sm font-medium text-slate-700">Password</label>
+                <label className="text-sm font-medium text-slate-700">{t('password')}</label>
               </div>
               <Input
                 type="password"
@@ -71,15 +77,15 @@ export default function Login() {
             </div>
             {error && <div className="p-3 bg-red-50 text-red-600 text-sm rounded-md">{error}</div>}
             <Button type="submit" disabled={isLoading} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium">
-              {isLoading ? "Signing in..." : "Sign In"}
+              {isLoading ? t('signing_in') : t('sign_in')}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="flex justify-center border-t pt-6">
           <p className="text-sm text-slate-600">
-            Don't have an account?{" "}
+            {t('no_account')} {" "}
             <Link href="/register" className="text-indigo-600 font-semibold hover:underline">
-              Create an account
+              {t('create_account')}
             </Link>
           </p>
         </CardFooter>

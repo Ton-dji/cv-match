@@ -6,8 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
 import Link from "next/link";
+import { useI18nStore } from "@/store/useI18nStore";
+import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export default function Register() {
+  const { t } = useI18nStore();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -45,18 +48,21 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4 relative">
+      <div className="absolute top-4 right-4">
+        <LanguageSwitcher />
+      </div>
       <Card className="w-full max-w-md shadow-lg border-indigo-100">
         <CardHeader className="text-center pb-6">
-          <CardTitle className="text-2xl font-bold text-slate-900">Create an Account</CardTitle>
+          <CardTitle className="text-2xl font-bold text-slate-900">{t('create_account')}</CardTitle>
           <CardDescription>
-            Join CV-Match to sync your Master Profile securely to the cloud.
+            {t('join_msg')}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700">Full Name</label>
+              <label className="text-sm font-medium text-slate-700">{t('full_name')}</label>
               <Input
                 type="text"
                 placeholder="John Doe"
@@ -67,7 +73,7 @@ export default function Register() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700">Email</label>
+              <label className="text-sm font-medium text-slate-700">{t('email')}</label>
               <Input
                 type="email"
                 placeholder="you@example.com"
@@ -78,10 +84,10 @@ export default function Register() {
               />
             </div>
             <div className="space-y-2">
-              <label className="text-sm font-medium text-slate-700">Password</label>
+              <label className="text-sm font-medium text-slate-700">{t('password')}</label>
               <Input
                 type="password"
-                placeholder="Create a strong password"
+                placeholder={t('create_pwd')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -91,15 +97,15 @@ export default function Register() {
             </div>
             {error && <div className="p-3 bg-red-50 text-red-600 text-sm rounded-md">{error}</div>}
             <Button type="submit" disabled={isLoading} className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-medium">
-              {isLoading ? "Creating account..." : "Create Account"}
+              {isLoading ? t('creating_account') : t('create_account')}
             </Button>
           </form>
         </CardContent>
         <CardFooter className="flex justify-center border-t pt-6">
           <p className="text-sm text-slate-600">
-            Already have an account?{" "}
+            {t('have_account')} {" "}
             <Link href="/login" className="text-indigo-600 font-semibold hover:underline">
-              Sign in
+              {t('sign_in')}
             </Link>
           </p>
         </CardFooter>

@@ -98,7 +98,22 @@ const translations: Record<Language, Record<string, string>> = {
     'profile_optimized': 'Your profile is optimized!',
     
     // Download
-    'download_pdf': 'Download PDF'
+    'download_pdf': 'Download PDF',
+
+    // Auth
+    'sign_in': 'Sign In',
+    'sign_out': 'Sign Out',
+    'create_account': 'Create Account',
+    'welcome_back': 'Welcome back to CV-Match. Please enter your details.',
+    'join_msg': 'Join CV-Match to sync your Master Profile securely to the cloud.',
+    'full_name': 'Full Name',
+    'email': 'Email',
+    'password': 'Password',
+    'signing_in': 'Signing in...',
+    'creating_account': 'Creating account...',
+    'no_account': 'Don\'t have an account?',
+    'have_account': 'Already have an account?',
+    'create_pwd': 'Create a strong password'
   },
   es: {
     // Header & Global
@@ -189,7 +204,22 @@ const translations: Record<Language, Record<string, string>> = {
     'profile_optimized': '¡Tu perfil está optimizado!',
     
     // Download
-    'download_pdf': 'Descargar PDF'
+    'download_pdf': 'Descargar PDF',
+
+    // Auth
+    'sign_in': 'Iniciar Sesión',
+    'sign_out': 'Cerrar Sesión',
+    'create_account': 'Crear Cuenta',
+    'welcome_back': 'Bienvenido a CV-Match. Por favor, introduce tus datos.',
+    'join_msg': 'Únete a CV-Match para sincronizar tu Perfil Maestro de forma segura en la nube.',
+    'full_name': 'Nombre Completo',
+    'email': 'Correo Electrónico',
+    'password': 'Contraseña',
+    'signing_in': 'Iniciando sesión...',
+    'creating_account': 'Creando cuenta...',
+    'no_account': '¿No tienes una cuenta?',
+    'have_account': '¿Ya tienes una cuenta?',
+    'create_pwd': 'Crea una contraseña segura'
   },
   fr: {
     // Header & Global
@@ -280,7 +310,22 @@ const translations: Record<Language, Record<string, string>> = {
     'profile_optimized': 'Votre profil est optimisé !',
 
     // Download
-    'download_pdf': 'Télécharger le PDF'
+    'download_pdf': 'Télécharger le PDF',
+
+    // Auth
+    'sign_in': 'Se Connecter',
+    'sign_out': 'Se Déconnecter',
+    'create_account': 'Créer un Compte',
+    'welcome_back': 'Bienvenue sur CV-Match. Veuillez entrer vos informations.',
+    'join_msg': 'Rejoignez CV-Match pour synchroniser votre Profil Maître en toute sécurité sur le cloud.',
+    'full_name': 'Nom Complet',
+    'email': 'E-mail',
+    'password': 'Mot de passe',
+    'signing_in': 'Connexion en cours...',
+    'creating_account': 'Création du compte...',
+    'no_account': 'Vous n\'avez pas de compte ?',
+    'have_account': 'Vous avez déjà un compte ?',
+    'create_pwd': 'Créez un mot de passe fort'
   }
 };
 
