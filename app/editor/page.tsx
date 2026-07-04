@@ -14,7 +14,6 @@ import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18nStore } from '@/store/useI18nStore';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
-import { MockInterviewModal } from '@/components/MockInterviewModal';
 
 const CVDownloadButton = dynamic(() => import('@/components/CVDownloadButton'), { 
   ssr: false,
@@ -29,7 +28,6 @@ const CVPreview = dynamic(() => import('@/components/CVPreview'), {
 export default function MatchEditor() {
   const [activeTab, setActiveTab] = React.useState<'editor' | 'preview' | 'design'>('preview');
   const [isScraping, setIsScraping] = React.useState(false);
-  const [isInterviewOpen, setIsInterviewOpen] = useState(false);
   const { profile, setThemeColor, setFontFamily } = useProfileStore();
   const { t } = useI18nStore();
   const { 
@@ -376,14 +374,6 @@ export default function MatchEditor() {
                          <CVPreview data={optimizedCV} language={targetLanguage} themeName={currentTheme} />
                        </div>
                        <div className="p-4 border-t bg-white flex justify-center gap-4">
-                          <Button 
-                            onClick={() => setIsInterviewOpen(true)}
-                            variant="outline" 
-                            className="border-indigo-200 text-indigo-700 hover:bg-indigo-50 font-medium"
-                          >
-                            <Bot className="w-4 h-4 mr-2" />
-                            {t('practice_interview') || 'Practice AI Mock Interview'}
-                          </Button>
                        </div>
                      </div>
                   )}
@@ -405,10 +395,6 @@ export default function MatchEditor() {
            </div>
         </div>
       </div>
-      <MockInterviewModal 
-        isOpen={isInterviewOpen} 
-        onClose={() => setIsInterviewOpen(false)} 
-      />
     </div>
   );
 }
