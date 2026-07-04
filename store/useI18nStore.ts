@@ -73,6 +73,7 @@ const translations: Record<Language, Record<string, string>> = {
     // PDF Button
     'import_pdf': 'Import Old CV (PDF)',
     'importing': 'Importing...',
+    'profile_imported': 'Profile imported successfully!',
     
     // Analysis
     'match_analysis': 'Match Analysis',
@@ -147,6 +148,7 @@ const translations: Record<Language, Record<string, string>> = {
     // PDF Button
     'import_pdf': 'Importar CV (PDF)',
     'importing': 'Importando...',
+    'profile_imported': '¡Perfil importado con éxito!',
     
     // Analysis
     'match_analysis': 'Análisis de Coincidencia',
@@ -221,6 +223,7 @@ const translations: Record<Language, Record<string, string>> = {
     // PDF Button
     'import_pdf': 'Importer un CV (PDF)',
     'importing': 'Importation...',
+    'profile_imported': 'Profil importé avec succès !',
     
     // Analysis
     'match_analysis': 'Analyse de Correspondance',

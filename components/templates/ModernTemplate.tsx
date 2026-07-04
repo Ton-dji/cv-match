@@ -30,7 +30,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
       left: 0,
       bottom: -35, 
       width: '32%',
-      height: '115%', 
+      height: 900, // Hardcoded to cover the full A4 page height
       backgroundColor: '#f1f5f9', // Slate-100 check if this should be dynamic? Standard Modern uses this.
       zIndex: -1,
     },
