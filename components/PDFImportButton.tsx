@@ -5,11 +5,13 @@ import { Button } from '@/components/ui/button';
 import { FileText, Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 import { useProfileStore, MasterProfile, Experience, Education } from '@/store/useProfileStore';
+import { useI18nStore } from '@/store/useI18nStore';
 
 export function PDFImportButton() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isUploading, setIsUploading] = useState(false);
   const { setProfile } = useProfileStore();
+  const { t } = useI18nStore();
 
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -41,10 +43,10 @@ export function PDFImportButton() {
       }
 
       setProfile(data);
-      toast.success("Profile imported successfully!");
+      toast.success(t("profile_imported") || "Profile imported successfully!");
     } catch (error) {
       console.error('Error importing PDF:', error);
-      toast.error(`Error importing PDF: ${error instanceof Error ? error.message : "Unknown error"}`);
+      toast.error(`${t("error_importing") || "Error importing PDF"}: ${error instanceof Error ? error.message : "Unknown error"}`);
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
@@ -67,8 +69,15 @@ export function PDFImportButton() {
         disabled={isUploading}
         className="gap-2 border-blue-200 text-blue-700 hover:bg-blue-50"
       >
-        {isUploading ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
-        {isUploading ? "Importing..." : "Import from PDF"}
+        {isUploading ? (
+          <>
+            <Loader2 className="w-4 h-4 mr-2 animate-spin" /> {t('importing') || "Importing..."}
+          </>
+        ) : (
+          <>
+            <FileText className="w-4 h-4 mr-2" /> {t('import_pdf') || "Import from PDF"}
+          </>
+        )}
       </Button>
     </>
   );

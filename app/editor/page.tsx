@@ -13,6 +13,8 @@ import { AnalysisDashboard } from '@/components/AnalysisDashboard';
 import { ResumeStrengthMeter } from '@/components/ResumeStrengthMeter';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useI18nStore } from '@/store/useI18nStore';
+import { LanguageSwitcher } from '@/components/LanguageSwitcher';
 
 const CVDownloadButton = dynamic(() => import('@/components/CVDownloadButton'), { 
   ssr: false,
@@ -27,6 +29,7 @@ const CVPreview = dynamic(() => import('@/components/CVPreview'), {
 export default function MatchEditor() {
   const [activeTab, setActiveTab] = React.useState<'editor' | 'preview' | 'design'>('preview');
   const { profile, setThemeColor, setFontFamily } = useProfileStore();
+  const { t } = useI18nStore();
   const { 
     jobDescription, 
     targetLanguage, 
@@ -86,7 +89,7 @@ export default function MatchEditor() {
         setAnalysis(analyzeData);
       }
 
-      toast.success("Optimization complete! Your CV is ready.");
+      toast.success(t('app_title') + ": " + t('download_pdf')); // using generic success message for now
       setActiveTab('preview'); // Automatically switch to preview
     } catch (error: unknown) {
       console.error(error);
@@ -118,18 +121,21 @@ export default function MatchEditor() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white/70 backdrop-blur-md border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0">
+      <header className="bg-white/95 lg:bg-white/70 lg:backdrop-blur-md border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0">
         <h1 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-indigo-600"/> Match Editor
+          <Sparkles className="w-5 h-5 text-indigo-600"/> {t('match_editor')}
         </h1>
-        {optimizedCV && (
-          <CVDownloadButton 
-            data={optimizedCV} 
-            fileName={`CV_${optimizedCV.fullName.replace(/\s+/g, '_')}_${targetLanguage}.pdf`} 
-            language={targetLanguage}
-            themeName={currentTheme}
-          />
-        )}
+        <div className="flex items-center gap-4">
+          <LanguageSwitcher />
+          {optimizedCV && (
+            <CVDownloadButton 
+              data={optimizedCV} 
+              fileName={`CV_${optimizedCV.fullName.replace(/\s+/g, '_')}_${targetLanguage}.pdf`} 
+              language={targetLanguage}
+              themeName={currentTheme}
+            />
+          )}
+        </div>
       </header>
       <div className="flex-1 flex flex-col lg:flex-row lg:h-[calc(100vh-60px)] lg:overflow-hidden h-auto">
         
@@ -143,12 +149,12 @@ export default function MatchEditor() {
             <Card className="border-blue-100 shadow-md">
               <CardHeader className="bg-blue-50/50 pb-4">
                 <CardTitle className="text-blue-900 flex items-center gap-2">
-                  <Wand2 className="w-5 h-5"/> Job Details
+                  <Wand2 className="w-5 h-5"/> {t('job_details')}
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-4 pt-4">
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700">Target Language</label>
+                  <label className="text-sm font-medium text-slate-700">{t('target_language')}</label>
                   <select 
                     className="flex h-10 w-full rounded-md border border-slate-200 bg-white px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 outline-none"
                     value={targetLanguage}
@@ -161,9 +167,9 @@ export default function MatchEditor() {
                 </div>
 
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-slate-700">Job Description</label>
+                  <label className="text-sm font-medium text-slate-700">{t('job_description')}</label>
                   <Textarea 
-                    placeholder="Paste the job description here..." 
+                    placeholder={t('job_description_placeholder')}
                     className="min-h-[200px] resize-none focus:ring-2 focus:ring-blue-500"
                     value={jobDescription}
                     onChange={(e) => setJobDescription(e.target.value)}
@@ -178,11 +184,11 @@ export default function MatchEditor() {
                   >
                     {isGenerating ? (
                       <>
-                        <Loader2 className="w-5 h-5 mr-2 animate-spin" /> Tailoring your CV...
+                        <Loader2 className="w-5 h-5 mr-2 animate-spin" /> {t('tailoring')}
                       </>
                     ) : (
                       <>
-                        <Wand2 className="w-5 h-5 mr-2" /> Tailor My CV <ArrowRight className="w-5 h-5 ml-2" />
+                        <Wand2 className="w-5 h-5 mr-2" /> {t('tailor_my_cv')} <ArrowRight className="w-5 h-5 ml-2" />
                       </>
                     )}
                   </Button>
@@ -194,8 +200,8 @@ export default function MatchEditor() {
             </Card>
 
             <div className="text-sm text-slate-500 text-center">
-              <p>Based on your Master Profile.</p>
-              <p>AI will rewrite summary, skills, and experience to match this job.</p>
+              <p>{t('based_on_master')}</p>
+              <p>{t('ai_will_rewrite')}</p>
             </div>
           </div>
         </div>
@@ -205,30 +211,30 @@ export default function MatchEditor() {
            <div className="max-w-3xl mx-auto w-full h-full flex flex-col min-h-[500px]">
              
              {/* Tabs - Sticky Bottom on Mobile, Top on Desktop */}
-             <div className="fixed bottom-0 left-0 right-0 z-30 lg:static lg:mb-4 bg-white/80 lg:bg-transparent backdrop-blur-md border-t lg:border-t-0 border-slate-200 p-3 lg:p-0 flex justify-center lg:justify-between items-center w-full shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] lg:shadow-none">
+             <div className="fixed bottom-0 left-0 right-0 z-30 lg:static lg:mb-4 bg-white/95 lg:bg-transparent lg:backdrop-blur-md border-t lg:border-t-0 border-slate-200 p-3 lg:p-0 flex justify-center lg:justify-between items-center w-full shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] lg:shadow-none">
                <div className="bg-slate-100/80 lg:bg-white rounded-full lg:rounded-lg p-1 border border-slate-200 inline-flex shadow-sm w-full lg:w-auto max-w-sm justify-between">
                   <button 
                     onClick={() => setActiveTab('editor')}
                     className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'editor' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
-                    Manual Edit
+                    {t('manual_edit')}
                   </button>
                   <button 
                     onClick={() => setActiveTab('design')}
                     className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'design' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
-                    Design
+                    {t('design')}
                   </button>
                   <button 
                     onClick={() => setActiveTab('preview')}
                     className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'preview' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
-                    PDF
+                    {t('pdf_preview')}
                   </button>
                </div>
              </div>
              
-             <div className="flex-1 bg-white/80 backdrop-blur-sm rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col mb-16 lg:mb-0">
+             <div className="flex-1 bg-white/95 lg:bg-white/80 lg:backdrop-blur-sm rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col mb-16 lg:mb-0">
                {optimizedCV ? (
                  <>
                   {activeTab === 'editor' && (
@@ -247,7 +253,7 @@ export default function MatchEditor() {
                         {/* Template Selection */}
                         <div className="space-y-4">
                             <h3 className="text-lg font-semibold flex items-center gap-2">
-                                <LayoutTemplate className="w-5 h-5 text-blue-600" /> Choose Template
+                                <LayoutTemplate className="w-5 h-5 text-blue-600" /> {t('choose_template')}
                             </h3>
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                                 {['Modern', 'Classic', 'Minimalist'].map((t) => (
@@ -268,7 +274,7 @@ export default function MatchEditor() {
                         {/* Color Selection */}
                         <div className="space-y-4">
                             <h3 className="text-lg font-semibold flex items-center gap-2">
-                                <Palette className="w-5 h-5 text-blue-600" /> Accent Color
+                                <Palette className="w-5 h-5 text-pink-600" /> {t('theme_color')}
                             </h3>
                             <div className="flex flex-wrap gap-3">
                                 {colorPresets.map((color) => (
@@ -305,7 +311,7 @@ export default function MatchEditor() {
                         {/* Font Selection */}
                         <div className="space-y-4">
                              <h3 className="text-lg font-semibold flex items-center gap-2">
-                                <Type className="w-5 h-5 text-blue-600" /> Typography
+                                <Type className="w-5 h-5 text-emerald-600" /> {t('typography')}
                             </h3>
                             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                                 {fontOptions.map((font) => (
