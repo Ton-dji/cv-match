@@ -31,8 +31,9 @@ export async function POST(req: NextRequest) {
       ${jobDescription}
       
       Instructions:
-      1. **Professional Summary**: Write a compelling 3-4 line summary. Focus on value proposition and fit for the role. Avoid generic fluff.
-      2. **Experience**:
+      1. **Title**: Update the 'title' field to perfectly match or closely mirror the role/title specified in the Job Description, translated to the Target Language. This is crucial for ATS matching.
+      2. **Professional Summary**: Write a compelling 3-4 line summary. Focus on value proposition and fit for the role. Avoid generic fluff.
+      3. **Experience**:
          - Rewrite bullet points to focus on RESULTS and IMPACT (Quantitative metrics where possible).
          - Use strong, varied action verbs.
          - NATURALLY weave in keywords from the JD, but do not stuffing.
@@ -48,6 +49,7 @@ export async function POST(req: NextRequest) {
       Output JSON Format:
       {
         "fullName": "...",
+        "title": "...",
         "email": "...",
         "phone": "...",
         "location": "...",

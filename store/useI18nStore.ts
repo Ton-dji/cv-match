@@ -81,6 +81,17 @@ const translations: Record<Language, Record<string, string>> = {
     'missing_skills': 'Missing Skills',
     'key_strengths': 'Key Strengths',
     
+    // Resume Strength
+    'resume_strength': 'Profile Completeness',
+    'add_full_name': 'Add your full name',
+    'add_email': 'Add your email address',
+    'add_summary': 'Add a professional summary (50+ characters)',
+    'add_experience_tip': 'Add at least one work experience',
+    'add_education_tip': 'Add your education details',
+    'add_skills_tip': 'Add at least 3 key skills',
+    'improve_score': 'Improve your score:',
+    'profile_optimized': 'Your profile is optimized!',
+    
     // Download
     'download_pdf': 'Download PDF'
   },
@@ -152,9 +163,20 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Analysis
     'match_analysis': 'Análisis de Coincidencia',
-    'match_score': 'Puntuación',
+    'match_score': 'Puntuación de Coincidencia',
     'missing_skills': 'Habilidades Faltantes',
-    'key_strengths': 'Puntos Fuertes',
+    'key_strengths': 'Fortalezas Clave',
+    
+    // Resume Strength
+    'resume_strength': 'Completitud del Perfil',
+    'add_full_name': 'Añade tu nombre completo',
+    'add_email': 'Añade tu correo electrónico',
+    'add_summary': 'Añade un resumen profesional (50+ caracteres)',
+    'add_experience_tip': 'Añade al menos una experiencia laboral',
+    'add_education_tip': 'Añade tu educación',
+    'add_skills_tip': 'Añade al menos 3 habilidades clave',
+    'improve_score': 'Mejora tu puntuación:',
+    'profile_optimized': '¡Tu perfil está optimizado!',
     
     // Download
     'download_pdf': 'Descargar PDF'
@@ -227,12 +249,23 @@ const translations: Record<Language, Record<string, string>> = {
     
     // Analysis
     'match_analysis': 'Analyse de Correspondance',
-    'match_score': 'Score',
+    'match_score': 'Score de Correspondance',
     'missing_skills': 'Compétences Manquantes',
     'key_strengths': 'Points Forts',
     
+    // Resume Strength
+    'resume_strength': 'Complétude du Profil',
+    'add_full_name': 'Ajoutez votre nom complet',
+    'add_email': 'Ajoutez votre adresse e-mail',
+    'add_summary': 'Ajoutez un résumé professionnel (50+ caractères)',
+    'add_experience_tip': 'Ajoutez au moins une expérience professionnelle',
+    'add_education_tip': 'Ajoutez vos études',
+    'add_skills_tip': 'Ajoutez au moins 3 compétences clés',
+    'improve_score': 'Améliorez votre score :',
+    'profile_optimized': 'Votre profil est optimisé !',
+
     // Download
-    'download_pdf': 'Télécharger PDF'
+    'download_pdf': 'Télécharger le PDF'
   }
 };
 

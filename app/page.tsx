@@ -8,6 +8,8 @@ import { FileText, Sparkles } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { PDFImportButton } from "@/components/PDFImportButton";
 import { useApplicationStore } from "@/store/useApplicationStore";
+import { useProfileStore } from "@/store/useProfileStore";
+import { ResumeStrengthMeter } from "@/components/ResumeStrengthMeter";
 import { useSession } from "next-auth/react";
 import { AuthButtons } from "@/components/AuthButtons";
 import { motion } from "framer-motion";
@@ -16,6 +18,7 @@ import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 
 export default function Dashboard() {
   const { reset } = useApplicationStore();
+  const { profile } = useProfileStore();
   const { data: session } = useSession();
   const { t } = useI18nStore();
 
@@ -98,6 +101,10 @@ export default function Dashboard() {
                 <li>{t('tip_2')}</li>
                 <li>{t('tip_3')}</li>
               </ul>
+            </motion.div>
+
+            <motion.div>
+              <ResumeStrengthMeter data={profile} />
             </motion.div>
           </div>
 

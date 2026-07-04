@@ -10,7 +10,6 @@ import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { CVForm } from '@/components/CVForm';
 import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type } from 'lucide-react';
 import { AnalysisDashboard } from '@/components/AnalysisDashboard';
-import { ResumeStrengthMeter } from '@/components/ResumeStrengthMeter';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18nStore } from '@/store/useI18nStore';
@@ -171,12 +170,9 @@ export default function MatchEditor() {
       <div className="flex-1 flex flex-col lg:flex-row lg:h-[calc(100vh-60px)] lg:overflow-hidden h-auto">
         
         {/* Job Details Panel (Now on Right / Bottom) */}
-        <div className="order-2 lg:order-2 p-4 lg:p-6 lg:overflow-y-auto border-t lg:border-l lg:border-t-0 border-slate-200 bg-white h-auto lg:h-full lg:w-1/2 w-full pb-10">
+        <div className="w-full lg:w-1/2 overflow-y-auto p-4 lg:p-6 lg:h-full bg-white relative pb-24 lg:pb-6 z-10 lg:z-auto order-2 lg:order-2 shadow-[0_-10px_15px_-3px_rgb(0,0,0,0.1)] lg:shadow-none">
           <div className="space-y-6 max-w-xl mx-auto">
             
-            {/* Resume Strength Meter - Always visible at top */}
-            <ResumeStrengthMeter data={optimizedCV || profile} />
-
             <Card className="border-blue-100 shadow-md">
               <CardHeader className="bg-blue-50/50 pb-4">
                 <CardTitle className="text-blue-900 flex items-center gap-2">
