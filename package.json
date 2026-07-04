@@ -19,7 +19,9 @@
     "cheerio": "^1.2.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "docx": "^9.7.1",
     "dotenv": "^17.2.3",
+    "file-saver": "^2.0.5",
     "framer-motion": "^12.42.2",
     "lucide-react": "^0.561.0",
     "next": "14.2.15",
@@ -33,6 +35,7 @@
     "zustand": "^5.0.9"
   },
   "devDependencies": {
+    "@types/file-saver": "^2.0.7",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
