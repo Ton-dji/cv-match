@@ -73,6 +73,7 @@ export default function MatchEditor() {
           setJobDescription(data.text);
           toast.success('Successfully extracted job description from URL');
         } else {
+          setJobDescription(''); // Clear the URL so they can paste text
           toast.error(data.error || 'Failed to extract text from URL');
         }
       } catch (error) {

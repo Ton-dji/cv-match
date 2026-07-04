@@ -29,6 +29,19 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'No content found on the page.' }, { status: 404 });
     }
 
+    // Detect Cloudflare or similar bot-protection pages
+    const isBlocked = 
+      content.includes("Just a moment...") || 
+      content.includes("Additional Verification Required") || 
+      content.includes("Cloudflare Errors") ||
+      content.includes("Attention Required!");
+
+    if (isBlocked) {
+      return NextResponse.json({ 
+        error: 'Job boards like Indeed/LinkedIn actively block automated access. Please copy and paste the job description text manually.' 
+      }, { status: 403 });
+    }
+
     // Truncate to a reasonable length (e.g., 20k chars) to prevent massive payloads
     if (content.length > 20000) {
       content = content.substring(0, 20000) + '...';
