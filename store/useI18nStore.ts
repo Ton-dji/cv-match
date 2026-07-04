@@ -113,7 +113,13 @@ const translations: Record<Language, Record<string, string>> = {
     'creating_account': 'Creating account...',
     'no_account': 'Don\'t have an account?',
     'have_account': 'Already have an account?',
-    'create_pwd': 'Create a strong password'
+    'create_pwd': 'Create a strong password',
+
+    // Mock Interview
+    'practice_interview': 'Practice AI Mock Interview',
+    'interview_desc': 'The AI will ask you questions based on your tailored CV and the target job description.',
+    'ai_typing': 'Interviewer is typing...',
+    'type_answer': 'Type your answer...'
   },
   es: {
     // Header & Global
@@ -219,7 +225,13 @@ const translations: Record<Language, Record<string, string>> = {
     'creating_account': 'Creando cuenta...',
     'no_account': '¿No tienes una cuenta?',
     'have_account': '¿Ya tienes una cuenta?',
-    'create_pwd': 'Crea una contraseña segura'
+    'create_pwd': 'Crea una contraseña segura',
+
+    // Mock Interview
+    'practice_interview': 'Practicar Entrevista Falsa con IA',
+    'interview_desc': 'La IA te hará preguntas basadas en tu CV adaptado y en la descripción del trabajo objetivo.',
+    'ai_typing': 'El entrevistador está escribiendo...',
+    'type_answer': 'Escribe tu respuesta...'
   },
   fr: {
     // Header & Global
@@ -325,7 +337,13 @@ const translations: Record<Language, Record<string, string>> = {
     'creating_account': 'Création du compte...',
     'no_account': 'Vous n\'avez pas de compte ?',
     'have_account': 'Vous avez déjà un compte ?',
-    'create_pwd': 'Créez un mot de passe fort'
+    'create_pwd': 'Créez un mot de passe fort',
+
+    // Mock Interview
+    'practice_interview': 'S\'entraîner à un Entretien avec l\'IA',
+    'interview_desc': 'L\'IA vous posera des questions en fonction de votre CV adapté et de la description du poste ciblé.',
+    'ai_typing': 'L\'interviewer est en train d\'écrire...',
+    'type_answer': 'Tapez votre réponse...'
   }
 };
 

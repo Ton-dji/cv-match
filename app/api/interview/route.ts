@@ -3,93 +3,56 @@ import { anthropic } from "@/lib/claude";
 
 export async function POST(req: NextRequest) {
   try {
-    const { chatHistory, currentProfile, latestUserMessage } = await req.json();
+    const { chatHistory, optimizedCV, jobDescription, targetLanguage } = await req.json();
 
-    if (!latestUserMessage) {
+    if (!optimizedCV || !jobDescription) {
       return NextResponse.json(
-        { error: "latestUserMessage is required" },
+        { error: "optimizedCV and jobDescription are required" },
         { status: 400 }
       );
     }
 
-    const messages = [
-      ...chatHistory,
-      { role: "user", content: latestUserMessage }
-    ];
+    const language = targetLanguage || "English";
 
-    const systemPrompt = `You are a friendly, professional AI Resume Assistant. You are interviewing the user to build their CV.
-Your goal is to extract information about their work experience, education, skills, and background, and use the 'update_cv' tool to save that information directly into their resume profile JSON.
-Keep your responses conversational, encouraging, and relatively brief (1-2 sentences). Ask ONE clear question at a time to keep the user focused.
-Currently, the user's CV JSON is:
-${JSON.stringify(currentProfile, null, 2)}`;
+    const systemPrompt = `You are an expert Senior Hiring Manager conducting a job interview.
+Your goal is to interview the user for the role described in the Job Description, based on their provided CV.
+
+Target Language: ${language}
+ALL of your responses, questions, and feedback MUST be in the Target Language.
+
+Job Description:
+${jobDescription}
+
+User's CV:
+${JSON.stringify(optimizedCV, null, 2)}
+
+Instructions:
+1. Act as the interviewer. Be professional, slightly challenging, but encouraging.
+2. Ask ONE question at a time. Do not ask multiple questions in a single message.
+3. The questions should be highly specific to their CV experience and how it relates to the Job Description.
+4. Keep track of the interview. It should last exactly 3-4 questions total.
+5. If the user has answered the final question, provide a comprehensive, constructive piece of feedback on their overall interview performance, highlighting strengths and areas for improvement.
+6. Keep your responses relatively concise (2-4 sentences max).
+7. NEVER break character. ALWAYS speak in the exact Target Language specified.`;
 
     const response = await anthropic.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-3-5-haiku-20241022",
       max_tokens: 1000,
-      temperature: 0.5,
+      temperature: 0.7,
       system: systemPrompt,
-      messages: messages,
-      tools: [
-        {
-          name: "update_cv",
-          description: "Update the user's CV with newly extracted information. Pass a partial MasterProfile object containing only the fields you want to update or append to.",
-          input_schema: {
-            type: "object",
-            properties: {
-              fullName: { type: "string" },
-              title: { type: "string" },
-              email: { type: "string" },
-              phone: { type: "string" },
-              location: { type: "string" },
-              summary: { type: "string" },
-              experience: { 
-                type: "array", 
-                items: {
-                  type: "object",
-                  properties: {
-                    role: { type: "string" },
-                    company: { type: "string" },
-                    location: { type: "string" },
-                    startDate: { type: "string" },
-                    endDate: { type: "string" },
-                    description: { type: "string" },
-                  }
-                }
-              },
-              education: { 
-                type: "array", 
-                items: {
-                  type: "object",
-                  properties: {
-                    degree: { type: "string" },
-                    school: { type: "string" },
-                    location: { type: "string" },
-                    startDate: { type: "string" },
-                    endDate: { type: "string" }
-                  }
-                }
-              },
-              skills: { type: "array", items: { type: "string" } }
-            }
-          }
-        }
-      ]
+      messages: chatHistory,
     });
 
     let aiMessage = "";
-    let cvUpdates = null;
 
     for (const content of response.content) {
       if (content.type === "text") {
         aiMessage += content.text;
-      } else if (content.type === "tool_use" && content.name === "update_cv") {
-        cvUpdates = content.input;
       }
     }
 
     return NextResponse.json({
       message: aiMessage,
-      updates: cvUpdates
     });
   } catch (error) {
     console.error("Error in interview route:", error);

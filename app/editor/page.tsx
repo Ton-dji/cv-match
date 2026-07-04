@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useProfileStore } from '@/store/useProfileStore';
 import { useApplicationStore, TargetLanguage } from '@/store/useApplicationStore';
@@ -8,12 +8,13 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { CVForm } from '@/components/CVForm';
-import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type } from 'lucide-react';
+import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type, Bot } from 'lucide-react';
 import { AnalysisDashboard } from '@/components/AnalysisDashboard';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18nStore } from '@/store/useI18nStore';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import { MockInterviewModal } from '@/components/MockInterviewModal';
 
 const CVDownloadButton = dynamic(() => import('@/components/CVDownloadButton'), { 
   ssr: false,
@@ -28,6 +29,7 @@ const CVPreview = dynamic(() => import('@/components/CVPreview'), {
 export default function MatchEditor() {
   const [activeTab, setActiveTab] = React.useState<'editor' | 'preview' | 'design'>('preview');
   const [isScraping, setIsScraping] = React.useState(false);
+  const [isInterviewOpen, setIsInterviewOpen] = useState(false);
   const { profile, setThemeColor, setFontFamily } = useProfileStore();
   const { t } = useI18nStore();
   const { 
@@ -111,7 +113,7 @@ export default function MatchEditor() {
       const analyzeResponse = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ masterProfile: optimizedData, jobDescription, targetLanguage: language })
+        body: JSON.stringify({ masterProfile: optimizedData, jobDescription, targetLanguage: targetLanguage })
       });
       
       if (analyzeResponse.ok) {
@@ -369,7 +371,21 @@ export default function MatchEditor() {
                   )}
 
                   {activeTab === 'preview' && (
-                     <CVPreview data={optimizedCV} language={targetLanguage} themeName={currentTheme} />
+                     <div className="flex flex-col h-full">
+                       <div className="flex-1 overflow-auto">
+                         <CVPreview data={optimizedCV} language={targetLanguage} themeName={currentTheme} />
+                       </div>
+                       <div className="p-4 border-t bg-white flex justify-center gap-4">
+                          <Button 
+                            onClick={() => setIsInterviewOpen(true)}
+                            variant="outline" 
+                            className="border-indigo-200 text-indigo-700 hover:bg-indigo-50 font-medium"
+                          >
+                            <Bot className="w-4 h-4 mr-2" />
+                            {t('practice_interview') || 'Practice AI Mock Interview'}
+                          </Button>
+                       </div>
+                     </div>
                   )}
                  </>
                ) : (
@@ -389,6 +405,10 @@ export default function MatchEditor() {
            </div>
         </div>
       </div>
+      <MockInterviewModal 
+        isOpen={isInterviewOpen} 
+        onClose={() => setIsInterviewOpen(false)} 
+      />
     </div>
   );
 }
