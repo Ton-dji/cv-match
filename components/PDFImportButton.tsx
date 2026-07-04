@@ -3,6 +3,7 @@
 import { useRef, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { FileText, Loader2 } from 'lucide-react';
+import { toast } from 'sonner';
 import { useProfileStore, MasterProfile, Experience, Education } from '@/store/useProfileStore';
 
 export function PDFImportButton() {
@@ -40,10 +41,10 @@ export function PDFImportButton() {
       }
 
       setProfile(data);
-      alert("Profile imported successfully!");
+      toast.success("Profile imported successfully!");
     } catch (error) {
-      console.error(error);
-      alert(`Error importing PDF: ${error instanceof Error ? error.message : "Unknown error"}`);
+      console.error('Error importing PDF:', error);
+      toast.error(`Error importing PDF: ${error instanceof Error ? error.message : "Unknown error"}`);
     } finally {
       setIsUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';

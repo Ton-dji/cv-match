@@ -133,8 +133,8 @@ export default function MatchEditor() {
       </header>
       <div className="flex-1 flex flex-col lg:flex-row lg:h-[calc(100vh-60px)] lg:overflow-hidden h-auto">
         
-        {/* Left Panel: Inputs */}
-        <div className="p-4 lg:p-6 lg:overflow-y-auto border-b lg:border-r lg:border-b-0 border-slate-200 bg-white h-auto lg:h-full lg:w-1/2 w-full pb-10">
+        {/* Job Details Panel (Now on Right / Bottom) */}
+        <div className="order-2 lg:order-2 p-4 lg:p-6 lg:overflow-y-auto border-t lg:border-l lg:border-t-0 border-slate-200 bg-white h-auto lg:h-full lg:w-1/2 w-full pb-10">
           <div className="space-y-6 max-w-xl mx-auto">
             
             {/* Resume Strength Meter - Always visible at top */}
@@ -200,8 +200,8 @@ export default function MatchEditor() {
           </div>
         </div>
 
-        {/* Right Panel: Preview/Edit */}
-        <div className="bg-slate-100 p-4 lg:p-6 lg:overflow-y-auto h-auto lg:h-full lg:w-1/2 w-full pb-20 flex flex-col">
+        {/* Preview/Edit Panel (Now on Left / Top) */}
+        <div className="order-1 lg:order-1 bg-slate-100 p-4 lg:p-6 lg:overflow-y-auto h-auto lg:h-full lg:w-1/2 w-full pb-20 flex flex-col">
            <div className="max-w-3xl mx-auto w-full h-full flex flex-col min-h-[500px]">
              
              {/* Tabs - Sticky Bottom on Mobile, Top on Desktop */}
