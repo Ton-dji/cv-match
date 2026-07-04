@@ -70,7 +70,15 @@ const formTranslations: Record<string, Record<string, string>> = {
     clearProfile: "Clear Profile",
     clearWarning: "Are you sure you want to clear your entire CV? This cannot be undone.",
     aiInterviewMode: "AI Interview Mode",
-    noPhoto: "No Photo"
+    noPhoto: "No Photo",
+    layoutConfig: "Layout Configuration",
+    layoutDesc: "Arrange sections between the Main Column and Sidebar.",
+    layoutNote: 'Note: In "Minimalist" theme, the Sidebar is hidden and its content follows the Main Column content.',
+    singleColumnActive: "Single Column Layout Active.",
+    singleColumnDesc: 'In Minimalist mode, "Main" and "Sidebar" sections are merged into one single list. You can still order them below.',
+    mainColumn: "Main Column",
+    sidebarOther: "Sidebar / Other",
+    contact: "Contact"
   },
   French: {
     personalInfo: "Informations Personnelles",
@@ -119,7 +127,15 @@ const formTranslations: Record<string, Record<string, string>> = {
     clearProfile: "Effacer le Profil",
     clearWarning: "Êtes-vous sûr de vouloir effacer tout votre CV ? Cette action est irréversible.",
     aiInterviewMode: "Mode Entretien IA",
-    noPhoto: "Pas de Photo"
+    noPhoto: "Pas de Photo",
+    layoutConfig: "Configuration de la mise en page",
+    layoutDesc: "Organisez les sections entre la colonne principale et la barre latérale.",
+    layoutNote: 'Remarque : Dans le thème "Minimaliste", la barre latérale est masquée.',
+    singleColumnActive: "Disposition en colonne unique active.",
+    singleColumnDesc: 'En mode Minimaliste, les sections "Principale" et "Barre latérale" sont fusionnées.',
+    mainColumn: "Colonne Principale",
+    sidebarOther: "Barre Latérale / Autre",
+    contact: "Contact"
   },
   Spanish: {
     personalInfo: "Información Personal",
@@ -168,7 +184,15 @@ const formTranslations: Record<string, Record<string, string>> = {
     clearProfile: "Borrar Perfil",
     clearWarning: "¿Estás seguro de que deseas borrar todo tu CV? Esto no se puede deshacer.",
     aiInterviewMode: "Modo Entrevista IA",
-    noPhoto: "Sin Foto"
+    noPhoto: "Sin Foto",
+    layoutConfig: "Configuración de Diseño",
+    layoutDesc: "Organiza las secciones entre la Columna Principal y la Barra Lateral.",
+    layoutNote: 'Nota: En el tema "Minimalista", la Barra Lateral está oculta.',
+    singleColumnActive: "Diseño de columna única activo.",
+    singleColumnDesc: 'En el modo Minimalista, las secciones "Principal" y "Barra Lateral" se fusionan en una sola lista.',
+    mainColumn: "Columna Principal",
+    sidebarOther: "Barre Lateral / Otros",
+    contact: "Contacto"
   }
 };
 
@@ -184,6 +208,17 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
   const { language: uiLanguage } = useI18nStore();
   const langKey = uiLanguage === 'es' ? 'Spanish' : uiLanguage === 'fr' ? 'French' : 'English';
   const t = formTranslations[langKey];
+  
+  const sectionNames: Record<string, string> = {
+    summary: t.summary,
+    experience: t.workExperience,
+    projects: t.projects,
+    education: t.education,
+    contact: t.contact,
+    skills: t.skills,
+    languages: t.languages,
+    certifications: t.certifications,
+  };
   
   const handleInputChange = (field: keyof MasterProfile, value: string | Experience[] | Education[] | string[]) => {
     onChange({ ...data, [field]: value });
@@ -979,22 +1014,22 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
           <CardHeader>
              <CardTitle className="flex items-center gap-2">
                 <LayoutTemplate className="w-5 h-5" />
-                Layout Configuration
+                {t.layoutConfig}
              </CardTitle>
           </CardHeader>
           <CardContent>
               <p className="text-sm text-muted-foreground mb-4">
-                  Arrange sections between the Main Column and Sidebar. 
+                  {t.layoutDesc} 
                   <br/>
-                  <span className="italic text-xs">Note: In &quot;Minimalist&quot; theme, the Sidebar is hidden and its content follows the Main Column content (or uses a linear layout).</span>
+                  <span className="italic text-xs">{t.layoutNote}</span>
               </p>
 
               {themeName === 'Minimalist' && (
                   <div className="bg-amber-50 border border-amber-200 rounded-md p-3 mb-4 text-sm text-amber-800 flex gap-2 items-start">
                      <span className="text-lg">ℹ️</span>
                      <div>
-                        <strong>Single Column Layout Active.</strong>
-                        <p>In Minimalist mode, &quot;Main&quot; and &quot;Sidebar&quot; sections are merged into one single list. However, you can still use the lists below to determine their relative order (Main sections first, then Sidebar sections).</p>
+                        <strong>{t.singleColumnActive}</strong>
+                        <p>{t.singleColumnDesc}</p>
                      </div>
                   </div>
               )}
@@ -1002,11 +1037,11 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {/* Main Column */}
                   <div className="space-y-4">
-                      <h3 className="font-semibold text-sm text-slate-700 uppercase tracking-wider">Main Column</h3>
+                      <h3 className="font-semibold text-sm text-slate-700 uppercase tracking-wider">{t.mainColumn}</h3>
                       <div className="space-y-2 min-h-[100px] p-2 bg-slate-50 rounded-lg border border-dashed">
                           {(data.mainSections || DEFAULT_MAIN_SECTIONS).map((section, idx, arr) => (
                               <div key={section} className="flex items-center justify-between p-3 bg-white border rounded shadow-sm">
-                                  <span className="capitalize font-medium text-sm">{section}</span>
+                                  <span className="capitalize font-medium text-sm">{sectionNames[section] || section}</span>
                                   {!readOnly && (
                                       <div className="flex gap-1">
                                           <Button 
@@ -1055,11 +1090,11 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
 
                   {/* Sidebar */}
                   <div className="space-y-4">
-                      <h3 className="font-semibold text-sm text-slate-700 uppercase tracking-wider">Sidebar / Other</h3>
+                      <h3 className="font-semibold text-sm text-slate-700 uppercase tracking-wider">{t.sidebarOther}</h3>
                       <div className="space-y-2 min-h-[100px] p-2 bg-slate-50 rounded-lg border border-dashed">
                           {(data.sidebarSections || DEFAULT_SIDEBAR_SECTIONS).map((section, idx, arr) => (
                               <div key={section} className="flex items-center justify-between p-3 bg-white border rounded shadow-sm">
-                                  <span className="capitalize font-medium text-sm">{section}</span>
+                                  <span className="capitalize font-medium text-sm">{sectionNames[section] || section}</span>
                                   {!readOnly && (
                                       <div className="flex gap-1">
                                            <Button 
