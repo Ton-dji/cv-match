@@ -5,7 +5,7 @@ import { anthropic } from "@/lib/claude";
 export async function POST(req: NextRequest) {
   console.log("Analysis: Request received");
   try {
-    const { masterProfile, jobDescription } = await req.json();
+    const { masterProfile, jobDescription, targetLanguage } = await req.json();
 
     if (!masterProfile || !jobDescription) {
       console.error("Analysis: Missing fields", { hasProfile: !!masterProfile, hasJD: !!jobDescription });
@@ -23,10 +23,12 @@ export async function POST(req: NextRequest) {
       Job Description:
       ${jobDescription}
 
+      Target Language: ${targetLanguage || "English"}
+
       Instructions:
       1. Calculate a match score (0-100) based on skills, experience, and keywords.
-      2. Identify CRITICAL skills or keywords from the JD that are missing or weak in the CV.
-      3. Provide a brief, actionable advice summary (max 2 sentences).
+      2. Identify CRITICAL skills or keywords from the JD that are missing or weak in the CV. Translate these skill names to the Target Language if appropriate.
+      3. Provide a brief, actionable advice summary (max 2 sentences). MUST be written in the exact Target Language specified above.
       4. Return ONLY valid JSON.
 
       Output JSON Format:
@@ -38,7 +40,7 @@ export async function POST(req: NextRequest) {
     `;
 
     const result = await anthropic.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-3-5-sonnet-20241022",
       max_tokens: 4096,
       messages: [{ role: "user", content: prompt }],
     });

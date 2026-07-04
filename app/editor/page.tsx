@@ -111,7 +111,7 @@ export default function MatchEditor() {
       const analyzeResponse = await fetch('/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ masterProfile: optimizedData, jobDescription })
+        body: JSON.stringify({ masterProfile: optimizedData, jobDescription, targetLanguage: language })
       });
       
       if (analyzeResponse.ok) {
