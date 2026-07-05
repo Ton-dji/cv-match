@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       ${JSON.stringify(masterProfile)}
       
       Job Description:
-      ${jobDescription}
+      ${jobDescription.substring(0, 15000)}
       
       Instructions:
       1. **Title**: Update the 'title' field to perfectly match or closely mirror the role/title specified in the Job Description, translated to the Target Language. This is crucial for ATS matching.

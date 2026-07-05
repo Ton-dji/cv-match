@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
       ${JSON.stringify(masterProfile)}
 
       Job Description:
-      ${jobDescription}
+      ${jobDescription.substring(0, 15000)}
 
       Target Language: ${targetLanguage || "English"}
 

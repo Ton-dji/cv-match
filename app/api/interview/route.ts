@@ -21,7 +21,7 @@ Target Language: ${language}
 ALL of your responses, questions, and feedback MUST be in the Target Language.
 
 Job Description:
-${jobDescription}
+${jobDescription.substring(0, 15000)}
 
 User's CV:
 ${JSON.stringify(optimizedCV, null, 2)}
