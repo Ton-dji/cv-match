@@ -30,7 +30,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
       width: '100%',
     },
     name: {
-      fontSize: (data.fullName?.length || 0) > 18 ? 18 : 24,
+      fontSize: fs((data.fullName?.length || 0) > 18 ? 18 : 24),
       fontWeight: 'bold', 
       color: themeColor,
       marginBottom: sp(5),

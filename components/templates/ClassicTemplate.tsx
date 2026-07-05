@@ -52,7 +52,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
         borderRadius: 50,
     },
     name: {
-      fontSize: (data.fullName?.length || 0) > 18 ? 22 : 28, // Larger
+      fontSize: fs((data.fullName?.length || 0) > 18 ? 22 : 28), // Larger
       fontFamily: fontFamily,
       fontWeight: 'bold', 
       color: '#000000',

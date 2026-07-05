@@ -458,7 +458,11 @@ export default function MatchEditor() {
                                     </div>
                                 </div>
                                 <button
-                                    onClick={() => setOptimizedCV({ ...optimizedCV, fontSizeScale: 0.85, lineSpacing: 0.85 })}
+                                    onClick={() => setOptimizedCV({ 
+                                        ...optimizedCV, 
+                                        fontSizeScale: Math.max(0.65, (optimizedCV.fontSizeScale || 1.0) - 0.05), 
+                                        lineSpacing: Math.max(0.65, (optimizedCV.lineSpacing || 1.0) - 0.05) 
+                                    })}
                                     className="w-full mt-2 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-medium py-2 rounded-lg text-sm flex items-center justify-center transition-all shadow-sm"
                                 >
                                     <Sparkles className="w-4 h-4 mr-2" />

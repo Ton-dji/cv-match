@@ -57,7 +57,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
     },
 
     name: {
-      fontSize: (data.fullName?.length || 0) > 18 ? 18 : 24,
+      fontSize: fs((data.fullName?.length || 0) > 18 ? 18 : 24),
       fontWeight: 'bold', 
       color: themeColor,
       marginBottom: sp(5),
