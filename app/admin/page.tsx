@@ -139,7 +139,7 @@ export default function AdminDashboard() {
     const csvContent = [
       headers.join(","),
       ...users.map(u => 
-        \`\${u.id},"\${u.name || ''}","\${u.email}",\${u.isPremium},\${u.freeAccess},\${u.credits},\${new Date(u.createdAt).toISOString()}\`
+        `${u.id},"${u.name || ''}","${u.email}",${u.isPremium},${u.freeAccess},${u.credits},${new Date(u.createdAt).toISOString()}`
       )
     ].join("\n");
 
@@ -147,7 +147,7 @@ export default function AdminDashboard() {
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.setAttribute("href", url);
-    link.setAttribute("download", \`cvmatch_users_\${format(new Date(), "yyyy-MM-dd")}.csv\`);
+    link.setAttribute("download", `cvmatch_users_${format(new Date(), "yyyy-MM-dd")}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
