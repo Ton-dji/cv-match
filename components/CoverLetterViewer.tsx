@@ -7,8 +7,8 @@ import { Loader2, Mail, Download, Edit3, Save } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 
 export function CoverLetterViewer() {
-  const { masterProfile, jobDescription } = useApplicationStore();
-  const { language } = useI18nStore();
+  const { optimizedCV, jobDescription } = useApplicationStore();
+  const { language, t } = useI18nStore();
   
   const [coverLetter, setCoverLetter] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
@@ -22,7 +22,7 @@ export function CoverLetterViewer() {
       const res = await fetch('/api/cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ masterProfile, jobDescription, targetLanguage: language })
+        body: JSON.stringify({ masterProfile: optimizedCV, jobDescription, targetLanguage: language })
       });
       
       if (!res.ok) {
@@ -54,12 +54,12 @@ export function CoverLetterViewer() {
     // Header
     doc.setFontSize(14);
     doc.setFont("helvetica", "bold");
-    doc.text(masterProfile?.fullName || "Cover Letter", margin, cursorY);
+    doc.text(optimizedCV?.fullName || "Cover Letter", margin, cursorY);
     cursorY += 10;
     
     doc.setFontSize(10);
     doc.setFont("helvetica", "normal");
-    const contactInfo = [masterProfile?.email, masterProfile?.phone].filter(Boolean).join(" | ");
+    const contactInfo = [optimizedCV?.email, optimizedCV?.phone].filter(Boolean).join(" | ");
     if (contactInfo) {
       doc.text(contactInfo, margin, cursorY);
       cursorY += 15;
@@ -76,7 +76,7 @@ export function CoverLetterViewer() {
         cursorY += 6; // line height
     }
     
-    doc.save(`Cover_Letter_${masterProfile?.fullName?.replace(/\s+/g, '_') || 'CV'}.pdf`);
+    doc.save(`Cover_Letter_${optimizedCV?.fullName?.replace(/\s+/g, '_') || 'CV'}.pdf`);
   };
 
   if (!jobDescription) {
@@ -96,22 +96,22 @@ export function CoverLetterViewer() {
       <div className="bg-slate-50 border-b px-4 py-3 flex items-center justify-between">
         <div className="flex items-center gap-2 text-indigo-700 font-semibold">
           <Mail className="w-5 h-5" />
-          Motivation / Cover Letter
+          {t('cover_letter_title')}
         </div>
         <div className="flex gap-2">
            {coverLetter && !isEditing && (
              <>
                 <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
-                    <Edit3 className="w-4 h-4 mr-2" /> Edit
+                    <Edit3 className="w-4 h-4 mr-2" /> {t('edit')}
                 </Button>
                 <Button variant="default" size="sm" onClick={handleDownloadPDF} className="bg-indigo-600 hover:bg-indigo-700">
-                    <Download className="w-4 h-4 mr-2" /> Download PDF
+                    <Download className="w-4 h-4 mr-2" /> {t('download_pdf')}
                 </Button>
              </>
            )}
            {coverLetter && isEditing && (
                <Button variant="default" size="sm" onClick={() => setIsEditing(false)} className="bg-green-600 hover:bg-green-700">
-                   <Save className="w-4 h-4 mr-2" /> Save Changes
+                   <Save className="w-4 h-4 mr-2" /> {t('save')}
                </Button>
            )}
         </div>
@@ -123,12 +123,12 @@ export function CoverLetterViewer() {
              <div className="w-16 h-16 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mb-4">
                 <Mail className="w-8 h-8" />
              </div>
-             <h3 className="text-lg font-bold text-slate-800 mb-2">Ready to write your Cover Letter?</h3>
+             <h3 className="text-lg font-bold text-slate-800 mb-2">{t('ready_cover_letter')}</h3>
              <p className="text-slate-500 text-sm max-w-sm mb-6">
-                Our AI will analyze your CV and the target Job Description to write a compelling, perfectly tailored cover letter.
+                {t('cover_letter_desc')}
              </p>
              <Button onClick={generateCoverLetter} size="lg" className="bg-indigo-600 hover:bg-indigo-700">
-                Generate Cover Letter Now
+                {t('generate_cover_letter')}
              </Button>
            </div>
         )}
@@ -136,8 +136,8 @@ export function CoverLetterViewer() {
         {isGenerating && (
             <div className="h-full flex flex-col items-center justify-center text-center animate-pulse">
                 <Loader2 className="w-10 h-10 text-indigo-600 animate-spin mb-4" />
-                <p className="text-indigo-800 font-medium">Writing your cover letter...</p>
-                <p className="text-indigo-500 text-sm mt-1">Analyzing Job Description & Core Skills</p>
+                <p className="text-indigo-800 font-medium">{t('writing_cover_letter')}</p>
+                <p className="text-indigo-500 text-sm mt-1">{t('analyzing_job_desc')}</p>
             </div>
         )}
 

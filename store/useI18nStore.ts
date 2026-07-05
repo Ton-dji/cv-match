@@ -119,7 +119,20 @@ const translations: Record<Language, Record<string, string>> = {
     'practice_interview': 'Practice AI Mock Interview',
     'interview_desc': 'The AI will ask you questions based on your tailored CV and the target job description.',
     'ai_typing': 'Interviewer is typing...',
-    'type_answer': 'Type your answer...'
+    'type_answer': 'Type your answer...',
+    
+    // Cover Letter & Editor Tabs
+    'cover_letter_tab': 'Cover Letter',
+    'preview_tab': 'Preview',
+    'back_to_master': 'Back to Master Profile',
+    'cover_letter_title': 'Motivation / Cover Letter',
+    'ready_cover_letter': 'Ready to write your Cover Letter?',
+    'cover_letter_desc': 'Our AI will analyze your CV and the target Job Description to write a compelling, perfectly tailored cover letter.',
+    'generate_cover_letter': 'Generate Cover Letter Now',
+    'writing_cover_letter': 'Writing your cover letter...',
+    'analyzing_job_desc': 'Analyzing Job Description & Core Skills',
+    'edit': 'Edit',
+    'save': 'Save'
   },
   es: {
     // Header & Global
@@ -231,7 +244,20 @@ const translations: Record<Language, Record<string, string>> = {
     'practice_interview': 'Practicar Entrevista Falsa con IA',
     'interview_desc': 'La IA te hará preguntas basadas en tu CV adaptado y en la descripción del trabajo objetivo.',
     'ai_typing': 'El entrevistador está escribiendo...',
-    'type_answer': 'Escribe tu respuesta...'
+    'type_answer': 'Escribe tu respuesta...',
+
+    // Cover Letter & Editor Tabs
+    'cover_letter_tab': 'Carta de Presentación',
+    'preview_tab': 'Vista Previa',
+    'back_to_master': 'Volver al Perfil',
+    'cover_letter_title': 'Motivación / Carta de Presentación',
+    'ready_cover_letter': '¿Listo para escribir tu Carta de Presentación?',
+    'cover_letter_desc': 'Nuestra IA analizará tu CV y la descripción del trabajo para escribir una carta de presentación perfecta y persuasiva.',
+    'generate_cover_letter': 'Generar Carta de Presentación',
+    'writing_cover_letter': 'Escribiendo tu carta de presentación...',
+    'analyzing_job_desc': 'Analizando Descripción del Trabajo',
+    'edit': 'Editar',
+    'save': 'Guardar'
   },
   fr: {
     // Header & Global
@@ -343,7 +369,20 @@ const translations: Record<Language, Record<string, string>> = {
     'practice_interview': 'S\'entraîner à un Entretien avec l\'IA',
     'interview_desc': 'L\'IA vous posera des questions en fonction de votre CV adapté et de la description du poste ciblé.',
     'ai_typing': 'L\'interviewer est en train d\'écrire...',
-    'type_answer': 'Tapez votre réponse...'
+    'type_answer': 'Tapez votre réponse...',
+
+    // Cover Letter & Editor Tabs
+    'cover_letter_tab': 'Lettre de Motivation',
+    'preview_tab': 'Aperçu',
+    'back_to_master': 'Retour au Profil',
+    'cover_letter_title': 'Motivation / Lettre de Motivation',
+    'ready_cover_letter': 'Prêt à écrire votre Lettre de Motivation ?',
+    'cover_letter_desc': 'Notre IA va analyser votre CV et l\'offre d\'emploi pour rédiger une lettre de motivation convaincante et parfaitement adaptée.',
+    'generate_cover_letter': 'Générer Lettre de Motivation',
+    'writing_cover_letter': 'Rédaction de votre lettre de motivation...',
+    'analyzing_job_desc': 'Analyse de l\'offre d\'emploi',
+    'edit': 'Éditer',
+    'save': 'Enregistrer'
   }
 };
 

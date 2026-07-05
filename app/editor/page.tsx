@@ -186,7 +186,7 @@ export default function MatchEditor() {
         <div className="flex items-center gap-4">
           <Link href="/">
             <Button variant="ghost" size="sm" className="text-slate-500 hover:text-slate-700">
-               <ArrowLeft className="w-4 h-4 mr-2" /> Back to Master Profile
+               <ArrowLeft className="w-4 h-4 mr-2" /> {t('back_to_master')}
             </Button>
           </Link>
           <h1 className="text-lg font-bold text-slate-900 flex items-center gap-2 border-l pl-4 border-slate-200">
@@ -302,7 +302,7 @@ export default function MatchEditor() {
                   >
                     <div className="flex items-center justify-center gap-2">
                         <Eye className="w-4 h-4" />
-                        <span className="hidden sm:inline">Preview</span>
+                        <span className="hidden sm:inline">{t('preview_tab')}</span>
                     </div>
                   </button>
                   <button 
@@ -311,7 +311,7 @@ export default function MatchEditor() {
                   >
                     <div className="flex items-center justify-center gap-2">
                         <Mail className="w-4 h-4" />
-                        <span className="hidden sm:inline">Cover Letter</span>
+                        <span className="hidden sm:inline">{t('cover_letter_tab')}</span>
                     </div>
                   </button>
                </div>
