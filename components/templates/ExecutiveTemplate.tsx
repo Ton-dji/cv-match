@@ -14,7 +14,7 @@ interface TemplateProps {
   language: string;
 }
 
-export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, language }: TemplateProps) => {
+export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: t, language }: TemplateProps) => {
     const fs = (size: number) => size * (data.fontSizeScale || 1.0);
   const sp = (space: number) => space * (data.lineSpacing || 1.0);
   
@@ -29,30 +29,29 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
     },
     sidebarBackground: {
       position: 'absolute',
-      top: -35, 
+      top: 0, 
       left: 0,
-      bottom: -35, 
-      width: '32%',
-      height: 900, // Hardcoded to cover the full A4 page height
-      backgroundColor: '#f1f5f9', // Slate-100 check if this should be dynamic? Standard Modern uses this.
+      bottom: 0, 
+      width: '100%',
+      height: 900, 
+      backgroundColor: '#ffffff', // Clean white background
       zIndex: -1,
     },
     sidebar: {
-      width: '32%', 
-      // Removed height: '100%' to allow flow
-      paddingLeft: sp(20), 
-      paddingRight: sp(15),
-      // Vertical padding moved to page
-      color: '#1e293b',
+      width: '28%', 
+      paddingLeft: 20, 
+      paddingRight: 15,
+      color: '#334155',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
+      borderRightWidth: 1,
+      borderRightColor: '#cbd5e1',
     },
     main: {
-      width: '68%',
-      // Vertical padding moved to page
-      paddingLeft: sp(20), 
-      paddingRight: sp(35),
+      width: '72%',
+      paddingLeft: 25, 
+      paddingRight: 30,
     },
 
     name: {

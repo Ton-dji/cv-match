@@ -14,60 +14,58 @@ interface TemplateProps {
   language: string;
 }
 
-export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, language }: TemplateProps) => {
+export const CreativeTemplate = ({ data, themeColor, fontFamily, translations: t, language }: TemplateProps) => {
     const fs = (size: number) => size * (data.fontSizeScale || 1.0);
   const sp = (space: number) => space * (data.lineSpacing || 1.0);
   
   const styles = StyleSheet.create({
     page: {
-      flexDirection: 'row',
-      backgroundColor: '#FFFFFF',
+      flexDirection: 'column', // Top to bottom
+      backgroundColor: '#ffffff',
       fontFamily: fontFamily,
       position: 'relative',
-      paddingTop: sp(30),
+    },
+    header: {
+      backgroundColor: themeColor,
+      padding: sp(30),
+      color: '#ffffff',
+      flexDirection: 'row',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+    },
+    contentWrapper: {
+      flexDirection: 'row',
+      paddingTop: sp(20),
       paddingBottom: sp(30),
     },
     sidebarBackground: {
-      position: 'absolute',
-      top: -35, 
-      left: 0,
-      bottom: -35, 
-      width: '32%',
-      height: 900, // Hardcoded to cover the full A4 page height
-      backgroundColor: '#f1f5f9', // Slate-100 check if this should be dynamic? Standard Modern uses this.
-      zIndex: -1,
+      display: 'none'
     },
     sidebar: {
-      width: '32%', 
-      // Removed height: '100%' to allow flow
+      width: '35%', 
       paddingLeft: sp(20), 
       paddingRight: sp(15),
-      // Vertical padding moved to page
       color: '#1e293b',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
     },
     main: {
-      width: '68%',
-      // Vertical padding moved to page
-      paddingLeft: sp(20), 
-      paddingRight: sp(35),
+      width: '65%',
+      paddingLeft: sp(15), 
+      paddingRight: sp(30),
     },
-
     name: {
-      fontSize: (data.fullName?.length || 0) > 18 ? 18 : 24,
+      fontSize: fs((data.fullName?.length || 0) > 18 ? 24 : 32),
       fontWeight: 'bold', 
-      color: themeColor,
+      color: '#ffffff',
       marginBottom: sp(5),
-      textTransform: 'uppercase', 
-      letterSpacing: 1,
+      letterSpacing: 1.5,
     },
     jobTitle: {
       fontSize: fs(14),
-      color: '#475569',
-      marginBottom: sp(20),
-      textTransform: 'uppercase',
+      color: '#f8fafc',
+      marginBottom: sp(0),
       letterSpacing: 1,
     },
     sectionTitleContainer: {
@@ -402,8 +400,13 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
 
   return (
     <Page size="A4" style={styles.page}>
-         <View style={styles.sidebarBackground} fixed />
-        <View style={styles.sidebar}>
+        <View style={styles.header}>
+            <View>
+                <Text style={styles.name}>{data.fullName}</Text>
+                <Text style={styles.jobTitle}>
+                    {data.title || data.experience?.[0]?.role || "Professional Profile"}
+                </Text>
+            </View>
             {data.picture && (
                 <View style={styles.profileImageContainer}>
                     <Image 
@@ -417,14 +420,14 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                     />
                 </View>
             )}
-            {sidebarSections.map(section => renderSection(section, true))}
         </View>
-        <View style={styles.main}>
-            <Text style={styles.name}>{data.fullName}</Text>
-            <Text style={styles.jobTitle}>
-                {data.title || data.experience?.[0]?.role || "Professional Profile"}
-            </Text>
-            {mainSections.map(section => renderSection(section, false))}
+        <View style={styles.contentWrapper}>
+            <View style={styles.sidebar}>
+                {sidebarSections.map(section => renderSection(section, true))}
+            </View>
+            <View style={styles.main}>
+                {mainSections.map(section => renderSection(section, false))}
+            </View>
         </View>
     </Page>
   );

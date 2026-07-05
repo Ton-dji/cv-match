@@ -7,6 +7,8 @@ Font.registerHyphenationCallback(word => [word]);
 import { ModernTemplate } from './templates/ModernTemplate';
 import { ClassicTemplate } from './templates/ClassicTemplate';
 import { MinimalistTemplate } from './templates/MinimalistTemplate';
+import { ExecutiveTemplate } from './templates/ExecutiveTemplate';
+import { CreativeTemplate } from './templates/CreativeTemplate';
 
 interface CVDocumentProps {
   data: MasterProfile;
@@ -66,6 +68,10 @@ export const CVDocument = ({ data, language = "English", themeName = "Modern" }:
               return <ClassicTemplate {...props} />;
           case 'Minimalist':
               return <MinimalistTemplate {...props} />;
+          case 'Executive':
+              return <ExecutiveTemplate {...props} />;
+          case 'Creative':
+              return <CreativeTemplate {...props} />;
           case 'Modern':
           default:
               return <ModernTemplate {...props} />;

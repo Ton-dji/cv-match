@@ -317,11 +317,11 @@ export default function MatchEditor() {
                             <h3 className="text-lg font-semibold flex items-center gap-2">
                                 <LayoutTemplate className="w-5 h-5 text-blue-600" /> {t('choose_template')}
                             </h3>
-                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                {['Modern', 'Classic', 'Minimalist'].map((t) => (
+                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-4">
+                                {['Modern', 'Classic', 'Minimalist', 'Executive', 'Creative'].map((t) => (
                                     <div 
                                         key={t}
-                                        onClick={() => setTheme(t as "Modern" | "Classic" | "Minimalist")}
+                                        onClick={() => setTheme(t as any)}
                                         className={`cursor-pointer border-2 rounded-xl p-4 transition-all hover:scale-105 ${currentTheme === t ? 'border-blue-600 bg-blue-50 ring-2 ring-blue-200' : 'border-slate-200 hover:border-blue-300'}`}
                                     >
                                         <div className="h-24 bg-slate-200 mb-3 rounded-md flex items-center justify-center text-slate-400 font-medium">
@@ -389,6 +389,53 @@ export default function MatchEditor() {
                                         {font.name}
                                     </button>
                                 ))}
+                            </div>
+                        </div>
+
+                        {/* Layout Controls */}
+                        <div className="space-y-4">
+                             <h3 className="text-lg font-semibold flex items-center gap-2">
+                                <LayoutTemplate className="w-5 h-5 text-purple-600" /> Layout Scale
+                            </h3>
+                            <div className="space-y-4 bg-slate-50 p-4 rounded-xl border border-slate-100">
+                                <div>
+                                    <div className="flex justify-between mb-1">
+                                        <label className="text-sm font-medium text-slate-700">Font Size ({optimizedCV.fontSizeScale || 1.0}x)</label>
+                                    </div>
+                                    <input 
+                                        type="range" 
+                                        min="0.8" max="1.3" step="0.05" 
+                                        className="w-full"
+                                        value={optimizedCV.fontSizeScale || 1.0}
+                                        onChange={(e) => {
+                                            const val = parseFloat(e.target.value);
+                                            setOptimizedCV({ ...optimizedCV, fontSizeScale: val });
+                                        }}
+                                    />
+                                    <div className="flex justify-between text-xs text-slate-400 mt-1">
+                                        <span>Small</span>
+                                        <span>Large</span>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="flex justify-between mb-1">
+                                        <label className="text-sm font-medium text-slate-700">Spacing ({optimizedCV.lineSpacing || 1.0}x)</label>
+                                    </div>
+                                    <input 
+                                        type="range" 
+                                        min="0.8" max="1.5" step="0.05" 
+                                        className="w-full"
+                                        value={optimizedCV.lineSpacing || 1.0}
+                                        onChange={(e) => {
+                                            const val = parseFloat(e.target.value);
+                                            setOptimizedCV({ ...optimizedCV, lineSpacing: val });
+                                        }}
+                                    />
+                                    <div className="flex justify-between text-xs text-slate-400 mt-1">
+                                        <span>Compact</span>
+                                        <span>Spacious</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

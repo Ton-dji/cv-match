@@ -12,15 +12,18 @@ interface TemplateProps {
 }
 
 export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations: t, language }: TemplateProps) => {
+    const fs = (size: number) => size * (data.fontSizeScale || 1.0);
+  const sp = (space: number) => space * (data.lineSpacing || 1.0);
+  
   const styles = StyleSheet.create({
     page: {
       flexDirection: 'column',
       backgroundColor: '#FFFFFF',
       fontFamily: fontFamily,
-      paddingTop: 35,
-      paddingBottom: 35,
-      paddingLeft: 35, // Balanced padding for minimalist
-      paddingRight: 35,
+      paddingTop: sp(35),
+      paddingBottom: sp(35),
+      paddingLeft: sp(35), // Balanced padding for minimalist
+      paddingRight: sp(35),
       position: 'relative', 
     },
     main: {
@@ -30,7 +33,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
       fontSize: (data.fullName?.length || 0) > 18 ? 18 : 24,
       fontWeight: 'bold', 
       color: themeColor,
-      marginBottom: 5,
+      marginBottom: sp(5),
       textTransform: 'uppercase', // Often minimalists like clean uppercase or sentence case, stick to existing
       letterSpacing: 1,
     },
@@ -43,7 +46,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
         maxHeight: 100,
         borderRadius: 50,
         alignSelf: 'center', // Or flex-start depending on minimalist layout? Center is safer for now.
-        marginBottom: 10,
+        marginBottom: sp(10),
         overflow: 'hidden',
     },
     profileImage: {
@@ -53,94 +56,94 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
         borderRadius: 50,
     },
     jobTitle: {
-      fontSize: 14,
+      fontSize: fs(14),
       color: '#666666',
-      marginBottom: 10,
+      marginBottom: sp(10),
       textTransform: 'uppercase',
       letterSpacing: 1,
     },
     contactRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
-        gap: 15,
-        marginBottom: 20,
+        gap: sp(15),
+        marginBottom: sp(20),
         borderBottomWidth: 1, // Separator
         borderBottomColor: '#eeeeee',
-        paddingBottom: 15,
+        paddingBottom: sp(15),
     },
     contactItem: {
-      fontSize: 9,
+      fontSize: fs(9),
       color: '#444444',
     },
     sectionTitle: { // Minimalist title
-      fontSize: 16, // Slightly larger
+      fontSize: fs(16), // Slightly larger
       fontWeight: 'bold', 
       color: themeColor,
       textTransform: 'uppercase',
       letterSpacing: 2,
-      marginBottom: 10,
-      marginTop: 10,
+      marginBottom: sp(10),
+      marginTop: sp(10),
     },
     experienceBlock: {
-      marginBottom: 20,
+      marginBottom: sp(20),
     },
     roleRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'flex-start',
-      marginBottom: 4,
+      marginBottom: sp(4),
     },
     roleTitle: {
-      fontSize: 12,
+      fontSize: fs(12),
       fontWeight: 'bold',
       color: '#000000',
     },
     dateText: {
-      fontSize: 10,
+      fontSize: fs(10),
       color: '#666666',
     },
     companyText: {
-      fontSize: 10,
+      fontSize: fs(10),
       color: '#333333',
       fontStyle: 'italic',
-      marginBottom: 8,
+      marginBottom: sp(8),
     },
     bulletPoint: {
         flexDirection: 'row',
-        marginBottom: 3,
-        paddingLeft: 0, 
+        marginBottom: sp(3),
+        paddingLeft: sp(0), 
     },
     bullet: {
         width: 15, 
-        fontSize: 10,
+        fontSize: fs(10),
         color: themeColor, // Use theme color for bullets
         textAlign: 'center',
     },
     bulletContent: {
-        fontSize: 10,
+        fontSize: fs(10),
         flex: 1,
         lineHeight: 1.6,
         color: '#333333',
     },
     skillTag: {
-      fontSize: 9,
-      marginRight: 10,
-      marginBottom: 6,
+      fontSize: fs(9),
+      marginRight: sp(10),
+      marginBottom: sp(6),
       color: '#333333',
       borderBottomWidth: 1, // Underline instead of box for minimalist
       borderBottomColor: '#ddd',
-      paddingBottom: 2,
+      paddingBottom: sp(2),
     },
     skillsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
     summaryText: {
-      fontSize: 10,
+      fontSize: fs(10),
       lineHeight: 1.6,
       color: '#333333',
       textAlign: 'justify',
-      marginBottom: 5,
+      marginBottom: sp(5),
     },
   });
 
@@ -209,7 +212,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                           );
                       })}
                     </View>
-                  ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666'}}>No experience entries found</Text>}
+                  ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No experience entries found</Text>}
                 </View>
               );
           case 'projects':
@@ -223,9 +226,9 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                                 <Text style={styles.roleTitle}>{proj.name}</Text>
                                 {proj.url && <Text style={styles.dateText}>{breakString(proj.url)}</Text>}
                             </View>
-                            <Text style={{fontSize: 10, lineHeight: 1.6, color: '#333'}}>{proj.description}</Text>
+                            <Text style={{fontSize: fs(10), lineHeight: 1.6, color: '#333'}}>{proj.description}</Text>
                         </View>
-                    ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666'}}>No projects listed</Text>}
+                    ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No projects listed</Text>}
                 </View>
               );
           case 'education':
@@ -245,20 +248,20 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                             {edu.school}{edu.location ? ` | ${edu.location}` : ''}
                         </Text>
                     </View>
-                  ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666'}}>No education listed</Text>}
+                  ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No education listed</Text>}
                 </View>
               );
            case 'languages':
                 return (
                   <View key="languages" style={{ marginBottom: 20 }}>
                      <Text style={styles.sectionTitle}>{t.languages}</Text>
-                     <View style={{ flexDirection: 'row', gap: 20, flexWrap: 'wrap' }}>
+                     <View style={{ flexDirection: 'row', gap: sp(20), flexWrap: 'wrap' }}>
                         {data.languages && data.languages.length > 0 ? (
                             data.languages.map((lang, i) => (
                             <View key={i}>
-                                <Text style={{ fontSize: 10, fontWeight: 'bold' }}>{lang.language}: <Text style={{fontWeight: 'normal', color: '#666'}}>{lang.proficiency}</Text></Text>
+                                <Text style={{ fontSize: fs(10), fontWeight: 'bold' }}>{lang.language}: <Text style={{fontWeight: 'normal', color: '#666'}}>{lang.proficiency}</Text></Text>
                             </View>
-                        ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666'}}>No languages listed</Text>}
+                        ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No languages listed</Text>}
                      </View>
                   </View>
                 );
@@ -270,21 +273,21 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                              {data.skills && data.skills.length > 0 ? (
                                  data.skills.map((skill, i) => (
                                  <Text key={i} style={styles.skillTag}>{skill}</Text>
-                             ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666'}}>No skills listed</Text>}
+                             ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No skills listed</Text>}
                          </View>
                      </View>
                  );
            case 'certifications':
                  return (
-                     <View key="certifications" style={{ marginBottom: 25, marginTop: 20 }}>
+                     <View key="certifications" style={{ marginBottom: sp(25), marginTop: 20 }}>
                          <Text style={styles.sectionTitle}>{t.certifications}</Text>
                          {data.certifications && data.certifications.length > 0 ? (
                              data.certifications.map((cert, i) => (
                              <View key={i} style={{ marginBottom: 6 }}>
-                                 <Text style={{ fontSize: 10, fontWeight: 'bold' }}>{cert.name}</Text>
-                                 <Text style={{ fontSize: 10, color: '#666' }}>{cert.issuer} {cert.date ? `(${cert.date})` : ''}</Text>
+                                 <Text style={{ fontSize: fs(10), fontWeight: 'bold' }}>{cert.name}</Text>
+                                 <Text style={{ fontSize: fs(10), color: '#666' }}>{cert.issuer} {cert.date ? `(${cert.date})` : ''}</Text>
                              </View>
-                         ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666'}}>No certifications</Text>}
+                         ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No certifications</Text>}
                      </View>
                  );
            case 'contact':
@@ -325,19 +328,19 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                     {data.email && <Text style={styles.contactItem}>{data.email}</Text>}
                     {data.phone && (
                         <>
-                             <Text style={{ fontSize: 9, color: '#ddd' }}>|</Text>
+                             <Text style={{ fontSize: fs(9), color: '#ddd' }}>|</Text>
                              <Text style={styles.contactItem}>{data.phone}</Text>
                         </>
                     )}
                     {data.location && (
                         <>
-                            <Text style={{ fontSize: 9, color: '#ddd' }}>|</Text>
+                            <Text style={{ fontSize: fs(9), color: '#ddd' }}>|</Text>
                             <Text style={styles.contactItem}>{data.location}</Text>
                         </>
                     )}
                     {data.socialLinks && data.socialLinks.map((link, i) => (
                          <React.Fragment key={i}>
-                            <Text style={{ fontSize: 9, color: '#ddd' }}>|</Text>
+                            <Text style={{ fontSize: fs(9), color: '#ddd' }}>|</Text>
                             <Text style={styles.contactItem}>{breakString(link.url)}</Text>
                          </React.Fragment>
                      ))}

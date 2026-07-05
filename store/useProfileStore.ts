@@ -64,7 +64,8 @@ export interface MasterProfile {
   sectionOrder?: string[]; // Deprecated, keeping for migration if needed
   themeColor?: string; // Hex code
   fontFamily?: string; // Font family name
-
+  fontSizeScale?: number; // Scaling factor for font size (e.g. 0.9 to 1.1)
+  lineSpacing?: number; // Scaling factor for margins/padding (e.g. 0.8 to 1.2)
 }
 
 interface ProfileState {
@@ -156,6 +157,10 @@ export const useProfileStore = create<ProfileState>()(
           picture: "",
           pictureZoom: 1.0,
           sectionOrder: [], 
+          themeColor: '#2563eb',
+          fontFamily: 'Helvetica',
+          fontSizeScale: 1.0,
+          lineSpacing: 1.0,
           mainSections: ['summary', 'experience', 'projects', 'education'],
           sidebarSections: ['contact', 'skills', 'languages', 'certifications'],
         }

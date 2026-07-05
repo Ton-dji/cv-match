@@ -13,22 +13,25 @@ interface TemplateProps {
 
 export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t, language }: TemplateProps) => {
   // Classic: Top-down, serif fonts usually (handled by fontFamily prop), centered header, horizontal lines
+    const fs = (size: number) => size * (data.fontSizeScale || 1.0);
+  const sp = (space: number) => space * (data.lineSpacing || 1.0);
+  
   const styles = StyleSheet.create({
     page: {
       flexDirection: 'column',
       backgroundColor: '#fdfbf7', // Warm classic paper
       fontFamily: fontFamily, // Times-Roman passed in usually
-      paddingTop: 40,
-      paddingBottom: 40,
-      paddingLeft: 40,
-      paddingRight: 40,
+      paddingTop: sp(40),
+      paddingBottom: sp(40),
+      paddingLeft: sp(40),
+      paddingRight: sp(40),
     },
     header: {
         alignItems: 'center',
-        marginBottom: 25,
+        marginBottom: sp(25),
         borderBottomWidth: 2,
         borderBottomColor: themeColor,
-        paddingBottom: 15,
+        paddingBottom: sp(15),
     },
     profileImageContainer: {
         width: 100,
@@ -39,7 +42,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
         maxHeight: 100,
         borderRadius: 50,
         alignSelf: 'center',
-        marginBottom: 10,
+        marginBottom: sp(10),
         overflow: 'hidden',
     },
     profileImage: {
@@ -53,83 +56,83 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
       fontFamily: fontFamily,
       fontWeight: 'bold', 
       color: '#000000',
-      marginBottom: 5,
+      marginBottom: sp(5),
       textTransform: 'uppercase', 
     },
     jobTitle: {
-      fontSize: 14,
+      fontSize: fs(14),
       color: themeColor,
-      marginBottom: 10,
+      marginBottom: sp(10),
       fontStyle: 'italic',
     },
     contactRow: {
         flexDirection: 'row',
         flexWrap: 'wrap',
         justifyContent: 'center',
-        gap: 15,
+        gap: sp(15),
     },
     contactItem: {
-      fontSize: 10,
+      fontSize: fs(10),
       color: '#333333',
     },
     sectionTitle: {
-        fontSize: 14,
+        fontSize: fs(14),
         fontWeight: 'bold',
         color: themeColor,
         borderBottomWidth: 1,
         borderBottomColor: '#cccccc',
-        marginBottom: 10,
-        marginTop: 10,
+        marginBottom: sp(10),
+        marginTop: sp(10),
         textTransform: 'uppercase',
         textAlign: 'center', // Classic often centers section titles
-        paddingBottom: 3,
+        paddingBottom: sp(3),
     },
     sectionContent: {
-        marginBottom: 5,
+        marginBottom: sp(5),
     },
     experienceBlock: {
-      marginBottom: 15,
+      marginBottom: sp(15),
     },
     roleRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
       alignItems: 'baseline',
-      marginBottom: 2,
+      marginBottom: sp(2),
     },
     roleTitle: {
-      fontSize: 12,
+      fontSize: fs(12),
       fontWeight: 'bold',
       color: '#000000',
     },
     dateText: {
-      fontSize: 10,
+      fontSize: fs(10),
       color: '#000000', 
     },
     companyText: {
-      fontSize: 11,
+      fontSize: fs(11),
       color: '#444444', 
       fontStyle: 'italic',
-      marginBottom: 4,
+      marginBottom: sp(4),
     },
     bulletPoint: {
         flexDirection: 'row',
-        marginBottom: 2,
-        paddingLeft: 10,
+        marginBottom: sp(2),
+        paddingLeft: sp(10),
     },
     bullet: {
         width: 15,
-        fontSize: 10,
+        fontSize: fs(10),
         color: '#000000',
     },
     bulletContent: {
-        fontSize: 11, // Classic usually slightly readable
+        fontSize: fs(11), // Classic usually slightly readable
         flex: 1,
         lineHeight: 1.4,
         color: '#000000',
     },
     skillTag: {
-        fontSize: 10,
-        marginRight: 10,
+        fontSize: fs(10),
+        marginRight: sp(10),
         color: '#000000',
     },
     skillsContainer: {
@@ -138,13 +141,13 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
         justifyContent: 'center', // Center skills in classic? Or left? Let's try centered for distinct look
     },
      summaryText: {
-      fontSize: 11,
+      fontSize: fs(11),
       lineHeight: 1.5,
       color: '#000000',
       textAlign: 'center', // Center summary
-      marginBottom: 5,
-      paddingLeft: 20,
-      paddingRight: 20,
+      marginBottom: sp(5),
+      paddingLeft: sp(20),
+      paddingRight: sp(20),
     },
   });
 
@@ -213,7 +216,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                           );
                       })}
                     </View>
-                  ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666', textAlign:'center'}}>No experience entries found</Text>}
+                  ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666', textAlign:'center'}}>No experience entries found</Text>}
                 </View>
               );
           case 'projects':
@@ -227,9 +230,9 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                                 <Text style={styles.roleTitle}>{proj.name}</Text>
                                 {proj.url && <Text style={styles.dateText}>{breakString(proj.url)}</Text>}
                             </View>
-                            <Text style={{fontSize: 11, fontStyle:'italic'}}>{proj.description}</Text>
+                            <Text style={{fontSize: fs(11), fontStyle:'italic'}}>{proj.description}</Text>
                         </View>
-                    ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666', textAlign:'center'}}>No projects listed</Text>}
+                    ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666', textAlign:'center'}}>No projects listed</Text>}
                 </View>
               );
           case 'education':
@@ -249,7 +252,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                             {edu.school}{edu.location ? ` | ${edu.location}` : ''}
                         </Text>
                     </View>
-                  ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666', textAlign:'center'}}>No education listed</Text>}
+                  ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666', textAlign:'center'}}>No education listed</Text>}
                 </View>
               );
            case 'languages':
@@ -260,33 +263,33 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                         {data.languages && data.languages.length > 0 ? (
                             data.languages.map((lang, i) => (
                             <Text key={i} style={{fontSize: 10}}>{lang.language} ({lang.proficiency})</Text>
-                        ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666'}}>No languages listed</Text>}
+                        ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No languages listed</Text>}
                      </View>
                   </View>
                 );
            case 'skills':
                  return (
-                     <View key="skills" style={[styles.sectionContent, { marginTop: 10, marginBottom: 50 }]}>
+                     <View key="skills" style={[styles.sectionContent, { marginTop: sp(10), marginBottom: 50 }]}>
                          <Text style={styles.sectionTitle}>{t.skills}</Text>
                          <View style={styles.skillsContainer}>
                              {data.skills && data.skills.length > 0 ? (
                                  data.skills.map((skill, i) => (
                                  <Text key={i} style={styles.skillTag}>{skill}{i < data.skills.length - 1 ? ' • ' : ''}</Text> 
-                             ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666'}}>No skills listed</Text>}
+                             ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No skills listed</Text>}
                          </View>
                      </View>
                  );
            case 'certifications':
                  return (
-                     <View key="certifications" style={[styles.sectionContent, { marginTop: 30, marginBottom: 15 }]}>
+                     <View key="certifications" style={[styles.sectionContent, { marginTop: sp(30), marginBottom: 15 }]}>
                          <Text style={styles.sectionTitle}>{t.certifications}</Text>
                          {data.certifications && data.certifications.length > 0 ? (
                              data.certifications.map((cert, i) => (
-                             <View key={i} style={{ marginBottom: 4, alignItems: 'center' }}>
-                                 <Text style={{ fontSize: 11, fontWeight: 'bold' }}>{cert.name}</Text>
-                                 <Text style={{ fontSize: 10, fontStyle: 'italic' }}>{cert.issuer} {cert.date ? `(${cert.date})` : ''}</Text>
+                             <View key={i} style={{ marginBottom: sp(4), alignItems: 'center' }}>
+                                 <Text style={{ fontSize: fs(11), fontWeight: 'bold' }}>{cert.name}</Text>
+                                 <Text style={{ fontSize: fs(10), fontStyle: 'italic' }}>{cert.issuer} {cert.date ? `(${cert.date})` : ''}</Text>
                              </View>
-                         ))) : <Text style={{fontSize: 10, fontStyle:'italic', color:'#666', textAlign:'center'}}>No certifications</Text>}
+                         ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666', textAlign:'center'}}>No certifications</Text>}
                      </View>
                  );
            case 'contact':
