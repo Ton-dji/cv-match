@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       2. **Professional Summary**: Write a compelling 3-4 line summary. Focus on value proposition and fit for the role. Avoid generic fluff.
       3. **Experience**:
          - Rewrite bullet points to focus on RESULTS and IMPACT (Quantitative metrics where possible).
-         - Use strong, varied action verbs.
+         - Start bullet points with a strong action noun/substantive (e.g., "Gestión", "Desarrollo", "Creación") rather than conjugated verbs (avoid past tense or 3rd person).
          - NATURALLY weave in keywords from the JD, but do not stuffing.
          - TRANSLATE strictly to the Target Language.
       3. **Skills**: Reorder and prioritize skills most relevant to the JD. Remove irrelevant filler skills.

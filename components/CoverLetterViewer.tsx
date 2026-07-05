@@ -3,14 +3,24 @@ import { useApplicationStore } from '@/store/useApplicationStore';
 import { useI18nStore } from '@/store/useI18nStore';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
-import { Loader2, Mail, Download, Edit3, Save } from 'lucide-react';
+import { Loader2, Mail, Download, Edit3, Save, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { jsPDF } from 'jspdf';
 
 export function CoverLetterViewer() {
-  const { optimizedCV, jobDescription } = useApplicationStore();
+  const { 
+    optimizedCV, 
+    jobDescription,
+    coverLetters,
+    activeCoverLetterIndex,
+    addCoverLetter,
+    setActiveCoverLetterIndex,
+    updateActiveCoverLetter
+  } = useApplicationStore();
+  
   const { language, t } = useI18nStore();
   
-  const [coverLetter, setCoverLetter] = useState('');
+  const coverLetter = coverLetters[activeCoverLetterIndex] || '';
+  
   const [isGenerating, setIsGenerating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +41,7 @@ export function CoverLetterViewer() {
       }
       
       const data = await res.json();
-      setCoverLetter(data.coverLetter || "Generated cover letter was empty.");
+      addCoverLetter(data.coverLetter || "Generated cover letter was empty.");
       setIsEditing(false);
     } catch (err: any) {
       setError(err.message || "An error occurred");
@@ -93,12 +103,44 @@ export function CoverLetterViewer() {
 
   return (
     <div className="w-full h-full flex flex-col bg-white border rounded-xl overflow-hidden shadow-sm">
-      <div className="bg-slate-50 border-b px-4 py-3 flex items-center justify-between">
+      <div className="bg-slate-50 border-b px-4 py-3 flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 text-indigo-700 font-semibold">
           <Mail className="w-5 h-5" />
           {t('cover_letter_title')}
         </div>
-        <div className="flex gap-2">
+        
+        {coverLetters.length > 0 && !isEditing && !isGenerating && (
+            <div className="flex items-center bg-white border rounded-lg px-2 py-1 shadow-sm">
+                <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-7 w-7 p-0" 
+                    disabled={activeCoverLetterIndex === 0}
+                    onClick={() => setActiveCoverLetterIndex(activeCoverLetterIndex - 1)}
+                >
+                    <ChevronLeft className="w-4 h-4" />
+                </Button>
+                <span className="text-sm font-medium text-slate-600 px-3">
+                    {activeCoverLetterIndex + 1} / {coverLetters.length}
+                </span>
+                <Button 
+                    variant="ghost" 
+                    size="sm" 
+                    className="h-7 w-7 p-0" 
+                    disabled={activeCoverLetterIndex === coverLetters.length - 1}
+                    onClick={() => setActiveCoverLetterIndex(activeCoverLetterIndex + 1)}
+                >
+                    <ChevronRight className="w-4 h-4" />
+                </Button>
+            </div>
+        )}
+
+        <div className="flex gap-2 ml-auto">
+           {coverLetters.length > 0 && !isEditing && !isGenerating && (
+             <Button variant="outline" size="sm" onClick={generateCoverLetter} className="text-indigo-600 border-indigo-200 hover:bg-indigo-50">
+                 <Plus className="w-4 h-4 mr-1.5" /> New Version
+             </Button>
+           )}
            {coverLetter && !isEditing && (
              <>
                 <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
@@ -152,7 +194,7 @@ export function CoverLetterViewer() {
                 {isEditing ? (
                     <Textarea 
                         value={coverLetter}
-                        onChange={(e) => setCoverLetter(e.target.value)}
+                        onChange={(e) => updateActiveCoverLetter(e.target.value)}
                         className="min-h-[500px] border-indigo-200 focus-visible:ring-indigo-500 resize-none text-base leading-relaxed"
                     />
                 ) : (
@@ -166,3 +208,4 @@ export function CoverLetterViewer() {
     </div>
   );
 }
+

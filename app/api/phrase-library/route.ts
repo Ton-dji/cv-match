@@ -24,7 +24,7 @@ export async function POST(req: NextRequest) {
       Instructions:
       1. Write exactly 10 bullet points.
       2. Focus on RESULTS and IMPACT. Use placeholder brackets for metrics (e.g., "[X]%").
-      3. Start each bullet point with a strong action verb.
+      3. Start each bullet point with a strong action noun/substantive (e.g., "Gestión de...", "Desarrollo de...", "Creación de...") rather than a conjugated verb in the past tense or 3rd person.
       4. Ensure natural integration of any provided ATS keywords. Do not force them awkwardly.
       5. Translate all output to the following language: ${targetLanguage || "English"}.
       6. Return ONLY valid JSON in the exact format below.

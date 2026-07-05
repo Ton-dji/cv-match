@@ -279,6 +279,7 @@ export const CreativeTemplate = ({ data, themeColor, fontFamily, translations: t
                       {exp.highlights && exp.highlights.map((highlight, hIdx) => {
                           if (!hasText(highlight)) return null;
                           const cleanHighlight = highlight.trim().replace(/^[-*•]\s+/, '');
+                          if (!cleanHighlight) return null;
                           return (
                             <View key={hIdx} style={styles.bulletPoint}>
                                 <Text style={styles.bullet}>•</Text>
