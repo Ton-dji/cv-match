@@ -114,6 +114,8 @@ const translations: Record<Language, Record<string, string>> = {
     'no_account': 'Don\'t have an account?',
     'have_account': 'Already have an account?',
     'create_pwd': 'Create a strong password',
+    'confirm_pwd': 'Confirm Password',
+    'pwd_mismatch': 'Passwords do not match',
 
     // Mock Interview
     'practice_interview': 'Practice AI Mock Interview',
@@ -246,6 +248,8 @@ const translations: Record<Language, Record<string, string>> = {
     'no_account': '¿No tienes una cuenta?',
     'have_account': '¿Ya tienes una cuenta?',
     'create_pwd': 'Crea una contraseña segura',
+    'confirm_pwd': 'Confirmar Contraseña',
+    'pwd_mismatch': 'Las contraseñas no coinciden',
 
     // Mock Interview
     'practice_interview': 'Practicar Entrevista Falsa con IA',
@@ -377,7 +381,9 @@ const translations: Record<Language, Record<string, string>> = {
     'creating_account': 'Création du compte...',
     'no_account': 'Vous n\'avez pas de compte ?',
     'have_account': 'Vous avez déjà un compte ?',
-    'create_pwd': 'Créez un mot de passe fort',
+    'create_pwd': 'Créez un mot de passe sécurisé',
+    'confirm_pwd': 'Confirmer le mot de passe',
+    'pwd_mismatch': 'Les mots de passe ne correspondent pas',
 
     // Mock Interview
     'practice_interview': 'S\'entraîner à un Entretien avec l\'IA',
