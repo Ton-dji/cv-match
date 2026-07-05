@@ -138,22 +138,22 @@ export function CoverLetterViewer() {
         <div className="flex gap-2 ml-auto">
            {coverLetters.length > 0 && !isEditing && !isGenerating && (
              <Button variant="outline" size="sm" onClick={generateCoverLetter} className="text-indigo-600 border-indigo-200 hover:bg-indigo-50">
-                 <Plus className="w-4 h-4 mr-1.5" /> New Version
+                 <Plus className="w-4 h-4 sm:mr-1.5" /> <span className="hidden sm:inline">New Version</span>
              </Button>
            )}
            {coverLetter && !isEditing && (
              <>
                 <Button variant="outline" size="sm" onClick={() => setIsEditing(true)}>
-                    <Edit3 className="w-4 h-4 mr-2" /> {t('edit')}
+                    <Edit3 className="w-4 h-4 sm:mr-2" /> <span className="hidden sm:inline">{t('edit')}</span>
                 </Button>
                 <Button variant="default" size="sm" onClick={handleDownloadPDF} className="bg-indigo-600 hover:bg-indigo-700">
-                    <Download className="w-4 h-4 mr-2" /> {t('download_pdf')}
+                    <Download className="w-4 h-4 sm:mr-2" /> <span className="hidden sm:inline">{t('download_pdf')}</span>
                 </Button>
              </>
            )}
            {coverLetter && isEditing && (
                <Button variant="default" size="sm" onClick={() => setIsEditing(false)} className="bg-green-600 hover:bg-green-700">
-                   <Save className="w-4 h-4 mr-2" /> {t('save')}
+                   <Save className="w-4 h-4 sm:mr-2" /> <span className="hidden sm:inline">{t('save')}</span>
                </Button>
            )}
         </div>

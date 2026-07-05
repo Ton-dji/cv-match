@@ -82,13 +82,13 @@ export function PhraseLibraryModal({
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-xl">
             <BookOpen className="w-5 h-5 text-indigo-600" />
-            ATS-Optimized Phrase Library
+            {t.phraseLibraryTitle || 'ATS-Optimized Phrase Library'}
           </DialogTitle>
           <DialogDescription>
-            Enter a job title to generate highly-optimized bullet points.
+            {t.phraseLibraryDesc || 'Enter a job title to generate highly-optimized bullet points.'}
             {missingSkills && missingSkills.length > 0 && (
               <span className="block mt-2 text-indigo-600 font-medium bg-indigo-50 p-2 rounded-md border border-indigo-100">
-                ✨ AI is actively injecting your missing ATS keywords: {missingSkills.join(', ')}
+                ✨ {t.aiInjectingKeywords || 'AI is actively injecting your missing ATS keywords:'} {missingSkills.join(', ')}
               </span>
             )}
           </DialogDescription>
@@ -96,14 +96,14 @@ export function PhraseLibraryModal({
 
         <div className="flex gap-2 mt-2">
           <Input 
-            placeholder="e.g. Frontend Developer, Marketing Manager..." 
+            placeholder={t.phraseLibraryPlaceholder || "e.g. Frontend Developer, Marketing Manager..."}
             value={role} 
             onChange={(e) => setRole(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && fetchPhrases()}
           />
           <Button onClick={fetchPhrases} disabled={isLoading || !role.trim()} className="bg-indigo-600 hover:bg-indigo-700">
             {isLoading ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : null}
-            Generate
+            {t.generate || 'Generate'}
           </Button>
         </div>
 
@@ -120,7 +120,10 @@ export function PhraseLibraryModal({
                 variant="outline" 
                 size="icon" 
                 className="h-8 w-8 shrink-0 rounded-full border-indigo-200 text-indigo-600 hover:bg-indigo-600 hover:text-white"
-                onClick={() => onAddPhrase(phrase)}
+                onClick={() => {
+                   onAddPhrase(phrase);
+                   setPhrases(prev => prev.filter(p => p !== phrase));
+                }}
                 title="Add to description"
               >
                 <Plus className="w-4 h-4" />
@@ -132,7 +135,7 @@ export function PhraseLibraryModal({
           ))}
           {phrases.length === 0 && !isLoading && !error && (
             <div className="text-center py-10 text-slate-400 text-sm border-2 border-dashed rounded-xl">
-              Click Generate to see tailored phrases
+              {t.clickGeneratePhrases || 'Click Generate to see tailored phrases'}
             </div>
           )}
         </div>

@@ -288,13 +288,19 @@ export default function MatchEditor() {
                     onClick={() => setActiveTab('editor')}
                     className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'editor' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
-                    {t('manual_edit')}
+                    <div className="flex items-center justify-center gap-2">
+                       <Edit3 className="w-4 h-4" />
+                       <span className="hidden sm:inline">{t('manual_edit')}</span>
+                    </div>
                   </button>
                   <button 
                     onClick={() => setActiveTab('design')}
                     className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'design' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
-                    {t('design')}
+                    <div className="flex items-center justify-center gap-2">
+                       <Palette className="w-4 h-4" />
+                       <span className="hidden sm:inline">{t('design')}</span>
+                    </div>
                   </button>
                   <button 
                     onClick={() => setActiveTab('preview')}

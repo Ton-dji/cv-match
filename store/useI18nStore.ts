@@ -132,7 +132,14 @@ const translations: Record<Language, Record<string, string>> = {
     'writing_cover_letter': 'Writing your cover letter...',
     'analyzing_job_desc': 'Analyzing Job Description & Core Skills',
     'edit': 'Edit',
-    'save': 'Save'
+    'save': 'Save',
+    
+    // Phrase Library
+    'phraseLibraryTitle': 'ATS-Optimized Phrase Library',
+    'phraseLibraryDesc': 'Enter a job title to generate highly-optimized bullet points.',
+    'phraseLibraryPlaceholder': 'e.g. Frontend Developer, Marketing Manager...',
+    'aiInjectingKeywords': 'AI is actively injecting your missing ATS keywords:',
+    'clickGeneratePhrases': 'Click Generate to see tailored phrases'
   },
   es: {
     // Header & Global
@@ -257,7 +264,14 @@ const translations: Record<Language, Record<string, string>> = {
     'writing_cover_letter': 'Escribiendo tu carta de presentación...',
     'analyzing_job_desc': 'Analizando Descripción del Trabajo',
     'edit': 'Editar',
-    'save': 'Guardar'
+    'save': 'Guardar',
+    
+    // Phrase Library
+    'phraseLibraryTitle': 'Biblioteca de Frases Optimizada para ATS',
+    'phraseLibraryDesc': 'Introduce un título de trabajo para generar viñetas altamente optimizadas.',
+    'phraseLibraryPlaceholder': 'ej. Desarrollador Frontend, Gerente de Marketing...',
+    'aiInjectingKeywords': 'La IA está inyectando activamente tus palabras clave ATS faltantes:',
+    'clickGeneratePhrases': 'Haz clic en Generar para ver frases personalizadas'
   },
   fr: {
     // Header & Global
@@ -382,7 +396,14 @@ const translations: Record<Language, Record<string, string>> = {
     'writing_cover_letter': 'Rédaction de votre lettre de motivation...',
     'analyzing_job_desc': 'Analyse de l\'offre d\'emploi',
     'edit': 'Éditer',
-    'save': 'Enregistrer'
+    'save': 'Enregistrer',
+
+    // Phrase Library
+    'phraseLibraryTitle': 'Bibliothèque de Phrases Optimisée pour ATS',
+    'phraseLibraryDesc': 'Entrez un titre de poste pour générer des points clés hautement optimisés.',
+    'phraseLibraryPlaceholder': 'ex. Développeur Frontend, Responsable Marketing...',
+    'aiInjectingKeywords': 'L\'IA injecte activement vos mots-clés ATS manquants :',
+    'clickGeneratePhrases': 'Cliquez sur Générer pour voir des phrases personnalisées'
   }
 };
 
