@@ -123,9 +123,29 @@ export default function MatchEditor() {
         body: JSON.stringify({ masterProfile: optimizedData, jobDescription, targetLanguage: targetLanguage })
       });
       
+      let finalScore = null;
       if (analyzeResponse.ok) {
         const analyzeData = await analyzeResponse.json();
         setAnalysis(analyzeData);
+        finalScore = analyzeData.score;
+      }
+
+      // 3. Save to database for history
+      try {
+        await fetch('/api/cvs', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            jobTitle: optimizedData.title || "Tailored CV",
+            company: "", // Could be extracted in the future
+            jobDescription,
+            score: finalScore,
+            language: targetLanguage,
+            content: optimizedData
+          })
+        });
+      } catch (err) {
+        console.error("Failed to save CV history:", err);
       }
 
       toast.success(t('app_title') + ": " + t('download_pdf')); // using generic success message for now

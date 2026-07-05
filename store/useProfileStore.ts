@@ -71,6 +71,8 @@ interface ProfileState {
   profile: MasterProfile;
   setProfile: (profile: Partial<MasterProfile>) => void;
   clearProfile: () => void;
+  fetchProfileFromCloud: () => Promise<void>;
+  saveProfileToCloud: () => Promise<void>;
   // ... existing actions
   setMainSections: (sections: string[]) => void;
   setSidebarSections: (sections: string[]) => void;
@@ -158,6 +160,31 @@ export const useProfileStore = create<ProfileState>()(
           sidebarSections: ['contact', 'skills', 'languages', 'certifications'],
         }
       })),
+      fetchProfileFromCloud: async () => {
+        try {
+          const res = await fetch('/api/profile');
+          if (res.ok) {
+            const data = await res.json();
+            if (data && data.fullName) {
+              set({ profile: data });
+            }
+          }
+        } catch (error) {
+          console.error("Failed to fetch profile from cloud:", error);
+        }
+      },
+      saveProfileToCloud: async () => {
+        try {
+          const { profile } = get();
+          await fetch('/api/profile', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(profile),
+          });
+        } catch (error) {
+          console.error("Failed to save profile to cloud:", error);
+        }
+      },
       setMainSections: (sections) => set((state) => ({
         profile: { ...state.profile, mainSections: sections }
       })),

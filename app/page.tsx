@@ -33,6 +33,12 @@ export default function Dashboard() {
         </div>
         <nav className="flex flex-wrap gap-2 md:gap-4 items-center justify-center mt-4 sm:mt-0">
           <LanguageSwitcher />
+          {session && (
+            <Link href="/dashboard" className={buttonVariants({ variant: "outline" })}>
+              <FileText className="w-4 h-4 mr-2" />
+              History
+            </Link>
+          )}
           <AuthButtons session={session} />
           <Link href="/editor" onClick={() => reset()} className={buttonVariants()}>
             <Sparkles className="w-4 h-4 mr-2" />
