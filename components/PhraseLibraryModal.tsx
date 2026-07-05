@@ -3,6 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Loader2, Plus, BookOpen, AlertCircle } from 'lucide-react';
+import { useI18nStore } from '@/store/useI18nStore';
 
 interface PhraseLibraryModalProps {
   isOpen: boolean;
@@ -27,6 +28,7 @@ export function PhraseLibraryModal({
   const [phrases, setPhrases] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const { t } = useI18nStore();
 
   const fetchPhrases = async () => {
     if (!role.trim()) return;

@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { CVForm } from '@/components/CVForm';
-import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type, Bot, Eye, Mail, ArrowLeft } from 'lucide-react';
+import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type, Bot, Eye, Mail, ArrowLeft, Edit3 } from 'lucide-react';
 import { AnalysisDashboard } from '@/components/AnalysisDashboard';
 import { CoverLetterViewer } from '@/components/CoverLetterViewer';
 import { toast } from 'sonner';
