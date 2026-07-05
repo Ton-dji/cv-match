@@ -20,7 +20,7 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
   
   const styles = StyleSheet.create({
     page: {
-      flexDirection: 'row',
+      flexDirection: 'column',
       backgroundColor: '#FFFFFF',
       fontFamily: fontFamily,
       position: 'relative',
@@ -38,6 +38,9 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
       zIndex: -1,
     },
     sidebar: {
+      position: 'absolute',
+      left: 0,
+      top: sp(30),
       width: '28%', 
       paddingLeft: 20, 
       paddingRight: 15,
@@ -47,8 +50,10 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
       justifyContent: 'flex-start',
       borderRightWidth: 1,
       borderRightColor: '#cbd5e1',
+      height: 800, // Extend border down
     },
     main: {
+      marginLeft: '28%',
       width: '72%',
       paddingLeft: 25, 
       paddingRight: 30,

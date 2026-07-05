@@ -34,7 +34,8 @@ export const CreativeTemplate = ({ data, themeColor, fontFamily, translations: t
       alignItems: 'center',
     },
     contentWrapper: {
-      flexDirection: 'row',
+      flexDirection: 'column',
+      position: 'relative',
       paddingTop: sp(20),
       paddingBottom: sp(30),
     },
@@ -42,6 +43,9 @@ export const CreativeTemplate = ({ data, themeColor, fontFamily, translations: t
       display: 'none'
     },
     sidebar: {
+      position: 'absolute',
+      left: 0,
+      top: sp(20), // Matches contentWrapper paddingTop
       width: '35%', 
       paddingLeft: sp(20), 
       paddingRight: sp(15),
@@ -51,6 +55,7 @@ export const CreativeTemplate = ({ data, themeColor, fontFamily, translations: t
       justifyContent: 'flex-start',
     },
     main: {
+      marginLeft: '35%',
       width: '65%',
       paddingLeft: sp(15), 
       paddingRight: sp(30),

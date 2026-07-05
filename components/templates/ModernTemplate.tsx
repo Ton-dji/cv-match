@@ -20,7 +20,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
   
   const styles = StyleSheet.create({
     page: {
-      flexDirection: 'row',
+      flexDirection: 'column',
       backgroundColor: '#FFFFFF',
       fontFamily: fontFamily,
       position: 'relative',
@@ -38,19 +38,20 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
       zIndex: -1,
     },
     sidebar: {
+      position: 'absolute',
+      left: 0,
+      top: sp(30),
       width: '32%', 
-      // Removed height: '100%' to allow flow
       paddingLeft: sp(20), 
       paddingRight: sp(15),
-      // Vertical padding moved to page
       color: '#1e293b',
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'flex-start',
     },
     main: {
+      marginLeft: '32%',
       width: '68%',
-      // Vertical padding moved to page
       paddingLeft: sp(20), 
       paddingRight: sp(35),
     },

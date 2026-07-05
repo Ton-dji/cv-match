@@ -436,6 +436,13 @@ export default function MatchEditor() {
                                         <span>Spacious</span>
                                     </div>
                                 </div>
+                                <button
+                                    onClick={() => setOptimizedCV({ ...optimizedCV, fontSizeScale: 0.85, lineSpacing: 0.85 })}
+                                    className="w-full mt-2 bg-gradient-to-r from-purple-500 to-indigo-600 hover:from-purple-600 hover:to-indigo-700 text-white font-medium py-2 rounded-lg text-sm flex items-center justify-center transition-all shadow-sm"
+                                >
+                                    <Sparkles className="w-4 h-4 mr-2" />
+                                    Magic Fit (1 Page)
+                                </button>
                             </div>
                         </div>
                     </div>
