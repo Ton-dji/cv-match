@@ -8,8 +8,9 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { CVForm } from '@/components/CVForm';
-import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type, Bot } from 'lucide-react';
+import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type, Bot, Eye, Mail } from 'lucide-react';
 import { AnalysisDashboard } from '@/components/AnalysisDashboard';
+import { CoverLetterViewer } from '@/components/CoverLetterViewer';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18nStore } from '@/store/useI18nStore';
@@ -26,7 +27,7 @@ const CVPreview = dynamic(() => import('@/components/CVPreview'), {
 });
 
 export default function MatchEditor() {
-  const [activeTab, setActiveTab] = React.useState<'editor' | 'preview' | 'design'>('preview');
+  const [activeTab, setActiveTab] = React.useState<'editor' | 'preview' | 'design' | 'cover-letter'>('preview');
   const [isScraping, setIsScraping] = React.useState(false);
   const { profile, setThemeColor, setFontFamily } = useProfileStore();
   const { t } = useI18nStore();
@@ -291,7 +292,19 @@ export default function MatchEditor() {
                     onClick={() => setActiveTab('preview')}
                     className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'preview' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
-                    {t('pdf_preview')}
+                    <div className="flex items-center justify-center gap-2">
+                        <Eye className="w-4 h-4" />
+                        <span className="hidden sm:inline">Preview</span>
+                    </div>
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('cover-letter')}
+                    className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'cover-letter' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                        <Mail className="w-4 h-4" />
+                        <span className="hidden sm:inline">Cover Letter</span>
+                    </div>
                   </button>
                </div>
              </div>
@@ -457,6 +470,14 @@ export default function MatchEditor() {
                          <CVPreview data={optimizedCV} language={targetLanguage} themeName={currentTheme} />
                        </div>
                        <div className="p-4 border-t bg-white flex justify-center gap-4">
+                       </div>
+                     </div>
+                  )}
+
+                  {activeTab === 'cover-letter' && (
+                     <div className="flex flex-col h-full">
+                       <div className="flex-1 overflow-auto p-4">
+                         <CoverLetterViewer />
                        </div>
                      </div>
                   )}

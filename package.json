@@ -23,6 +23,7 @@
     "dotenv": "^17.2.3",
     "file-saver": "^2.0.5",
     "framer-motion": "^12.42.2",
+    "jspdf": "^4.2.1",
     "lucide-react": "^0.561.0",
     "next": "14.2.15",
     "next-auth": "^4.24.14",

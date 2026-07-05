@@ -3,12 +3,13 @@
 import React from 'react';
 import { MasterProfile, Experience, Education } from '@/store/useProfileStore';
 import { useI18nStore } from '@/store/useI18nStore';
+import { useApplicationStore } from "@/store/useApplicationStore";
 import { LANGUAGES_LIST } from '@/lib/constants';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
-import { Plus, Trash2, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, LayoutTemplate, ZoomIn, Wand2, Loader2 } from 'lucide-react';
+import { Plus, Trash2, ArrowUp, ArrowDown, ArrowLeft, ArrowRight, LayoutTemplate, ZoomIn, Wand2, Loader2, BookOpen } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { InterviewChat } from './InterviewChat';
+import { PhraseLibraryModal } from './PhraseLibraryModal';
 
 const DEFAULT_MAIN_SECTIONS = ['summary', 'experience', 'projects', 'education'];
 const DEFAULT_SIDEBAR_SECTIONS = ['contact', 'skills', 'languages', 'certifications'];
@@ -40,6 +42,7 @@ const formTranslations: Record<string, Record<string, string>> = {
     startDate: "Start Date",
     endDate: "End Date",
     description: "Description",
+    enterDescription: "Describe your responsibilities...",
     education: "Education",
     addEducation: "Add Education",
     degree: "Degree / Major",
@@ -97,6 +100,7 @@ const formTranslations: Record<string, Record<string, string>> = {
     startDate: "Date de Début",
     endDate: "Date de Fin",
     description: "Description",
+    enterDescription: "Décrivez vos responsabilités...",
     education: "Formation",
     addEducation: "Ajouter une Formation",
     degree: "Diplôme",
@@ -154,6 +158,7 @@ const formTranslations: Record<string, Record<string, string>> = {
     startDate: "Fecha de Inicio",
     endDate: "Fecha de Fin",
     description: "Descripción",
+    enterDescription: "Describa sus responsabilidades...",
     education: "Educación",
     addEducation: "Añadir Educación",
     degree: "Título / Carrera",
@@ -206,6 +211,7 @@ interface CVFormProps {
 
 export function CVForm({ data, onChange, readOnly = false, language = "English", themeName }: CVFormProps) {
   const { language: uiLanguage } = useI18nStore();
+  const { jobDescription, analysis } = useApplicationStore();
   const langKey = uiLanguage === 'es' ? 'Spanish' : uiLanguage === 'fr' ? 'French' : 'English';
   const t = formTranslations[langKey];
   
@@ -219,12 +225,13 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
     languages: t.languages,
     certifications: t.certifications,
   };
+
+  const [activeExpForPhrases, setActiveExpForPhrases] = React.useState<string | null>(null);
   
   const handleInputChange = (field: keyof MasterProfile, value: string | Experience[] | Education[] | string[]) => {
     onChange({ ...data, [field]: value });
   };
 
-  // AI Suggestions State
   const [suggestions, setSuggestions] = React.useState<string[]>([]);
   const [isLoadingSuggestions, setIsLoadingSuggestions] = React.useState(false);
 
@@ -250,12 +257,10 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
   };
 
   const addSuggestion = (expId: string, text: string) => {
-      // Find the experience and append to description
       const expIndex = data.experience.findIndex(e => e.id === expId);
       if (expIndex === -1) return;
       
       const currentDesc = data.experience[expIndex].description || '';
-      // Ensure we start on a new line if there's text
       const separator = currentDesc.length > 0 && !currentDesc.endsWith('\n') ? '\n' : '';
       const newDesc = currentDesc + separator + text;
       
@@ -311,10 +316,8 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
     onChange({ ...data, education: updatedEdu });
   };
 
-  // Local state for skills text to handle comfortable typing vs external updates
   const [skillsText, setSkillsText] = React.useState(data.skills.join(', '));
 
-  // Sync local text when data.skills changes (e.g. from AI optimization)
   React.useEffect(() => {
     setSkillsText(data.skills.join(', '));
   }, [data.skills]);
@@ -330,6 +333,16 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
 
   return (
     <div className="space-y-6">
+      <PhraseLibraryModal 
+         isOpen={!!activeExpForPhrases} 
+         onClose={() => setActiveExpForPhrases(null)}
+         jobDescription={jobDescription}
+         onSelectPhrase={(text) => {
+            if (activeExpForPhrases) {
+                addSuggestion(activeExpForPhrases, text);
+            }
+         }}
+      />
       <Card>
         <CardHeader className="flex flex-wrap items-center justify-between gap-4">
           <CardTitle>{t.personalInfo}</CardTitle>
@@ -363,8 +376,6 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                      currentProfile={data}
                      onUpdateCV={(parsedData) => {
                        const newData = { ...data };
-                       
-                       // Merge simple string fields
                        if (parsedData.fullName) newData.fullName = parsedData.fullName;
                        if (parsedData.title) newData.title = parsedData.title;
                        if (parsedData.email) newData.email = parsedData.email;
@@ -373,8 +384,6 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                        if (parsedData.summary) {
                          newData.summary = newData.summary ? `${newData.summary}\n\n${parsedData.summary}` : parsedData.summary;
                        }
-                       
-                       // Merge arrays by appending and adding IDs
                        if (parsedData.experience && Array.isArray(parsedData.experience)) {
                          const newExps = parsedData.experience.map(exp => ({ ...exp, id: crypto.randomUUID() }));
                          newData.experience = [...newData.experience, ...newExps];
@@ -387,7 +396,6 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                          const combinedSkills = Array.from(new Set([...newData.skills, ...parsedData.skills]));
                          newData.skills = combinedSkills;
                        }
-                       
                        onChange(newData);
                      }}
                    />
@@ -397,11 +405,9 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
           )}
         </CardHeader>
         <CardContent className="space-y-4">
-          {/* Profile Picture Upload */}
           <div className="flex items-center gap-4 mb-4">
             <div className="h-20 w-20 rounded-full bg-slate-100 border flex items-center justify-center overflow-hidden relative">
               {data.picture ? (
-                // eslint-disable-next-line @next/next/no-img-element
                 <img src={data.picture} alt="Profile" className="h-full w-full object-cover"/>
               ) : (
                 <span className="text-slate-400 text-xs">{t.noPhoto}</span>
@@ -651,8 +657,19 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                   disabled={readOnly}
                 />
               </div>
+              <div className="flex justify-between items-center mt-2 mb-2">
+                 <label className="text-sm font-medium">{t.description}</label>
+                 <Button 
+                   variant="ghost" 
+                   size="sm" 
+                   className="h-6 text-xs text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50"
+                   onClick={() => setActiveExpForPhrases(exp.id)}
+                 >
+                   <BookOpen className="w-3 h-3 mr-1" /> Add Phrases
+                 </Button>
+              </div>
               <Textarea 
-                placeholder={t.description} 
+                placeholder={t.enterDescription} 
                 value={exp.description} 
                 onChange={(e) => updateExperienceItem(exp.id, 'description', e.target.value)}
                 className="h-24 mb-2"
@@ -1143,6 +1160,36 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
               </div>
           </CardContent>
       </Card>
+
+      <PhraseLibraryModal 
+        isOpen={activeExpForPhrases !== null}
+        onClose={() => setActiveExpForPhrases(null)}
+        defaultRole={
+            activeExpForPhrases && activeExpForPhrases !== "generic" 
+                ? data.experience.find(e => e.id === activeExpForPhrases)?.role || data.title || ""
+                : data.title || ""
+        }
+        jobDescription={jobDescription || ""}
+        missingSkills={analysis?.missingSkills || []}
+        targetLanguage={language}
+        onAddPhrase={(phrase) => {
+            if (!activeExpForPhrases) return;
+            const targetExpId = activeExpForPhrases === "generic" 
+                ? (data.experience.length > 0 ? data.experience[0].id : null) 
+                : activeExpForPhrases;
+                
+            if (!targetExpId) return;
+
+            const expIndex = data.experience.findIndex(e => e.id === targetExpId);
+            if (expIndex !== -1) {
+                const currentDesc = data.experience[expIndex].description || '';
+                const newDesc = currentDesc.trim() ? `${currentDesc}\n• ${phrase}` : `• ${phrase}`;
+                const newExperiences = [...data.experience];
+                newExperiences[expIndex] = { ...newExperiences[expIndex], description: newDesc };
+                onChange({ ...data, experience: newExperiences });
+            }
+        }}
+      />
     </div>
   );
 }
