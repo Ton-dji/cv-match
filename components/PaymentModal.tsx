@@ -5,6 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Button } from "@/components/ui/button";
 import { Loader2, Sparkles, CheckCircle2 } from "lucide-react";
 import { useI18nStore } from "@/store/useI18nStore";
+import { toast } from "sonner";
 
 interface PaymentModalProps {
   isOpen: boolean;
@@ -23,12 +24,20 @@ export function PaymentModal({ isOpen, onClose }: PaymentModalProps) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ plan: "premium" }),
       });
-      const data = await res.json();
-      if (data.url) {
+      
+      const data = await res.json().catch(() => null);
+      
+      if (!res.ok) {
+        toast.error(`Payment failed: ${data?.error || 'Unknown error'}`);
+        return;
+      }
+
+      if (data && data.url) {
         window.location.href = data.url;
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Payment failed", error);
+      toast.error(`An error occurred: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
