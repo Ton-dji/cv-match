@@ -41,14 +41,19 @@ export async function POST(req: NextRequest) {
     });
 
     const text = result.content[0].type === "text" ? result.content[0].text : "";
-    const cleanText = text.replace(/```json\n?|\n?```/g, "").trim();
+    let cleanText = text.replace(/```json\n?|\n?```/g, "").trim();
+    const jsonStart = cleanText.indexOf('{');
+    const jsonEnd = cleanText.lastIndexOf('}');
+    if (jsonStart !== -1 && jsonEnd !== -1) {
+        cleanText = cleanText.substring(jsonStart, jsonEnd + 1);
+    }
     
     let parsed;
     try {
         parsed = JSON.parse(cleanText);
     } catch (e) {
         console.error("Failed to parse cover letter JSON:", cleanText);
-        throw new Error("Failed to parse AI response");
+      throw new Error("Failed to parse AI response: The model did not return valid JSON.");
     }
 
     return NextResponse.json(parsed);

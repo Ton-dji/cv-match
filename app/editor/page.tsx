@@ -8,13 +8,14 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 import { CVForm } from '@/components/CVForm';
-import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type, Bot, Eye, Mail } from 'lucide-react';
+import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type, Bot, Eye, Mail, ArrowLeft } from 'lucide-react';
 import { AnalysisDashboard } from '@/components/AnalysisDashboard';
 import { CoverLetterViewer } from '@/components/CoverLetterViewer';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18nStore } from '@/store/useI18nStore';
 import { LanguageSwitcher } from '@/components/LanguageSwitcher';
+import Link from 'next/link';
 
 const CVDownloadButton = dynamic(() => import('@/components/CVDownloadButton'), { 
   ssr: false,
@@ -182,9 +183,16 @@ export default function MatchEditor() {
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       <header className="bg-white lg:bg-white/70 lg:backdrop-blur-md border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0">
-        <h1 className="text-lg font-bold text-slate-900 flex items-center gap-2">
-          <Sparkles className="w-5 h-5 text-indigo-600"/> {t('match_editor')}
-        </h1>
+        <div className="flex items-center gap-4">
+          <Link href="/">
+            <Button variant="ghost" size="sm" className="text-slate-500 hover:text-slate-700">
+               <ArrowLeft className="w-4 h-4 mr-2" /> Back to Master Profile
+            </Button>
+          </Link>
+          <h1 className="text-lg font-bold text-slate-900 flex items-center gap-2 border-l pl-4 border-slate-200">
+            <Sparkles className="w-5 h-5 text-indigo-600"/> {t('match_editor')}
+          </h1>
+        </div>
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
           {optimizedCV && (
@@ -275,7 +283,7 @@ export default function MatchEditor() {
              
              {/* Tabs - Sticky Bottom on Mobile, Top on Desktop */}
              <div className="fixed bottom-0 left-0 right-0 z-30 lg:static lg:mb-4 bg-white/95 lg:bg-transparent lg:backdrop-blur-md border-t lg:border-t-0 border-slate-200 p-3 lg:p-0 flex justify-center lg:justify-between items-center w-full shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] lg:shadow-none">
-               <div className="bg-slate-100/80 lg:bg-white rounded-full lg:rounded-lg p-1 border border-slate-200 inline-flex shadow-sm w-full lg:w-auto max-w-sm justify-between">
+               <div className="bg-slate-100/80 lg:bg-white rounded-full lg:rounded-lg p-1 border border-slate-200 inline-flex shadow-sm w-full lg:w-auto max-w-xl justify-between">
                   <button 
                     onClick={() => setActiveTab('editor')}
                     className={`flex-1 lg:flex-none px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'editor' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}

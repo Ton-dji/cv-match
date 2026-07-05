@@ -25,7 +25,10 @@ export function CoverLetterViewer() {
         body: JSON.stringify({ masterProfile, jobDescription, targetLanguage: language })
       });
       
-      if (!res.ok) throw new Error("Failed to generate cover letter.");
+      if (!res.ok) {
+          const errData = await res.json().catch(() => ({}));
+          throw new Error(errData.error || `Server responded with status ${res.status}`);
+      }
       
       const data = await res.json();
       setCoverLetter(data.coverLetter || "Generated cover letter was empty.");

@@ -120,7 +120,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
         paddingLeft: sp(10),
     },
     bullet: {
-        width: 15,
+        marginRight: sp(4),
         fontSize: fs(10),
         color: '#000000',
     },

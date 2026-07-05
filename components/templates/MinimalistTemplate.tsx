@@ -114,7 +114,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
         paddingLeft: sp(0), 
     },
     bullet: {
-        width: 15, 
+        marginRight: sp(4),
         fontSize: fs(10),
         color: themeColor, // Use theme color for bullets
         textAlign: 'center',

@@ -161,7 +161,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
         paddingLeft: sp(5),
     },
     bullet: {
-        width: 15,
+        marginRight: sp(4),
         fontSize: fs(10),
         color: '#1e293b',
     },
