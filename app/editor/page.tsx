@@ -11,6 +11,7 @@ import { CVForm } from '@/components/CVForm';
 import { ArrowRight, Loader2, Sparkles, Wand2, Palette, LayoutTemplate, Type, Bot, Eye, Mail, ArrowLeft, Edit3 } from 'lucide-react';
 import { AnalysisDashboard } from '@/components/AnalysisDashboard';
 import { CoverLetterViewer } from '@/components/CoverLetterViewer';
+import { PaymentModal } from '@/components/PaymentModal';
 import { toast } from 'sonner';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useI18nStore } from '@/store/useI18nStore';
@@ -29,6 +30,8 @@ const CVPreview = dynamic(() => import('@/components/CVPreview'), {
 
 export default function MatchEditor() {
   const [activeTab, setActiveTab] = React.useState<'editor' | 'preview' | 'design' | 'cover-letter'>('preview');
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isScraping, setIsScraping] = React.useState(false);
   const { profile, setThemeColor, setFontFamily } = useProfileStore();
   const { t } = useI18nStore();
@@ -113,6 +116,10 @@ export default function MatchEditor() {
 
       if (!optimizeResponse.ok) {
         const err = await optimizeResponse.json();
+        if (err.error === 'INSUFFICIENT_CREDITS') {
+          setShowPaymentModal(true);
+          return;
+        }
         throw new Error(err.error || 'Optimization failed');
       }
       const optimizedData = await optimizeResponse.json();
@@ -517,6 +524,7 @@ export default function MatchEditor() {
            </div>
         </div>
       </div>
+      <PaymentModal isOpen={showPaymentModal} onClose={() => setShowPaymentModal(false)} />
     </div>
   );
 }

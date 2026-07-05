@@ -3,7 +3,9 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
-const handler = NextAuth({
+import { AuthOptions } from "next-auth";
+
+export const authOptions: AuthOptions = {
   providers: [
     CredentialsProvider({
       name: "Credentials",
@@ -33,7 +35,15 @@ const handler = NextAuth({
           throw new Error("Invalid password");
         }
 
-        return { id: user.id, email: user.email, name: user.name };
+        return { 
+          id: user.id, 
+          email: user.email, 
+          name: user.name,
+          role: user.role,
+          isPremium: user.isPremium,
+          freeAccess: user.freeAccess,
+          credits: user.credits
+        };
       },
     }),
   ],
@@ -44,12 +54,20 @@ const handler = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.role = (user as any).role;
+        token.isPremium = (user as any).isPremium;
+        token.freeAccess = (user as any).freeAccess;
+        token.credits = (user as any).credits;
       }
       return token;
     },
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string;
+        (session.user as any).role = token.role;
+        (session.user as any).isPremium = token.isPremium;
+        (session.user as any).freeAccess = token.freeAccess;
+        (session.user as any).credits = token.credits;
       }
       return session;
     },
@@ -57,6 +75,8 @@ const handler = NextAuth({
   pages: {
     signIn: "/login",
   },
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

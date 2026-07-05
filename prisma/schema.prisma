@@ -11,14 +11,20 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  email     String   @unique
-  password  String
-  name      String?
-  createdAt DateTime @default(now())
-  updatedAt  DateTime     @updatedAt
-  profile    Profile?
-  tailoredCVs TailoredCV[]
+  id                   String       @id @default(auto()) @map("_id") @db.ObjectId
+  email                String       @unique
+  password             String
+  name                 String?
+  role                 String       @default("USER")
+  isPremium            Boolean      @default(false)
+  freeAccess           Boolean      @default(false)
+  credits              Int          @default(1)
+  stripeCustomerId     String?
+  stripeSubscriptionId String?
+  createdAt            DateTime     @default(now())
+  updatedAt            DateTime     @updatedAt
+  profile              Profile?
+  tailoredCVs          TailoredCV[]
 }
 
 model Profile {

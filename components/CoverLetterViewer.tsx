@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Loader2, Mail, Download, Edit3, Save, ChevronLeft, ChevronRight, Plus } from 'lucide-react';
 import { jsPDF } from 'jspdf';
+import { PaymentModal } from '@/components/PaymentModal';
 
 export function CoverLetterViewer() {
   const { 
@@ -24,6 +25,7 @@ export function CoverLetterViewer() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   const generateCoverLetter = async () => {
     setIsGenerating(true);
@@ -37,6 +39,10 @@ export function CoverLetterViewer() {
       
       if (!res.ok) {
           const errData = await res.json().catch(() => ({}));
+          if (errData.error === 'INSUFFICIENT_CREDITS') {
+            setShowPaymentModal(true);
+            return;
+          }
           throw new Error(errData.error || `Server responded with status ${res.status}`);
       }
       
@@ -205,6 +211,7 @@ export function CoverLetterViewer() {
             </div>
         )}
       </div>
+      <PaymentModal isOpen={showPaymentModal} onClose={() => setShowPaymentModal(false)} />
     </div>
   );
 }

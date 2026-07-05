@@ -1,11 +1,29 @@
 import { NextRequest, NextResponse } from "next/server";
 import { anthropic } from "@/lib/claude";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
+import { prisma } from "@/lib/prisma";
 
 // Set max duration for Vercel (Hobby plan limit is often 10s or 60s, Pro is 300s)
 export const maxDuration = 60; 
 
 export async function POST(req: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session || !session.user) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
+    const dbUser = await prisma.user.findUnique({ where: { id: session.user.id } });
+    if (!dbUser) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+
+    const hasAccess = dbUser.isPremium || dbUser.freeAccess || dbUser.credits > 0;
+    if (!hasAccess) {
+      return NextResponse.json({ error: "INSUFFICIENT_CREDITS" }, { status: 403 });
+    }
+
     const { masterProfile, jobDescription, targetLanguage } = await req.json();
     console.log("Optimize: Request received", { targetLanguage, hasProfile: !!masterProfile, hasJD: !!jobDescription });
 
@@ -104,7 +122,15 @@ export async function POST(req: NextRequest) {
             }
         }
 
-    return NextResponse.json(optimizedCV);
+        // Deduct 1 credit if they are on free tier
+        if (!dbUser.isPremium && !dbUser.freeAccess) {
+          await prisma.user.update({
+            where: { id: session.user.id },
+            data: { credits: Math.max(0, dbUser.credits - 1) },
+          });
+        }
+
+        return NextResponse.json(optimizedCV);
     } catch (genError: unknown) {
         console.error("Gemini Generation Error:", genError);
         const message = genError instanceof Error ? genError.message : String(genError);
