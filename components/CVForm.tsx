@@ -408,7 +408,12 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
           <div className="flex items-center gap-4 mb-4">
             <div className="h-20 w-20 rounded-full bg-slate-100 border flex items-center justify-center overflow-hidden relative">
               {data.picture ? (
-                <img src={data.picture} alt="Profile" className="h-full w-full object-cover"/>
+                <img 
+                  src={data.picture} 
+                  alt="Profile" 
+                  className="h-full w-full object-cover"
+                  style={{ transform: `scale(${data.pictureZoom || 1})` }}
+                />
               ) : (
                 <span className="text-slate-400 text-xs">{t.noPhoto}</span>
               )}

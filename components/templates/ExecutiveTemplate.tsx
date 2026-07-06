@@ -110,16 +110,14 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
      profileImageContainer: {
         width: 110,
         height: 110,
-        minWidth: 110,
-        maxWidth: 110,
-        minHeight: 110,
-        maxHeight: 110,
         borderRadius: 55,
-        alignSelf: 'center',
-        marginBottom: sp(20),
         overflow: 'hidden',
-        borderWidth: 2,
+        borderWidth: 3,
         borderColor: themeColor,
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginBottom: sp(20),
+        alignSelf: 'center',
     },
     profileImage: {
         width: '100%',
@@ -413,10 +411,10 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                 <View style={styles.profileImageContainer}>
                     <Image 
                         src={data.picture} 
-                        style={[
-                            styles.profileImage, 
-                            { transform: `scale(${data.pictureZoom || 1})` }
-                        ]} 
+                        style={[styles.profileImage, {
+                            width: `${(data.pictureZoom || 1) * 100}%`,
+                            height: `${(data.pictureZoom || 1) * 100}%`,
+                        }]} 
                         // @ts-expect-error - Image alt prop requirement conflict with PDF renderer
                         alt="Profile Picture"
                     />

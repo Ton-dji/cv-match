@@ -44,6 +44,8 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
         alignSelf: 'center',
         marginBottom: sp(10),
         overflow: 'hidden',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     profileImage: {
         width: '100%',
@@ -312,7 +314,10 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
                 <View style={styles.profileImageContainer}>
                     <Image 
                     src={data.picture} 
-                    style={styles.profileImage}
+                    style={[styles.profileImage, {
+                        width: `${(data.pictureZoom || 1) * 100}%`,
+                        height: `${(data.pictureZoom || 1) * 100}%`,
+                    }]}
                     // @ts-expect-error - Image alt prop requirement conflict with PDF renderer
                     alt="Profile Picture"
                 />

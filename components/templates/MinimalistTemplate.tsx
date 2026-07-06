@@ -40,14 +40,14 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
     profileImageContainer: {
         width: 100,
         height: 100,
-        minWidth: 100,
-        maxWidth: 100,
-        minHeight: 100,
-        maxHeight: 100,
         borderRadius: 50,
-        alignSelf: 'center', // Or flex-start depending on minimalist layout? Center is safer for now.
-        marginBottom: sp(10),
         overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: '#e2e8f0',
+        alignItems: 'center',
+        justifyContent: 'center',
+        alignSelf: 'center',
+        marginBottom: sp(10),
     },
     profileImage: {
         width: '100%',
@@ -314,7 +314,10 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                      <View style={styles.profileImageContainer}>
                          <Image 
                             src={data.picture} 
-                            style={styles.profileImage}
+                            style={[styles.profileImage, {
+                                width: `${(data.pictureZoom || 1) * 100}%`,
+                                height: `${(data.pictureZoom || 1) * 100}%`,
+                            }]}
                             // @ts-expect-error - Image alt prop requirement conflict with PDF renderer
                             alt="Profile Picture"
                         />
