@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
       ${jobDescription.substring(0, 15000)}
       
       Instructions:
-      1. **Title**: Update the 'title' field to perfectly match or closely mirror the role/title specified in the Job Description, translated to the Target Language. This is crucial for ATS matching.
+      1. **Title**: Update the 'title' field to align with the role/title specified in the Job Description, but DO NOT copy it exactly word-for-word. Make it slightly unique or modified so it doesn't look too obvious, while still remaining highly relevant for ATS. Translate to the Target Language.
       2. **Professional Summary**: Write a compelling 3-4 line summary. Focus on value proposition and fit for the role. Avoid generic fluff.
       3. **Experience**:
          - Rewrite bullet points to focus on RESULTS and IMPACT (Quantitative metrics where possible).
