@@ -85,7 +85,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
       marginTop: sp(10),
     },
     experienceBlock: {
-      marginBottom: sp(20),
+      marginBottom: sp(10),
     },
     roleRow: {
       flexDirection: 'row',
@@ -114,9 +114,9 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
         paddingLeft: sp(0), 
     },
     bullet: {
-        marginRight: sp(4),
+        width: sp(10),
         fontSize: fs(10),
-        color: themeColor, // Use theme color for bullets
+        color: themeColor,
         textAlign: 'center',
     },
     bulletContent: {

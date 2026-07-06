@@ -128,7 +128,7 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
         borderRadius: 55, // Explicitly match container
     },
      experienceBlock: {
-      marginBottom: sp(15),
+      marginBottom: sp(8),
     },
     roleRow: {
       flexDirection: 'row',
@@ -161,10 +161,10 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
     bulletPoint: {
         flexDirection: 'row',
         marginBottom: sp(2),
-        paddingLeft: sp(5),
+        paddingLeft: sp(4),
     },
     bullet: {
-        marginRight: sp(4),
+        width: sp(10),
         fontSize: fs(10),
         color: '#1e293b',
     },
@@ -197,7 +197,7 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
       marginBottom: sp(4),
     },
     mainSection: {
-      marginBottom: sp(15),
+      marginBottom: sp(10),
     },
      summaryText: {
       fontSize: fs(10),

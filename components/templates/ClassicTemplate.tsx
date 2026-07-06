@@ -91,7 +91,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
         marginBottom: sp(5),
     },
     experienceBlock: {
-      marginBottom: sp(15),
+      marginBottom: sp(10),
     },
     roleRow: {
       flexDirection: 'row',
@@ -117,10 +117,10 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
     bulletPoint: {
         flexDirection: 'row',
         marginBottom: sp(2),
-        paddingLeft: sp(10),
+        paddingLeft: sp(4),
     },
     bullet: {
-        marginRight: sp(4),
+        width: sp(10),
         fontSize: fs(10),
         color: '#000000',
     },
