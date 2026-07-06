@@ -240,7 +240,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                   {data.experience && data.experience.length > 0 ? (
                       data.experience.map((exp, i) => (
                     <View key={i} style={styles.experienceBlock}>
-                      <View style={styles.roleRow}>
+                      <View style={styles.roleRow} wrap={false}>
                         <Text style={styles.roleTitle}>{exp.role || "No Role"}</Text>
                         <Text style={styles.dateText}>
                           {exp.startDate} - {exp.endDate || (language === 'Spanish' ? 'Actualidad' : language === 'French' ? 'Présent' : 'Present')}
@@ -268,7 +268,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                           if (lines.length === 0) return null;
 
                           return lines.map((line, lIdx) => (
-                                <View key={lIdx} style={styles.bulletPoint}>
+                                <View key={lIdx} style={styles.bulletPoint} wrap={false}>
                                     <Text style={styles.bullet}>•</Text>
                                     <Text style={styles.bulletContent}>{line + (line.endsWith('.') ? '' : '.')}</Text>
                                 </View>
@@ -279,7 +279,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                           const cleanHighlight = highlight.trim().replace(/^[-*•]\s+/, '');
                           if (!cleanHighlight) return null;
                           return (
-                            <View key={hIdx} style={styles.bulletPoint}>
+                            <View key={hIdx} style={styles.bulletPoint} wrap={false}>
                                 <Text style={styles.bullet}>•</Text>
                                 <Text style={styles.bulletContent}>{cleanHighlight}</Text>
                             </View>
@@ -299,7 +299,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                     {data.projects && data.projects.length > 0 ? (
                         data.projects.map((proj, i) => (
                         <View key={i} style={styles.experienceBlock}>
-                            <View style={styles.roleRow}>
+                            <View style={styles.roleRow} wrap={false}>
                                 <Text style={styles.roleTitle}>{proj.name}</Text>
                                 {proj.url && <Text style={styles.dateText}>{breakString(proj.url)}</Text>}
                             </View>
@@ -318,7 +318,7 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                   {data.education && data.education.length > 0 ? (
                       data.education.map((edu, i) => (
                     <View key={i} style={styles.experienceBlock}>
-                        <View style={styles.roleRow}>
+                        <View style={styles.roleRow} wrap={false}>
                             <Text style={styles.roleTitle}>{edu.degree}</Text>
                             <Text style={styles.dateText}>
                                 {edu.startDate} - {edu.endDate || (language === 'Spanish' ? 'Actualidad' : language === 'French' ? 'Présent' : 'Present')}
