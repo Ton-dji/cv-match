@@ -412,8 +412,8 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                     <Image 
                         src={data.picture} 
                         style={[styles.profileImage, {
-                            width: `${(data.pictureZoom || 1) * 100}%`,
-                            height: `${(data.pictureZoom || 1) * 100}%`,
+                            width: 110 * (data.pictureZoom || 1),
+                            height: 110 * (data.pictureZoom || 1),
                         }]} 
                         // @ts-expect-error - Image alt prop requirement conflict with PDF renderer
                         alt="Profile Picture"

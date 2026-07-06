@@ -409,8 +409,8 @@ export const ModernTemplate = ({ data, themeColor, fontFamily, translations: t, 
                     <Image 
                         src={data.picture} 
                         style={[styles.profileImage, {
-                            width: `${(data.pictureZoom || 1) * 100}%`,
-                            height: `${(data.pictureZoom || 1) * 100}%`,
+                            width: 120 * (data.pictureZoom || 1),
+                            height: 120 * (data.pictureZoom || 1),
                         }]} 
                         // @ts-expect-error - Image alt prop requirement conflict with PDF renderer
                         alt="Profile Picture"
