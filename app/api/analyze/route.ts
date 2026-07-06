@@ -12,13 +12,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    const cleanProfile = { ...masterProfile };
+    delete cleanProfile.picture;
+
     console.log("Analysis: Generating content...");
     const prompt = `
       Act as an expert ATS and Recruiter.
       Analyze the "Match Score" between the provided CV and Job Description.
 
       Input CV:
-      ${JSON.stringify(masterProfile)}
+      ${JSON.stringify(cleanProfile)}
 
       Job Description:
       ${jobDescription.substring(0, 15000)}

@@ -28,12 +28,15 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
+    const cleanProfile = { ...masterProfile };
+    delete cleanProfile.picture;
+
     const prompt = `
       Act as an expert Senior Executive Assistant and Professional Cover Letter Writer.
       Write a compelling, professional, and tailored cover letter for the candidate based on their CV and the Job Description.
 
       Candidate CV:
-      ${JSON.stringify(masterProfile)}
+      ${JSON.stringify(cleanProfile)}
 
       Job Description:
       ${jobDescription.substring(0, 15000)}

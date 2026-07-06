@@ -33,6 +33,9 @@ export async function POST(req: NextRequest) {
 
     console.log("Optimizing CV for target language:", targetLanguage);
 
+    const cleanProfile = { ...masterProfile };
+    delete cleanProfile.picture;
+
     const prompt = `
       Act as an expert Senior Recruiter and Professional CV Writer.
       Your task is to rewrite the input CV to target the provided Job Description.
@@ -43,7 +46,7 @@ export async function POST(req: NextRequest) {
       Target Language: ${targetLanguage || "English"} (Translate everything to this language).
       
       Input CV:
-      ${JSON.stringify(masterProfile)}
+      ${JSON.stringify(cleanProfile)}
       
       Job Description:
       ${jobDescription.substring(0, 15000)}

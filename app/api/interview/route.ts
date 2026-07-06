@@ -14,6 +14,9 @@ export async function POST(req: NextRequest) {
 
     const language = targetLanguage || "English";
 
+    const cleanProfile = { ...optimizedCV };
+    delete cleanProfile.picture;
+
     const systemPrompt = `You are an expert Senior Hiring Manager conducting a job interview.
 Your goal is to interview the user for the role described in the Job Description, based on their provided CV.
 
@@ -24,7 +27,7 @@ Job Description:
 ${jobDescription.substring(0, 15000)}
 
 User's CV:
-${JSON.stringify(optimizedCV, null, 2)}
+${JSON.stringify(cleanProfile, null, 2)}
 
 Instructions:
 1. Act as the interviewer. Be professional, slightly challenging, but encouraging.
