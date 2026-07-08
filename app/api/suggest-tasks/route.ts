@@ -37,12 +37,32 @@ export async function POST(req: Request) {
     
     const text = result.content[0].type === "text" ? result.content[0].text : "";
     
+    let cleanText = text.trim();
+    if (cleanText.startsWith('```json')) {
+        cleanText = cleanText.substring(7);
+    } else if (cleanText.startsWith('```')) {
+        cleanText = cleanText.substring(3);
+    }
+    if (cleanText.endsWith('```')) {
+        cleanText = cleanText.substring(0, cleanText.length - 3);
+    }
+    cleanText = cleanText.trim();
+    
     try {
-        const json = JSON.parse(text);
+        const json = JSON.parse(cleanText);
         return NextResponse.json({ suggestions: json.suggestions || [] });
     } catch (parseError) {
         console.error("Failed to parse Gemini JSON:", text, parseError);
-         // Fallback manual parse if JSON fails (unlikely with json mode but safe)
+        // Try to extract suggestions using regex if JSON parse fails
+        const match = cleanText.match(/"suggestions"\s*:\s*(\[[\s\S]*?\])/);
+        if (match && match[1]) {
+            try {
+                const suggestions = JSON.parse(match[1]);
+                return NextResponse.json({ suggestions });
+            } catch (e) {
+                console.error("Regex extraction failed too", e);
+            }
+        }
         return NextResponse.json({ suggestions: [] });
     }
 
