@@ -19,7 +19,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { InterviewChat } from './InterviewChat';
-import { PhraseLibraryModal } from './PhraseLibraryModal';
 
 const DEFAULT_MAIN_SECTIONS = ['summary', 'experience', 'projects', 'education'];
 const DEFAULT_SIDEBAR_SECTIONS = ['contact', 'skills', 'languages', 'certifications'];
@@ -226,8 +225,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
     certifications: t.certifications,
   };
 
-  const [activeExpForPhrases, setActiveExpForPhrases] = React.useState<string | null>(null);
-  
+
   const handleInputChange = (field: keyof MasterProfile, value: string | Experience[] | Education[] | string[]) => {
     onChange({ ...data, [field]: value });
   };
@@ -333,16 +331,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
 
   return (
     <div className="space-y-6">
-      <PhraseLibraryModal 
-         isOpen={!!activeExpForPhrases} 
-         onClose={() => setActiveExpForPhrases(null)}
-         jobDescription={jobDescription}
-         onSelectPhrase={(text) => {
-            if (activeExpForPhrases) {
-                addSuggestion(activeExpForPhrases, text);
-            }
-         }}
-      />
+
       <Card>
         <CardHeader className="flex flex-wrap items-center justify-between gap-4">
           <CardTitle>{t.personalInfo}</CardTitle>
@@ -648,12 +637,15 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                                         suggestions.map((sug, i) => (
                                             <div 
                                                 key={i} 
-                                                className="p-3 border rounded-md hover:bg-slate-50 cursor-pointer text-sm group transition-colors"
-                                                onClick={() => addSuggestion(exp.id, sug)}
+                                                className="p-3.5 border border-indigo-100 rounded-xl hover:bg-indigo-50/50 hover:border-indigo-200 cursor-pointer text-sm group transition-all duration-200 ease-in-out shadow-sm"
+                                                onClick={() => {
+                                                    addSuggestion(exp.id, sug);
+                                                    setSuggestions(prev => prev.filter(s => s !== sug));
+                                                }}
                                             >
-                                                <div className="flex justify-between items-start gap-2">
-                                                    <span>{sug}</span>
-                                                    <Plus className="w-4 h-4 opacity-0 group-hover:opacity-100 text-green-600 shrink-0 mt-0.5" />
+                                                <div className="flex justify-between items-start gap-3">
+                                                    <span className="text-slate-700 leading-relaxed">{sug}</span>
+                                                    <Plus className="w-5 h-5 opacity-0 group-hover:opacity-100 text-indigo-600 shrink-0 transition-opacity" />
                                                 </div>
                                             </div>
                                         ))
@@ -694,14 +686,6 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
               </div>
               <div className="flex justify-between items-center mt-2 mb-2">
                  <label className="text-sm font-medium">{t.description}</label>
-                 <Button 
-                   variant="ghost" 
-                   size="sm" 
-                   className="h-6 text-xs text-indigo-600 hover:text-indigo-700 hover:bg-indigo-50"
-                   onClick={() => setActiveExpForPhrases(exp.id)}
-                 >
-                   <BookOpen className="w-3 h-3 mr-1" /> Add Phrases
-                 </Button>
               </div>
               <Textarea 
                 placeholder={t.enterDescription} 
@@ -1196,35 +1180,6 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
           </CardContent>
       </Card>
 
-      <PhraseLibraryModal 
-        isOpen={activeExpForPhrases !== null}
-        onClose={() => setActiveExpForPhrases(null)}
-        defaultRole={
-            activeExpForPhrases && activeExpForPhrases !== "generic" 
-                ? data.experience.find(e => e.id === activeExpForPhrases)?.role || data.title || ""
-                : data.title || ""
-        }
-        jobDescription={jobDescription || ""}
-        missingSkills={analysis?.missingSkills || []}
-        targetLanguage={language}
-        onAddPhrase={(phrase) => {
-            if (!activeExpForPhrases) return;
-            const targetExpId = activeExpForPhrases === "generic" 
-                ? (data.experience.length > 0 ? data.experience[0].id : null) 
-                : activeExpForPhrases;
-                
-            if (!targetExpId) return;
-
-            const expIndex = data.experience.findIndex(e => e.id === targetExpId);
-            if (expIndex !== -1) {
-                const currentDesc = data.experience[expIndex].description || '';
-                const newDesc = currentDesc.trim() ? `${currentDesc}\n• ${phrase}` : `• ${phrase}`;
-                const newExperiences = [...data.experience];
-                newExperiences[expIndex] = { ...newExperiences[expIndex], description: newDesc };
-                onChange({ ...data, experience: newExperiences });
-            }
-        }}
-      />
     </div>
   );
 }
