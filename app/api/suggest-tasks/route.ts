@@ -14,7 +14,7 @@ export async function POST(req: Request) {
 
     const prompt = `
       You are an expert resume writer and career coach.
-      Generate 10 highly specific, professional, potent, and metric-oriented bullet points for the position of "${jobTitle}".
+      Generate up to 25 highly specific, professional, potent, and metric-oriented bullet points for the position of "${jobTitle}".
       Make the suggestions highly relevant to the actual daily tasks and accomplishments of this specific role.
       CRITICAL: You MUST write the suggestions in this language: ${language || 'English'}. If the language is not English, respond entirely in that language.
       CRITICAL WRITING STYLE: Instead of using 1st-person ("I managed") or 3rd-person ("Manages"), you MUST use action nouns (substantives) or infinitives. For example, in Spanish use "Gestión de equipos..." (noun) instead of "Gestioné..." or "Gestiona...". In English use "Management of..." or "Development of...".
