@@ -208,10 +208,11 @@ interface CVFormProps {
   themeName?: string;
 }
 
-export function CVForm({ data, onChange, readOnly = false, language = "English", themeName }: CVFormProps) {
+export function CVForm({ data, onChange, readOnly = false, language, themeName }: CVFormProps) {
   const { language: uiLanguage } = useI18nStore();
   const { jobDescription, analysis } = useApplicationStore();
   const langKey = uiLanguage === 'es' ? 'Spanish' : uiLanguage === 'fr' ? 'French' : 'English';
+  const effectiveLanguage = language || langKey;
   const t = formTranslations[langKey];
   
   const sectionNames: Record<string, string> = {
@@ -241,7 +242,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
     try {
       const res = await fetch('/api/suggest-tasks', {
         method: 'POST',
-        body: JSON.stringify({ jobTitle, language: language }),
+        body: JSON.stringify({ jobTitle, language: effectiveLanguage }),
       });
       const json = await res.json();
       if (json.suggestions) {
