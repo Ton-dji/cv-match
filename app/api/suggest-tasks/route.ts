@@ -13,20 +13,21 @@ export async function POST(req: Request) {
     }
 
     const prompt = `
-      You are an expert resume writer.
-      Generate 6-8 professional, potent, and metric-oriented bullet points for a "${jobTitle}".
-      Language: ${language || 'English'}.
+      You are an expert resume writer and career coach.
+      Generate 10 highly specific, professional, potent, and metric-oriented bullet points for the position of "${jobTitle}".
+      Make the suggestions highly relevant to the actual daily tasks and accomplishments of this specific role.
+      CRITICAL: You MUST write the suggestions in this language: ${language || 'English'}. If the language is not English, respond entirely in that language.
       
       Format the output as a JSON object with a key "suggestions" containing an array of strings.
       Example:
       {
         "suggestions": [
-          "Managed a team of X developed...",
-          "Increased revenue by Y% through..."
+          "...",
+          "..."
         ]
       }
       
-      Ensure the tone is active, professional, and suitable for a CV.
+      Ensure the tone is active, professional, and suitable for a modern CV.
     `;
 
     const result = await anthropic.messages.create({

@@ -556,7 +556,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
           {data.experience.map((exp) => (
             <div key={exp.id} className="p-4 border rounded-md space-y-3 relative bg-slate-50/50">
               {!readOnly && (
-                <div className="absolute top-2 right-2 flex items-center gap-1">
+                <div className="flex justify-end items-center gap-1 mb-2">
                     <Button 
                       variant="ghost" 
                       size="icon" 
@@ -571,7 +571,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                         }
                       }}
                     >
-                      ↑
+                      <ArrowUp className="w-4 h-4" />
                     </Button>
                     <Button 
                       variant="ghost" 
@@ -587,7 +587,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                         }
                       }}
                     >
-                      ↓
+                      <ArrowDown className="w-4 h-4" />
                     </Button>
                     <Button 
                       variant="ghost" 
@@ -599,7 +599,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                     </Button>
                 </div>
               )}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="relative">
                     <Input 
                       placeholder={t.jobTitle} 
@@ -761,7 +761,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
           {data.education.map((edu) => (
             <div key={edu.id} className="p-4 border rounded-md space-y-3 relative bg-slate-50/50">
               {!readOnly && (
-                <div className="absolute top-2 right-2 flex items-center gap-1">
+                <div className="flex justify-end items-center gap-1 mb-2">
                     <Button 
                       variant="ghost" 
                       size="icon" 
@@ -776,7 +776,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                         }
                       }}
                     >
-                      ↑
+                      <ArrowUp className="w-4 h-4" />
                     </Button>
                     <Button 
                       variant="ghost" 
@@ -792,7 +792,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                          }
                       }}
                     >
-                      ↓
+                      <ArrowDown className="w-4 h-4" />
                     </Button>
                     <Button 
                       variant="ghost" 
@@ -804,7 +804,7 @@ export function CVForm({ data, onChange, readOnly = false, language = "English",
                     </Button>
                 </div>
               )}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pr-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <Input 
                   placeholder={t.degree} 
                   value={edu.degree} 
