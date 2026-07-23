@@ -59,13 +59,20 @@ export async function POST(req: NextRequest) {
          - Start bullet points with a strong action noun/substantive (e.g., "Gestión", "Desarrollo", "Creación") rather than conjugated verbs (avoid past tense or 3rd person).
          - NATURALLY weave in keywords from the JD, but do not stuffing.
          - TRANSLATE strictly to the Target Language.
-      3. **Skills**: Reorder and prioritize skills most relevant to the JD. Remove irrelevant filler skills.
-      4. **Languages**: Keep all. Translate proficiency levels.
-      5. **Education**: Keep all. Translate degrees/majors.
-      6. **Certifications**: Keep relevant ones.
-      7. **Projects**: Rewrite to highlight technical challenges solved and technologies used.
-      8. **Formatting**: Ensure the output is valid JSON matching the exact MasterProfile schema.
-      9. **Translation**: Ensure high-quality native-level translation for '${targetLanguage}'.
+      4. **Skills**: Reorder and prioritize skills most relevant to the JD. Remove irrelevant filler skills.
+      5. **Languages**: Keep all. Translate proficiency levels.
+      6. **Education**: Keep all. Translate degrees/majors.
+      7. **Certifications**: Keep relevant ones.
+      8. **Projects**: Rewrite to highlight technical challenges solved and technologies used.
+      9. **Formatting**: Ensure the output is valid JSON matching the exact MasterProfile schema.
+      10. **Translation**: Ensure high-quality native-level translation for '${targetLanguage}'.
+
+      CRITICAL INSTRUCTIONS FOR AUTHENTICITY:
+      - DO NOT make the CV a 100% perfect match for the Job Description. Real human CVs are rarely perfect matches.
+      - Retain some of the original phrasing and experiences that might not perfectly align with the JD to maintain an authentic, human-written feel.
+      - DO NOT force keywords into every single bullet point.
+      - Keep the tone grounded. Avoid over-embellishing achievements or using overly complex corporate jargon.
+      - Ensure it reads like it was written by a highly capable human professional, not an AI trying to please an ATS algorithm.
 
       Output JSON Format:
       {

@@ -159,6 +159,11 @@ export default function MatchEditor() {
 
       toast.success(t('app_title') + ": " + t('download_pdf')); // using generic success message for now
       setActiveTab('preview'); // Automatically switch to preview
+      
+      // Auto-scroll to the preview panel on mobile so the user sees the generated CV
+      setTimeout(() => {
+        document.getElementById('preview-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     } catch (error: unknown) {
       console.error(error);
       const message = error instanceof Error ? error.message : 'Unknown error';
@@ -214,8 +219,8 @@ export default function MatchEditor() {
       </header>
       <div className="flex-1 flex flex-col lg:flex-row lg:h-[calc(100vh-60px)] lg:overflow-hidden h-auto">
         
-        {/* Job Details Panel (Now on Right / Bottom) */}
-        <div className="w-full lg:w-1/2 overflow-y-auto p-4 lg:p-6 lg:h-full bg-white relative pb-24 lg:pb-6 z-10 lg:z-auto order-2 lg:order-2 shadow-[0_-10px_15px_-3px_rgb(0,0,0,0.1)] lg:shadow-none">
+        {/* Job Details Panel (Now Top on mobile / Right on desktop) */}
+        <div className="w-full lg:w-1/2 overflow-y-auto p-4 lg:p-6 lg:h-full bg-white relative pb-24 lg:pb-6 z-10 lg:z-auto order-1 lg:order-2 shadow-[0_-10px_15px_-3px_rgb(0,0,0,0.1)] lg:shadow-none">
           <div className="space-y-6 max-w-xl mx-auto">
             
             <Card className="border-blue-100 shadow-md">
@@ -284,8 +289,8 @@ export default function MatchEditor() {
           </div>
         </div>
 
-        {/* Preview/Edit Panel (Now on Left / Top) */}
-        <div className="order-1 lg:order-1 bg-slate-100 p-4 lg:p-6 lg:overflow-y-auto h-auto lg:h-full lg:w-1/2 w-full pb-20 flex flex-col">
+        {/* Preview/Edit Panel (Now Bottom on mobile / Left on desktop) */}
+        <div id="preview-panel" className="order-2 lg:order-1 bg-slate-100 p-4 lg:p-6 lg:overflow-y-auto h-auto lg:h-full lg:w-1/2 w-full pb-20 flex flex-col">
            <div className="max-w-3xl mx-auto w-full h-full flex flex-col min-h-[800px] lg:min-h-0">
              
              {/* Tabs - Sticky Bottom on Mobile, Top on Desktop */}
