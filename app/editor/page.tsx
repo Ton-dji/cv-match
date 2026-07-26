@@ -496,7 +496,7 @@ export default function MatchEditor() {
                        <div className="px-4">
                          <AnalysisDashboard />
                        </div>
-                       <div className="flex-1 overflow-auto min-h-[800px] lg:min-h-0">
+                       <div className="flex-1 overflow-auto min-h-[800px]">
                          <CVPreview data={optimizedCV} language={targetLanguage} themeName={currentTheme} />
                        </div>
                        <div className="p-4 border-t bg-white flex justify-center gap-4">
