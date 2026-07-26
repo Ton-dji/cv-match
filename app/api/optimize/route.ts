@@ -105,6 +105,7 @@ export async function POST(req: NextRequest) {
       Do not wrap it in markdown block quotes.
       Do not include any conversational text like "Here is the JSON" before or after the JSON.
       Your response MUST begin exactly with { and end exactly with }.
+      CRITICAL: Output the JSON completely MINIFIED. Do NOT use any line breaks, spaces, or indentation in the JSON. This is to prevent the output from being truncated due to token limits.
     `;
 
     try {
