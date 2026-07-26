@@ -39,7 +39,7 @@ Instructions:
 7. NEVER break character. ALWAYS speak in the exact Target Language specified.`;
 
     const response = await anthropic.messages.create({
-      model: "claude-sonnet-5",
+      model: "claude-3-5-sonnet-latest",
       max_tokens: 1000,
       temperature: 0.7,
       system: systemPrompt,
