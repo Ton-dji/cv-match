@@ -493,7 +493,7 @@ export default function MatchEditor() {
 
                   {activeTab === 'preview' && (
                      <div className="flex flex-col h-full">
-                       <div className="px-4">
+                       <div className="px-4 mb-6">
                          <AnalysisDashboard />
                        </div>
                        <div className="flex-1 overflow-auto min-h-[800px]">
