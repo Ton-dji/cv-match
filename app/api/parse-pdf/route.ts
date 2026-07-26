@@ -45,7 +45,7 @@ export async function POST(req: NextRequest) {
 
     console.log("PDF Import: Sending to Claude...");
     const result = await anthropic.messages.create({
-      model: "claude-3-5-sonnet-20241022",
+      model: "claude-3-5-sonnet-20240620",
       max_tokens: 4096,
       messages: [{ role: "user", content: prompt }]
     });
