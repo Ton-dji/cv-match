@@ -43,9 +43,9 @@ export async function POST(req: NextRequest) {
 
       IMPORTANT STRICT INSTRUCTION:
       You must return ONLY the raw, valid JSON object.
-      Do not wrap it in markdown block quotes (\`\`\`json).
+      Do not wrap it in markdown block quotes.
       Do not include any conversational text like "Here is the JSON" before or after the JSON.
-      Your response MUST begin exactly with `{` and end exactly with `}`.
+      Your response MUST begin exactly with { and end exactly with }.
     `;
 
     const result = await anthropic.messages.create({
