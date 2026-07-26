@@ -59,7 +59,18 @@ export async function POST(req: NextRequest) {
     
     // Clean and parse
     const cleanText = text.replace(/```json\n?|\n?```/g, "").trim();
-    const analysis = JSON.parse(cleanText);
+    let analysis;
+    if (cleanText.startsWith("{")) {
+        try {
+            analysis = JSON.parse(cleanText.replace(/,\s*([}\]])/g, '$1'));
+        } catch (innerError) {
+             console.error("Secondary JSON Parse Error on substring:", innerError);
+             const snippet = cleanText.substring(0, 100) + "...(length: " + cleanText.length + ")";
+             throw new Error(`Failed to parse AI response as JSON. Parse Error: ${(innerError as Error).message}. Snippet: ${snippet}`);
+        }
+    } else {
+         throw new Error(`No JSON object found. API Result: ${JSON.stringify(result)}`);
+    }
 
     return NextResponse.json(analysis);
 

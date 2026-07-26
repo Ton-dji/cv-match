@@ -141,8 +141,7 @@ export async function POST(req: NextRequest) {
                      throw new Error(`Failed to parse AI response as JSON. Parse Error: ${(innerError as Error).message}. Snippet: ${snippet}`);
                 }
             } else {
-                 const snippet = responseText.substring(0, 100) + "...";
-                 throw new Error(`No JSON object found in AI response. Snippet: ${snippet}`);
+                 throw new Error(`No JSON object found. API Result: ${JSON.stringify(result).substring(0, 300)}`);
             }
         }
 
