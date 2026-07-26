@@ -142,7 +142,8 @@ export async function POST(req: NextRequest) {
                      throw new Error(`Failed to parse AI response as JSON. Parse Error: ${(innerError as Error).message}. Snippet: ${snippet}`);
                 }
             } else {
-                 throw new Error(`No JSON object found. API Result: ${JSON.stringify(result).substring(0, 300)}`);
+                 const blockTypes = result.content.map((c: any) => ({ type: c.type, keys: Object.keys(c) }));
+                 throw new Error(`No JSON object found. Stop Reason: ${result.stop_reason}. Blocks: ${JSON.stringify(blockTypes)}`);
             }
         }
 
