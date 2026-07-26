@@ -40,7 +40,7 @@ ${transcript}
 `;
 
     const response = await anthropic.messages.create({
-      model: "claude-haiku-4-5-20251001",
+      model: "claude-sonnet-5",
       max_tokens: 2000,
       temperature: 0.2,
       messages: [
