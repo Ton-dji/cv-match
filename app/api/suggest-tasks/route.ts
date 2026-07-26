@@ -32,13 +32,12 @@ export async function POST(req: Request) {
     `;
 
     const result = await anthropic.messages.create({
-      model: "claude-sonnet-5",
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 4096,
       messages: [{ role: "user", content: prompt }]
     });
     
-    const textBlock = result.content.find((c: any) => c.type === "text");
-    const text = textBlock ? textBlock.text : "";
+    const text = result.content[0].type === "text" ? result.content[0].text : "";
     
     let cleanText = text.trim();
     if (cleanText.startsWith('```json')) {

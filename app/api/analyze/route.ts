@@ -40,39 +40,20 @@ export async function POST(req: NextRequest) {
         "missingSkills": string[], // e.g. ["Typescript", "AWS"]
         "advice": "..." // e.g. "Add more details about your cloud experience."
       }
-
-      IMPORTANT STRICT INSTRUCTION:
-      You must return ONLY the raw, valid JSON object.
-      Do not wrap it in markdown block quotes.
-      Do not include any conversational text like "Here is the JSON" before or after the JSON.
-      Your response MUST begin exactly with { and end exactly with }.
     `;
 
     const result = await anthropic.messages.create({
-      model: "claude-sonnet-5",
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 4096,
       messages: [{ role: "user", content: prompt }],
     });
     
-    const textBlock = result.content.find((c: any) => c.type === "text");
-    const text = textBlock ? textBlock.text : "";
+    const text = result.content[0].type === "text" ? result.content[0].text : "";
     console.log("Analysis: Claude response", text.substring(0, 100) + "...");
     
     // Clean and parse
     const cleanText = text.replace(/```json\n?|\n?```/g, "").trim();
-    let analysis;
-    if (cleanText.startsWith("{")) {
-        try {
-            analysis = JSON.parse(cleanText.replace(/,\s*([}\]])/g, '$1'));
-        } catch (innerError) {
-             console.error("Secondary JSON Parse Error on substring:", innerError);
-             const snippet = cleanText.substring(0, 100) + "...(length: " + cleanText.length + ")";
-             throw new Error(`Failed to parse AI response as JSON. Parse Error: ${(innerError as Error).message}. Snippet: ${snippet}`);
-        }
-    } else {
-         const blockTypes = result.content.map((c: any) => ({ type: c.type, keys: Object.keys(c) }));
-         throw new Error(`No JSON object found. Stop Reason: ${result.stop_reason}. Blocks: ${JSON.stringify(blockTypes)}`);
-    }
+    const analysis = JSON.parse(cleanText);
 
     return NextResponse.json(analysis);
 

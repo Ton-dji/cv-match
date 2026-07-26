@@ -99,23 +99,15 @@ export async function POST(req: NextRequest) {
         "projects": [ { "name": "...", "description": "...", "url": "..." } ],
         "socialLinks": [ { "platform": "...", "url": "..." } ]
       }
-
-      IMPORTANT STRICT INSTRUCTION:
-      You must return ONLY the raw, valid JSON object.
-      Do not wrap it in markdown block quotes.
-      Do not include any conversational text like "Here is the JSON" before or after the JSON.
-      Your response MUST begin exactly with { and end exactly with }.
-      CRITICAL: Output the JSON completely MINIFIED. Do NOT use any line breaks, spaces, or indentation in the JSON. This is to prevent the output from being truncated due to token limits.
     `;
 
     try {
         const result = await anthropic.messages.create({
-          model: "claude-sonnet-5",
+          model: "claude-haiku-4-5-20251001",
           max_tokens: 4096,
           messages: [{ role: "user", content: prompt }]
         });
-        const textBlock = result.content.find((c: any) => c.type === "text");
-        const responseText = textBlock ? textBlock.text : "";
+        const responseText = result.content[0].type === "text" ? result.content[0].text : "";
         console.log("Claude Raw Response:", responseText); // Debug log
 
         let optimizedCV;
@@ -129,22 +121,14 @@ export async function POST(req: NextRequest) {
             
             if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
                 const cleanText = responseText.substring(firstBrace, lastBrace + 1);
-                let noTrailingCommas = cleanText.replace(/,\s*([}\]])/g, '$1');
-                // Also remove potential unescaped newlines within strings (naive fix)
-                noTrailingCommas = noTrailingCommas.replace(/\n/g, "\\n");
-                
                 try {
-                    // One more cleanup: we need to handle the case where we escaped all newlines, including outside strings, which is fine for JSON.parse
-                    // Actually, replacing \n with \\n globally might break actual newlines. Let's just stick to trailing commas.
-                    optimizedCV = JSON.parse(cleanText.replace(/,\s*([}\]])/g, '$1'));
+                    optimizedCV = JSON.parse(cleanText);
                 } catch (innerError) {
                      console.error("Secondary JSON Parse Error on substring:", innerError);
-                     const snippet = cleanText.substring(0, 100) + "...(length: " + cleanText.length + ")";
-                     throw new Error(`Failed to parse AI response as JSON. Parse Error: ${(innerError as Error).message}. Snippet: ${snippet}`);
+                     throw new Error("Failed to parse AI response as JSON even after cleaning.");
                 }
             } else {
-                 const blockTypes = result.content.map((c: any) => ({ type: c.type, keys: Object.keys(c) }));
-                 throw new Error(`No JSON object found. Stop Reason: ${result.stop_reason}. Blocks: ${JSON.stringify(blockTypes)}`);
+                 throw new Error("No JSON object found in AI response.");
             }
         }
 

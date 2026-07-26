@@ -493,10 +493,10 @@ export default function MatchEditor() {
 
                   {activeTab === 'preview' && (
                      <div className="flex flex-col h-full">
-                       <div className="px-4 mb-6">
+                       <div className="px-4">
                          <AnalysisDashboard />
                        </div>
-                       <div className="flex-1 overflow-auto min-h-[800px]">
+                       <div className="flex-1 overflow-auto min-h-[800px] lg:min-h-0">
                          <CVPreview data={optimizedCV} language={targetLanguage} themeName={currentTheme} />
                        </div>
                        <div className="p-4 border-t bg-white flex justify-center gap-4">

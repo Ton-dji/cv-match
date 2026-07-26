@@ -40,7 +40,7 @@ ${transcript}
 `;
 
     const response = await anthropic.messages.create({
-      model: "claude-sonnet-5",
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 2000,
       temperature: 0.2,
       messages: [
@@ -51,10 +51,11 @@ ${transcript}
       ],
     });
 
-    const responseText = response.content.find((c: any) => c.type === "text")?.text || "";
+    const content =
+      response.content[0].type === "text" ? response.content[0].text : "";
     
     // Clean up potential markdown formatting just in case
-    let jsonString = responseText.trim();
+    let jsonString = content.trim();
     // Use regex to strip out ```json and ``` regardless of newlines
     jsonString = jsonString.replace(/^```(json)?\s*/i, '').replace(/\s*```$/i, '').trim();
 
@@ -62,7 +63,7 @@ ${transcript}
       const parsedData = JSON.parse(jsonString);
       return NextResponse.json({ data: parsedData });
     } catch (parseError) {
-      console.error("Error parsing Claude response as JSON:", responseText);
+      console.error("Error parsing Claude response as JSON:", content);
       return NextResponse.json(
         { error: "Failed to parse AI response into JSON" },
         { status: 500 }

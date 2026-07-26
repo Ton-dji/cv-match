@@ -45,13 +45,12 @@ export async function POST(req: NextRequest) {
 
     console.log("PDF Import: Sending to Claude...");
     const result = await anthropic.messages.create({
-      model: "claude-sonnet-5",
+      model: "claude-haiku-4-5-20251001",
       max_tokens: 4096,
       messages: [{ role: "user", content: prompt }]
     });
     
-    const textBlock = result.content.find((c: any) => c.type === "text");
-    const responseText = textBlock ? textBlock.text : "";
+    const responseText = result.content[0].type === "text" ? result.content[0].text : "";
     console.log("PDF Import: Claude response received");
     
     const cleanText = responseText.replace(/```json\n?|\n?```/g, "").trim();
