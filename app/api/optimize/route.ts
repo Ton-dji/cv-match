@@ -127,14 +127,22 @@ export async function POST(req: NextRequest) {
             
             if (firstBrace !== -1 && lastBrace !== -1 && lastBrace > firstBrace) {
                 const cleanText = responseText.substring(firstBrace, lastBrace + 1);
+                let noTrailingCommas = cleanText.replace(/,\s*([}\]])/g, '$1');
+                // Also remove potential unescaped newlines within strings (naive fix)
+                noTrailingCommas = noTrailingCommas.replace(/\n/g, "\\n");
+                
                 try {
-                    optimizedCV = JSON.parse(cleanText);
+                    // One more cleanup: we need to handle the case where we escaped all newlines, including outside strings, which is fine for JSON.parse
+                    // Actually, replacing \n with \\n globally might break actual newlines. Let's just stick to trailing commas.
+                    optimizedCV = JSON.parse(cleanText.replace(/,\s*([}\]])/g, '$1'));
                 } catch (innerError) {
                      console.error("Secondary JSON Parse Error on substring:", innerError);
-                     throw new Error("Failed to parse AI response as JSON even after cleaning.");
+                     const snippet = cleanText.substring(0, 100) + "...(length: " + cleanText.length + ")";
+                     throw new Error(`Failed to parse AI response as JSON. Parse Error: ${(innerError as Error).message}. Snippet: ${snippet}`);
                 }
             } else {
-                 throw new Error("No JSON object found in AI response.");
+                 const snippet = responseText.substring(0, 100) + "...";
+                 throw new Error(`No JSON object found in AI response. Snippet: ${snippet}`);
             }
         }
 
