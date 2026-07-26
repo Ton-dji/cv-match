@@ -99,11 +99,17 @@ export async function POST(req: NextRequest) {
         "projects": [ { "name": "...", "description": "...", "url": "..." } ],
         "socialLinks": [ { "platform": "...", "url": "..." } ]
       }
+
+      IMPORTANT STRICT INSTRUCTION:
+      You must return ONLY the raw, valid JSON object.
+      Do not wrap it in markdown block quotes (\`\`\`json).
+      Do not include any conversational text like "Here is the JSON" before or after the JSON.
+      Your response MUST begin exactly with `{` and end exactly with `}`.
     `;
 
     try {
         const result = await anthropic.messages.create({
-          model: "claude-3-5-sonnet-20240620",
+          model: "claude-sonnet-5",
           max_tokens: 4096,
           messages: [{ role: "user", content: prompt }]
         });
