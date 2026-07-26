@@ -37,7 +37,8 @@ export async function POST(req: Request) {
       messages: [{ role: "user", content: prompt }]
     });
     
-    const text = result.content[0].type === "text" ? result.content[0].text : "";
+    const textBlock = result.content.find((c: any) => c.type === "text");
+    const text = textBlock ? textBlock.text : "";
     
     let cleanText = text.trim();
     if (cleanText.startsWith('```json')) {

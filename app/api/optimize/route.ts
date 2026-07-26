@@ -113,7 +113,8 @@ export async function POST(req: NextRequest) {
           max_tokens: 4096,
           messages: [{ role: "user", content: prompt }]
         });
-        const responseText = result.content[0].type === "text" ? result.content[0].text : "";
+        const textBlock = result.content.find((c: any) => c.type === "text");
+        const responseText = textBlock ? textBlock.text : "";
         console.log("Claude Raw Response:", responseText); // Debug log
 
         let optimizedCV;

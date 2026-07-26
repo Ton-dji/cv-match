@@ -44,7 +44,8 @@ export async function POST(req: NextRequest) {
       messages: [{ role: "user", content: prompt }]
     });
 
-    const text = result.content[0].type === "text" ? result.content[0].text : "";
+    const textBlock = result.content.find((c: any) => c.type === "text");
+    const text = textBlock ? textBlock.text : "";
     const cleanText = text.replace(/```json\n?|\n?```/g, "").trim();
     
     let parsed;

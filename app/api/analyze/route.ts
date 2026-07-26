@@ -54,7 +54,8 @@ export async function POST(req: NextRequest) {
       messages: [{ role: "user", content: prompt }],
     });
     
-    const text = result.content[0].type === "text" ? result.content[0].text : "";
+    const textBlock = result.content.find((c: any) => c.type === "text");
+    const text = textBlock ? textBlock.text : "";
     console.log("Analysis: Claude response", text.substring(0, 100) + "...");
     
     // Clean and parse

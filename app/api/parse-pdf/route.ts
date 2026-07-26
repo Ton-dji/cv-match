@@ -50,7 +50,8 @@ export async function POST(req: NextRequest) {
       messages: [{ role: "user", content: prompt }]
     });
     
-    const responseText = result.content[0].type === "text" ? result.content[0].text : "";
+    const textBlock = result.content.find((c: any) => c.type === "text");
+    const responseText = textBlock ? textBlock.text : "";
     console.log("PDF Import: Claude response received");
     
     const cleanText = responseText.replace(/```json\n?|\n?```/g, "").trim();

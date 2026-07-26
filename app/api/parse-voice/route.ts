@@ -51,11 +51,10 @@ ${transcript}
       ],
     });
 
-    const content =
-      response.content[0].type === "text" ? response.content[0].text : "";
+    const responseText = response.content.find((c: any) => c.type === "text")?.text || "";
     
     // Clean up potential markdown formatting just in case
-    let jsonString = content.trim();
+    let jsonString = responseText.trim();
     // Use regex to strip out ```json and ``` regardless of newlines
     jsonString = jsonString.replace(/^```(json)?\s*/i, '').replace(/\s*```$/i, '').trim();
 
@@ -63,7 +62,7 @@ ${transcript}
       const parsedData = JSON.parse(jsonString);
       return NextResponse.json({ data: parsedData });
     } catch (parseError) {
-      console.error("Error parsing Claude response as JSON:", content);
+      console.error("Error parsing Claude response as JSON:", responseText);
       return NextResponse.json(
         { error: "Failed to parse AI response into JSON" },
         { status: 500 }
