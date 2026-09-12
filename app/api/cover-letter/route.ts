@@ -24,16 +24,16 @@ export async function POST(req: NextRequest) {
     const { masterProfile, jobDescription, targetLanguage, additionalInfo } = await req.json();
     console.log("Cover Letter: Request received", { targetLanguage });
 
-    // Fetch past tailored CVs for this user to learn from them
+    // Fetch past tailored CVs for this user to learn from them (limit to 2 to improve speed)
     const pastCVs = await prisma.tailoredCV.findMany({
       where: { userId: session.user.id },
       orderBy: { createdAt: 'desc' },
-      take: 5
+      take: 2
     });
 
     const pastCVsContext = pastCVs.length > 0 ? `
       Past Tailored CVs (Use these as additional context if relevant to the job offer):
-      ${pastCVs.map(cv => `Job Title: ${cv.jobTitle}\nCompany: ${cv.company || 'N/A'}\nCV Content: ${cv.content}`).join('\n\n')}
+      ${pastCVs.map(cv => `Job Title: ${cv.jobTitle}\nCompany: ${cv.company || 'N/A'}\nCV Content Snippet: ${cv.content.substring(0, 2000)}`).join('\n\n')}
     ` : '';
 
     const additionalInfoContext = additionalInfo ? `

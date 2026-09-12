@@ -194,7 +194,7 @@ export default function MatchEditor() {
 
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white lg:bg-white/70 lg:backdrop-blur-md border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0">
+      <header className="bg-white border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0">
         <div className="flex items-center gap-4">
           <Link href="/">
             <Button variant="ghost" size="sm" className="text-slate-500 hover:text-slate-700">
@@ -294,7 +294,7 @@ export default function MatchEditor() {
            <div className="max-w-3xl mx-auto w-full h-full flex flex-col min-h-[800px] lg:min-h-0">
              
              {/* Tabs - Sticky Bottom on Mobile, Top on Desktop */}
-             <div className="fixed bottom-0 left-0 right-0 z-30 lg:static lg:mb-4 bg-white/95 lg:bg-transparent lg:backdrop-blur-md border-t lg:border-t-0 border-slate-200 p-3 lg:p-0 flex justify-center lg:justify-between items-center w-full shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] lg:shadow-none">
+             <div className="fixed bottom-0 left-0 right-0 z-30 lg:static lg:mb-4 bg-white lg:bg-transparent border-t lg:border-t-0 border-slate-200 p-3 lg:p-0 flex justify-center lg:justify-between items-center w-full shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] lg:shadow-none">
                <div className="bg-slate-100/80 lg:bg-white rounded-full lg:rounded-lg p-1 border border-slate-200 inline-flex shadow-sm w-full lg:w-auto max-w-xl justify-between">
                   <button 
                     onClick={() => setActiveTab('editor')}
@@ -335,7 +335,7 @@ export default function MatchEditor() {
                </div>
              </div>
              
-             <div className="flex-1 bg-white/95 lg:bg-white/80 lg:backdrop-blur-sm rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col mb-16 lg:mb-0">
+             <div className="flex-1 bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col mb-16 lg:mb-0">
                {optimizedCV ? (
                  <>
                   {activeTab === 'editor' && (
