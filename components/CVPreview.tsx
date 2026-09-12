@@ -1,8 +1,8 @@
 
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { PDFViewer } from '@react-pdf/renderer';
+import React, { useState, useEffect, useMemo } from 'react';
+import { PDFViewer, usePDF } from '@react-pdf/renderer';
 import { CVDocument } from './CVDocument';
 import { MasterProfile } from '@/store/useProfileStore';
 import CVDownloadButton from './CVDownloadButton';
@@ -44,12 +44,31 @@ export default function CVPreview({ data, language, themeName }: CVPreviewProps)
     );
   }
 
-  // Add key to PDFViewer to force full remount on theme/language change
+  const document = useMemo(() => <CVDocument data={data} language={language} themeName={themeName as any} />, [data, language, themeName]);
+  const [instance, updateInstance] = usePDF({ document });
+
+  // Update PDF when data/theme/language changes
+  useEffect(() => {
+    updateInstance(document);
+  }, [document, updateInstance]);
+
   return (
-    <div className="w-full h-[800px] lg:h-full pointer-events-none lg:pointer-events-auto">
-      <PDFViewer key={`${themeName}-${language}`} className="w-full h-full border-none" showToolbar={false}>
-        <CVDocument data={data} language={language} themeName={themeName as any} />
-      </PDFViewer>
+    <div className="w-full h-[800px] lg:h-full pointer-events-none lg:pointer-events-auto bg-slate-200">
+      {instance.loading ? (
+        <div className="w-full h-full flex items-center justify-center text-slate-500">
+          Generating PDF...
+        </div>
+      ) : instance.url ? (
+        <iframe 
+          key={`${themeName}-${language}`} 
+          src={`${instance.url}#view=Fit&toolbar=0&navpanes=0`} 
+          className="w-full h-full border-none"
+        />
+      ) : (
+        <div className="w-full h-full flex items-center justify-center text-red-500">
+          Failed to load PDF preview.
+        </div>
+      )}
     </div>
   );
 }
