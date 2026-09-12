@@ -32,6 +32,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Editor Page
     'match_editor': 'Match Editor',
     'job_details': 'Job Details',
+    'optimization': 'Optimization',
     'target_language': 'Target Language',
     'job_description': 'Job Description',
     'job_description_placeholder': 'Paste the job description here...',
@@ -166,6 +167,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Editor Page
     'match_editor': 'Editor de CV',
     'job_details': 'Detalles del Empleo',
+    'optimization': 'Optimización',
     'target_language': 'Idioma del CV',
     'job_description': 'Descripción del Puesto',
     'job_description_placeholder': 'Pega la descripción del puesto aquí...',
@@ -300,6 +302,7 @@ const translations: Record<Language, Record<string, string>> = {
     // Editor Page
     'match_editor': 'Éditeur de CV',
     'job_details': 'Détails du Poste',
+    'optimization': 'Optimisation',
     'target_language': 'Langue du CV',
     'job_description': 'Description du Poste',
     'job_description_placeholder': 'Collez la description du poste ici...',
