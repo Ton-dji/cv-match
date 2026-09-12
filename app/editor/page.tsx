@@ -161,9 +161,9 @@ export default function MatchEditor() {
       toast.success(t('app_title') + ": " + t('download_pdf')); // using generic success message for now
       // Stay on 'job-details' tab to show optimization below
       
-      // Auto-scroll to the preview panel on mobile so the user sees the generated CV
+      // Auto-scroll to the analysis section so the user sees the generated CV match score
       setTimeout(() => {
-        document.getElementById('preview-panel')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('analysis-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     } catch (error: unknown) {
       console.error(error);
@@ -336,7 +336,7 @@ export default function MatchEditor() {
                             
                             {/* Analysis Section shown right below Job Details */}
                             {optimizedCV && analysis && (
-                                <div className="mt-8 border-t border-slate-200 pt-8">
+                                <div id="analysis-section" className="mt-8 border-t border-slate-200 pt-8">
                                     <AnalysisDashboard />
                                 </div>
                             )}
