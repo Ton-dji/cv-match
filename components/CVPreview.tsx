@@ -53,7 +53,7 @@ export default function CVPreview({ data, language, themeName }: CVPreviewProps)
   }, [document, updateInstance]);
 
   return (
-    <div className="w-full flex-1 relative min-h-[800px] lg:min-h-0 pointer-events-none lg:pointer-events-auto bg-slate-200">
+    <div className="w-full h-[800px] lg:h-full relative pointer-events-none lg:pointer-events-auto bg-slate-200">
       {instance.loading ? (
         <div className="absolute inset-0 flex items-center justify-center text-slate-500">
           Generating PDF...
