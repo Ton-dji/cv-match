@@ -53,19 +53,19 @@ export default function CVPreview({ data, language, themeName }: CVPreviewProps)
   }, [document, updateInstance]);
 
   return (
-    <div className="w-full h-[800px] lg:h-full pointer-events-none lg:pointer-events-auto bg-slate-200">
+    <div className="w-full flex-1 min-h-[800px] lg:min-h-0 pointer-events-none lg:pointer-events-auto bg-slate-200 flex flex-col">
       {instance.loading ? (
-        <div className="w-full h-full flex items-center justify-center text-slate-500">
+        <div className="w-full flex-1 flex items-center justify-center text-slate-500">
           Generating PDF...
         </div>
       ) : instance.url ? (
         <iframe 
           key={`${themeName}-${language}`} 
           src={`${instance.url}#view=Fit&toolbar=0&navpanes=0`} 
-          className="w-full h-full border-none"
+          className="w-full flex-1 border-none"
         />
       ) : (
-        <div className="w-full h-full flex items-center justify-center text-red-500">
+        <div className="w-full flex-1 flex items-center justify-center text-red-500">
           Failed to load PDF preview.
         </div>
       )}
