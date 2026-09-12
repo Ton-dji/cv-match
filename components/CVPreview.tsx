@@ -45,8 +45,8 @@ export default function CVPreview({ data, language, themeName }: CVPreviewProps)
   }
 
   return (
-    <div className="w-full h-[800px] lg:h-full relative pointer-events-none lg:pointer-events-auto bg-slate-200">
-      <PDFViewer key={`${themeName}-${language}`} className="absolute inset-0 w-full h-full border-none" showToolbar={false}>
+    <div className="w-full h-[800px] lg:h-full pointer-events-none lg:pointer-events-auto bg-slate-200 flex flex-col flex-1">
+      <PDFViewer key={`${themeName}-${language}`} style={{ flex: 1, width: '100%', height: '100%', border: 'none' }} showToolbar={false}>
         <CVDocument data={data} language={language} themeName={themeName as any} />
       </PDFViewer>
     </div>
