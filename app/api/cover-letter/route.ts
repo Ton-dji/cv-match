@@ -21,8 +21,25 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "INSUFFICIENT_CREDITS" }, { status: 403 });
     }
 
-    const { masterProfile, jobDescription, targetLanguage } = await req.json();
+    const { masterProfile, jobDescription, targetLanguage, additionalInfo } = await req.json();
     console.log("Cover Letter: Request received", { targetLanguage });
+
+    // Fetch past tailored CVs for this user to learn from them
+    const pastCVs = await prisma.tailoredCV.findMany({
+      where: { userId: session.user.id },
+      orderBy: { createdAt: 'desc' },
+      take: 5
+    });
+
+    const pastCVsContext = pastCVs.length > 0 ? `
+      Past Tailored CVs (Use these as additional context if relevant to the job offer):
+      ${pastCVs.map(cv => `Job Title: ${cv.jobTitle}\nCompany: ${cv.company || 'N/A'}\nCV Content: ${cv.content}`).join('\n\n')}
+    ` : '';
+
+    const additionalInfoContext = additionalInfo ? `
+      Additional Information from Candidate (CRITICAL: Incorporate this into the cover letter):
+      ${additionalInfo}
+    ` : '';
 
     if (!masterProfile || !jobDescription) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
@@ -40,6 +57,10 @@ export async function POST(req: NextRequest) {
 
       Job Description:
       ${jobDescription.substring(0, 15000)}
+
+      ${pastCVsContext}
+      
+      ${additionalInfoContext}
 
       Instructions:
       1. Write a 3-4 paragraph cover letter.

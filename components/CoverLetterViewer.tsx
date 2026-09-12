@@ -26,6 +26,7 @@ export function CoverLetterViewer() {
   const [isEditing, setIsEditing] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [additionalInfo, setAdditionalInfo] = useState("");
 
   const generateCoverLetter = async () => {
     setIsGenerating(true);
@@ -34,7 +35,7 @@ export function CoverLetterViewer() {
       const res = await fetch('/api/cover-letter', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ masterProfile: optimizedCV, jobDescription, targetLanguage: language })
+        body: JSON.stringify({ masterProfile: optimizedCV, jobDescription, targetLanguage: language, additionalInfo })
       });
       
       if (!res.ok) {
@@ -175,6 +176,17 @@ export function CoverLetterViewer() {
              <p className="text-slate-500 text-sm max-w-sm mb-6">
                 {t('cover_letter_desc')}
              </p>
+             <div className="w-full max-w-lg mb-6 text-left">
+                <label className="block text-sm font-medium text-slate-700 mb-2">
+                  Additional Information (Optional)
+                </label>
+                <Textarea 
+                  placeholder="e.g. Mention my 5 years of remote work experience, or my passion for this company's mission..."
+                  value={additionalInfo}
+                  onChange={(e) => setAdditionalInfo(e.target.value)}
+                  className="w-full min-h-[100px] border-slate-200 focus-visible:ring-indigo-500 text-sm"
+                />
+             </div>
              <Button onClick={generateCoverLetter} size="lg" className="bg-indigo-600 hover:bg-indigo-700">
                 {t('generate_cover_letter')}
              </Button>
