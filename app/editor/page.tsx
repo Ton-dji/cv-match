@@ -29,7 +29,7 @@ const CVPreview = dynamic(() => import('@/components/CVPreview'), {
 });
 
 export default function MatchEditor() {
-  const [activeTab, setActiveTab] = React.useState<'job-details' | 'optimization' | 'editor' | 'design' | 'cover-letter'>('job-details');
+  const [activeTab, setActiveTab] = React.useState<'job-details' | 'editor' | 'design' | 'cover-letter'>('editor');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [isScraping, setIsScraping] = React.useState(false);
@@ -159,7 +159,7 @@ export default function MatchEditor() {
       }
 
       toast.success(t('app_title') + ": " + t('download_pdf')); // using generic success message for now
-      setActiveTab('optimization'); // Automatically switch to optimization tab after generation
+      // Stay on 'job-details' tab to show optimization below
       
       // Auto-scroll to the preview panel on mobile so the user sees the generated CV
       setTimeout(() => {
@@ -228,30 +228,21 @@ export default function MatchEditor() {
              <div className="fixed bottom-0 left-0 right-0 z-30 lg:static lg:mb-4 bg-white lg:bg-transparent border-t lg:border-t-0 border-slate-200 p-3 lg:p-0 flex justify-center lg:justify-between items-center w-full shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] lg:shadow-none">
                <div className="bg-slate-100/80 lg:bg-white rounded-full lg:rounded-lg p-1 border border-slate-200 inline-flex shadow-sm w-full lg:w-auto max-w-xl justify-between overflow-x-auto">
                   <button 
-                    onClick={() => setActiveTab('job-details')}
-                    className={`flex-1 lg:flex-none whitespace-nowrap px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'job-details' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                       <Wand2 className="w-4 h-4" />
-                       <span className="hidden sm:inline">{t('job_details')}</span>
-                    </div>
-                  </button>
-                  <button 
-                    onClick={() => setActiveTab('optimization')}
-                    className={`flex-1 lg:flex-none whitespace-nowrap px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'optimization' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
-                  >
-                    <div className="flex items-center justify-center gap-2">
-                       <Sparkles className="w-4 h-4" />
-                       <span className="hidden sm:inline">{t('optimization')}</span>
-                    </div>
-                  </button>
-                  <button 
                     onClick={() => setActiveTab('editor')}
                     className={`flex-1 lg:flex-none whitespace-nowrap px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'editor' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
                   >
                     <div className="flex items-center justify-center gap-2">
                        <Edit3 className="w-4 h-4" />
                        <span className="hidden sm:inline">{t('manual_edit')}</span>
+                    </div>
+                  </button>
+                  <button 
+                    onClick={() => setActiveTab('job-details')}
+                    className={`flex-1 lg:flex-none whitespace-nowrap px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'job-details' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}
+                  >
+                    <div className="flex items-center justify-center gap-2">
+                       <Wand2 className="w-4 h-4" />
+                       <span className="hidden sm:inline">{t('job_details')}</span>
                     </div>
                   </button>
                   <button 
@@ -338,22 +329,18 @@ export default function MatchEditor() {
                             </CardContent>
                             </Card>
 
-                            <div className="text-sm text-slate-500 text-center">
+                            <div className="text-sm text-slate-500 text-center mb-6">
                             <p>{t('based_on_master')}</p>
                             <p>{t('ai_will_rewrite')}</p>
                             </div>
+                            
+                            {/* Analysis Section shown right below Job Details */}
+                            {optimizedCV && analysis && (
+                                <div className="mt-8 border-t border-slate-200 pt-8">
+                                    <AnalysisDashboard />
+                                </div>
+                            )}
                         </div>
-                     </div>
-                  )}
-
-                  {activeTab === 'optimization' && (
-                     <div className="p-4 lg:p-6 overflow-y-auto bg-slate-50">
-                        {optimizedCV && analysis ? <AnalysisDashboard /> : (
-                            <div className="h-full flex flex-col items-center justify-center text-slate-500 p-10 text-center">
-                                <Sparkles className="w-12 h-12 text-slate-300 mb-4" />
-                                <p>Please tailor your CV first to see the ATS optimization analysis.</p>
-                            </div>
-                        )}
                      </div>
                   )}
 
@@ -504,7 +491,7 @@ export default function MatchEditor() {
         </div>
 
         {/* Right Panel: CV Preview ALWAYS visible */}
-        <div id="preview-panel" className="w-full lg:w-1/2 p-4 lg:p-6 lg:h-full bg-slate-200 lg:overflow-y-auto h-auto flex flex-col">
+        <div id="preview-panel" className="w-full lg:w-1/2 lg:h-full bg-slate-200 h-auto flex flex-col">
            {optimizedCV ? (
                <CVPreview data={optimizedCV} language={targetLanguage} themeName={currentTheme} />
            ) : (
