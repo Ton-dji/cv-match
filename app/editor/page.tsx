@@ -194,8 +194,8 @@ export default function MatchEditor() {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col">
-      <header className="bg-white border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0">
+    <div className="min-h-screen lg:h-screen lg:overflow-hidden bg-slate-50 flex flex-col">
+      <header className="bg-white border-b py-3 px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between sticky top-0 z-20 shadow-sm gap-3 sm:gap-0 shrink-0">
         <div className="flex items-center gap-4">
           <Link href="/">
             <Button variant="ghost" size="sm" className="text-slate-500 hover:text-slate-700">
@@ -218,7 +218,7 @@ export default function MatchEditor() {
           )}
         </div>
       </header>
-      <div className="flex-1 flex flex-col lg:flex-row lg:h-[calc(100vh-60px)] lg:overflow-hidden h-auto">
+      <div className="flex-1 flex flex-col lg:flex-row min-h-0">
         
         {/* Left Panel: Tabs and Controls */}
         <div className="w-full lg:w-1/2 overflow-y-auto p-4 lg:p-6 lg:h-full bg-slate-100 relative pb-24 lg:pb-6 z-10 lg:z-auto shadow-[0_-10px_15px_-3px_rgb(0,0,0,0.1)] lg:shadow-none flex flex-col">

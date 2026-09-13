@@ -45,7 +45,7 @@ export default function CVPreview({ data, language, themeName }: CVPreviewProps)
   }
 
   return (
-    <div className="w-full h-[800px] lg:h-[calc(100vh-60px)] pointer-events-none lg:pointer-events-auto bg-slate-200">
+    <div className="w-full h-[800px] lg:h-full pointer-events-none lg:pointer-events-auto bg-slate-200">
       <PDFViewer key={`${themeName}-${language}`} className="w-full h-full border-none" showToolbar={false}>
         <CVDocument data={data} language={language} themeName={themeName as any} />
       </PDFViewer>
