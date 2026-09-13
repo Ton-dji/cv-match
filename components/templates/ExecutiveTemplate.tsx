@@ -1,10 +1,6 @@
-
 import React from 'react';
 import { Page, Text, View, StyleSheet, Image } from '@react-pdf/renderer';
 import { MasterProfile } from '@/store/useProfileStore';
-
-// Register standard fonts if needed, but for now relying on defaults or what's in CVDocument
-// Ideally, font registration should happen at the root or commonly imported file.
 
 interface TemplateProps {
   data: MasterProfile;
@@ -15,7 +11,7 @@ interface TemplateProps {
 }
 
 export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: t, language }: TemplateProps) => {
-    const fs = (size: number) => size * (data.fontSizeScale || 1.0);
+  const fs = (size: number) => size * (data.fontSizeScale || 1.0);
   const sp = (space: number) => space * (data.lineSpacing || 1.0);
   
   const styles = StyleSheet.create({
@@ -24,131 +20,112 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
       backgroundColor: '#FFFFFF',
       fontFamily: fontFamily,
       position: 'relative',
-      paddingTop: sp(30),
-      paddingBottom: sp(30),
     },
-    sidebarBackground: {
-      position: 'absolute',
-      top: 0, 
-      left: 0,
-      bottom: 0, 
-      width: '100%',
-      height: 900, 
-      backgroundColor: '#ffffff', // Clean white background
-      zIndex: -1,
+    header: {
+      backgroundColor: themeColor,
+      color: '#FFFFFF',
+      padding: sp(30),
+      flexDirection: 'row',
+      alignItems: 'center',
     },
-    sidebar: {
-      position: 'absolute',
-      left: 0,
-      top: sp(30),
-      width: '28%', 
-      paddingLeft: 20, 
-      paddingRight: 15,
-      color: '#334155',
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'flex-start',
-      borderRightWidth: 1,
-      borderRightColor: '#cbd5e1',
-      height: 800, // Extend border down
+    profileImageContainer: {
+      width: 100,
+      height: 100,
+      borderRadius: 50,
+      overflow: 'hidden',
+      border: '3px solid #FFFFFF',
+      marginRight: sp(20),
     },
-    main: {
-      marginLeft: '28%',
-      width: '72%',
-      paddingLeft: 25, 
-      paddingRight: 30,
+    profileImage: {
+      objectFit: 'cover',
     },
-
+    headerTextContainer: {
+      flex: 1,
+    },
     name: {
-      fontSize: fs((data.fullName?.length || 0) > 18 ? 18 : 24),
+      fontSize: fs((data.fullName?.length || 0) > 18 ? 24 : 32),
       fontWeight: 'bold', 
-      color: themeColor,
       marginBottom: sp(5),
       textTransform: 'uppercase', 
-      letterSpacing: 1,
+      letterSpacing: 1.5,
     },
     jobTitle: {
       fontSize: fs(14),
-      color: '#475569',
-      marginBottom: sp(20),
+      fontWeight: 'light',
+      marginBottom: sp(10),
       textTransform: 'uppercase',
-      letterSpacing: 1,
+      letterSpacing: 2,
+    },
+    headerContact: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      gap: sp(15),
+      marginTop: sp(10),
+      paddingTop: sp(10),
+      borderTopWidth: 1,
+      borderTopColor: 'rgba(255, 255, 255, 0.3)',
+    },
+    headerContactText: {
+      fontSize: fs(9),
+    },
+    body: {
+      flexDirection: 'row',
+      padding: sp(30),
+      paddingTop: sp(20),
+    },
+    sidebar: {
+      width: '32%', 
+      paddingRight: sp(20),
+    },
+    main: {
+      width: '68%',
+      paddingLeft: sp(20), 
+      borderLeftWidth: 1,
+      borderLeftColor: '#e2e8f0',
     },
     sectionTitleContainer: {
-      borderBottomWidth: 1.5,
+      borderBottomWidth: 2,
       borderBottomColor: themeColor,
-      marginBottom: sp(15),
-      paddingBottom: sp(5),
+      marginBottom: sp(12),
+      paddingBottom: sp(4),
     },
     sectionTitleText: {
-      fontSize: fs(12),
-      fontWeight: 'heavy', 
+      fontSize: fs(13),
+      fontWeight: 'bold', 
       color: themeColor,
-      letterSpacing: 1.2,
+      letterSpacing: 1,
       textTransform: 'uppercase',
     },
     sidebarTitleContainer: {
-      borderBottomWidth: 1,
-      borderBottomColor: '#d1d5db',
       marginBottom: sp(10),
-      paddingBottom: sp(4),
+      paddingBottom: sp(2),
+      borderBottomWidth: 1,
+      borderBottomColor: '#cbd5e1',
     },
     sidebarTitleText: {
-      fontSize: fs(11),
+      fontSize: fs(12),
       fontWeight: 'bold',
       color: themeColor,
       letterSpacing: 1,
       textTransform: 'uppercase',
     },
-    // ... Copying other styles relevant to Modern
-     contactItem: {
-      fontSize: fs(9),
-      marginBottom: sp(8),
-      color: '#1e293b',
-      lineHeight: 1.3,
-    },
-     profileImageContainer: {
-        width: 110,
-        height: 110,
-        borderRadius: 55,
-        overflow: 'hidden',
-        borderWidth: 3,
-        borderColor: themeColor,
-        alignItems: 'center',
-        justifyContent: 'center',
-        marginBottom: sp(20),
-        alignSelf: 'center',
-    },
-    profileImage: {
-        width: '100%',
-        height: '100%',
-        objectFit: 'cover',
-        borderRadius: 55, // Explicitly match container
-    },
-     experienceBlock: {
-      marginBottom: sp(8),
+    experienceBlock: {
+      marginBottom: sp(15),
     },
     roleRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'flex-start',
-      marginBottom: sp(2),
-      gap: sp(10),
+      alignItems: 'baseline',
+      marginBottom: sp(3),
     },
     roleTitle: {
-      fontSize: fs(12),
+      fontSize: fs(11),
       fontWeight: 'bold',
-      color: '#000000',
-      flex: 1,
-      marginRight: sp(10),
+      color: '#1e293b',
     },
     dateText: {
       fontSize: fs(9),
-      color: '#475569',
-      fontStyle: 'italic',
-      minWidth: 80,
-      textAlign: 'right',
-      marginTop: sp(2),
+      color: '#64748b',
     },
     companyText: {
       fontSize: fs(10),
@@ -158,23 +135,22 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
     },
     bulletPoint: {
         flexDirection: 'row',
-        marginBottom: sp(2),
-        paddingLeft: sp(4),
+        marginBottom: sp(3),
     },
     bullet: {
         width: sp(10),
         fontSize: fs(10),
-        color: '#1e293b',
+        color: themeColor,
     },
     bulletContent: {
         fontSize: fs(10),
         flex: 1,
         lineHeight: 1.5,
-        color: '#444444',
+        color: '#475569',
     },
     skillTag: {
       fontSize: fs(9),
-      backgroundColor: '#e2e8f0',
+      backgroundColor: '#f1f5f9',
       paddingTop: sp(4),
       paddingBottom: sp(4),
       paddingLeft: sp(8),
@@ -182,42 +158,47 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
       marginBottom: sp(6),
       marginRight: sp(6),
       color: '#334155',
+      borderRadius: 4,
     },
     skillsContainer: {
         flexDirection: 'row',
         flexWrap: 'wrap',
     },
-     descriptionText: {
+    descriptionText: {
       fontSize: fs(10),
       lineHeight: 1.5,
-      color: '#444444',
-      textAlign: 'justify',
+      color: '#475569',
       marginBottom: sp(4),
     },
     mainSection: {
-      marginBottom: sp(10),
+      marginBottom: sp(20),
     },
-     summaryText: {
+    summaryText: {
       fontSize: fs(10),
       lineHeight: 1.6,
-      color: '#444444',
+      color: '#334155',
       textAlign: 'justify',
-      marginBottom: sp(5),
     },
-     sidebarSection: {
-      paddingBottom: sp(30), 
-      flexDirection: 'column',
-      width: '100%',
+    sidebarSection: {
+      marginBottom: sp(20), 
+    },
+    sidebarItem: {
+      marginBottom: sp(8),
+    },
+    sidebarItemTitle: {
+      fontSize: fs(10),
+      fontWeight: 'bold',
+      color: '#334155',
+      marginBottom: sp(2),
+    },
+    sidebarItemSubtitle: {
+      fontSize: fs(9),
+      color: '#64748b',
     },
   });
 
-   const breakString = (str: string) => {
-    return str.replace(/([@./_-])/g, '$1\u200B');
-  };
-
-  const hasText = (str: string | undefined | null) => {
-      return str && str.replace(/[\s\u200B\u200C\u200D\uFEFF]/g, '').length > 0;
-  };
+  const breakString = (str: string) => str.replace(/([@./_-])/g, '$1\u200B');
+  const hasText = (str: string | undefined | null) => str && str.replace(/[\s\u200B\u200C\u200D\uFEFF]/g, '').length > 0;
 
   const renderSection = (sectionName: string, isSidebar: boolean) => {
       const containerStyle = isSidebar ? styles.sidebarSection : styles.mainSection;
@@ -227,19 +208,23 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
        switch (sectionName) {
           case 'summary':
               return data.summary ? (
-                <View style={styles.mainSection} key="summary">
+                <View style={containerStyle} key="summary">
+                    {isSidebar && (
+                      <View style={titleContainerStyle}>
+                        <Text style={titleTextStyle}>Profile</Text>
+                      </View>
+                    )}
                     <Text style={styles.summaryText}>{data.summary}</Text>
                 </View>
               ) : null;
           case 'experience':
               if (!data.experience || data.experience.length === 0) return null;
               return (
-                <View style={styles.mainSection} key="experience">
-                  <View style={styles.sectionTitleContainer}>
-                      <Text style={styles.sectionTitleText}>{t?.workExperience || "WORK EXPERIENCE"}</Text>
+                <View style={containerStyle} key="experience">
+                  <View style={titleContainerStyle}>
+                      <Text style={titleTextStyle}>{t?.workExperience || "WORK EXPERIENCE"}</Text>
                   </View>
-                  {data.experience && data.experience.length > 0 ? (
-                      data.experience.map((exp, i) => (
+                  {data.experience.map((exp, i) => (
                     <View key={i} style={styles.experienceBlock}>
                       <View style={styles.roleRow} wrap={false}>
                         <Text style={styles.roleTitle}>{exp.role || "No Role"}</Text>
@@ -251,16 +236,11 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                         {exp.company}{exp.location ? ` | ${exp.location}` : ''}
                       </Text>
                       {exp.description && (() => {
-                          // Aggressive splitting to auto-bullet tasks separated by periods or newlines
                           const lines = exp.description
                             .replace(/\r\n|\r|\n/g, '\n')
-                            // Split by period + space to handle paragraphs like "Task 1. Task 2."
                             .split(/(?:\r\n|\r|\n)|(?:\.\s+)/)
                             .map(l => {
-                                // Clean leading bullets or dashes if user typed them
-                                let clean = l.trim();
-                                clean = clean.replace(/^[\u2022\u00b7\u2023\u2043\u25E6\u204C\u2219\-\*]\s*/, '');
-                                // Remove trailing period if it was a sentence split
+                                let clean = l.trim().replace(/^[\u2022\u00b7\u2023\u2043\u25E6\u204C\u2219\-\*]\s*/, '');
                                 if (clean.endsWith('.')) clean = clean.slice(0, -1);
                                 return clean;
                             })
@@ -287,18 +267,17 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                           );
                       })}
                     </View>
-                  ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#94a3b8'}}>No experience entries found in data</Text>}
+                  ))}
                 </View>
               );
           case 'projects':
               if (!data.projects || data.projects.length === 0) return null;
               return (
-                <View style={styles.mainSection} key="projects">
-                    <View style={styles.sectionTitleContainer}>
-                        <Text style={styles.sectionTitleText}>{t.projects}</Text>
+                <View style={containerStyle} key="projects">
+                    <View style={titleContainerStyle}>
+                        <Text style={titleTextStyle}>{t.projects}</Text>
                     </View>
-                    {data.projects && data.projects.length > 0 ? (
-                        data.projects.map((proj, i) => (
+                    {data.projects.map((proj, i) => (
                         <View key={i} style={styles.experienceBlock}>
                             <View style={styles.roleRow} wrap={false}>
                                 <Text style={styles.roleTitle}>{proj.name}</Text>
@@ -306,18 +285,17 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                             </View>
                             <Text style={styles.descriptionText}>{proj.description}</Text>
                         </View>
-                    ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#94a3b8'}}>No projects listed</Text>}
+                    ))}
                 </View>
               );
           case 'education':
               if (!data.education || data.education.length === 0) return null;
               return (
-                <View style={styles.mainSection} key="education">
-                  <View style={styles.sectionTitleContainer}>
-                      <Text style={styles.sectionTitleText}>{t.education}</Text>
+                <View style={containerStyle} key="education">
+                  <View style={titleContainerStyle}>
+                      <Text style={titleTextStyle}>{t.education}</Text>
                   </View>
-                  {data.education && data.education.length > 0 ? (
-                      data.education.map((edu, i) => (
+                  {data.education.map((edu, i) => (
                     <View key={i} style={styles.experienceBlock}>
                         <View style={styles.roleRow} wrap={false}>
                             <Text style={styles.roleTitle}>{edu.degree}</Text>
@@ -329,7 +307,7 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                             {edu.school}{edu.location ? ` | ${edu.location}` : ''}
                         </Text>
                     </View>
-                  ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#94a3b8'}}>No education listed</Text>}
+                  ))}
                 </View>
               );
            case 'languages':
@@ -340,9 +318,9 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                          <Text style={titleTextStyle}>{t.languages}</Text>
                      </View>
                      {data.languages.map((lang, i) => (
-                         <View key={i} style={{ marginBottom: 4 }}>
-                             <Text style={{ fontSize: fs(9), fontWeight: 'bold', marginBottom: 2 }}>{lang.language}</Text>
-                             <Text style={{ fontSize: fs(9), color: '#666' }}>{lang.proficiency}</Text>
+                         <View key={i} style={styles.sidebarItem}>
+                             <Text style={styles.sidebarItemTitle}>{lang.language}</Text>
+                             <Text style={styles.sidebarItemSubtitle}>{lang.proficiency}</Text>
                          </View>
                      ))}
                   </View>
@@ -354,7 +332,7 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                          <View style={titleContainerStyle}>
                              <Text style={titleTextStyle}>{t.skills}</Text>
                          </View>
-                         <View style={[styles.skillsContainer, { marginBottom: 10 }]}>
+                         <View style={styles.skillsContainer}>
                              {data.skills.map((skill, i) => (
                                  <Text key={i} style={styles.skillTag}>{skill}</Text>
                              ))}
@@ -369,65 +347,66 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                              <Text style={titleTextStyle}>{t.certifications}</Text>
                          </View>
                          {data.certifications.map((cert, i) => (
-                             <View key={i} style={{ marginBottom: 4 }}>
-                                 <Text style={{ fontSize: fs(9), fontWeight: 'bold' }}>{cert.name}</Text>
-                                 <Text style={{ fontSize: fs(9), color: '#666' }}>{cert.issuer} {cert.date ? `(${cert.date})` : ''}</Text>
+                             <View key={i} style={styles.sidebarItem}>
+                                 <Text style={styles.sidebarItemTitle}>{cert.name}</Text>
+                                 <Text style={styles.sidebarItemSubtitle}>{cert.issuer} {cert.date ? `(${cert.date})` : ''}</Text>
                              </View>
                          ))}
                      </View>
                  );
            case 'contact':
-                // For Modern, contact is in Sidebar usually
-                // Only return null if absolutely no contact info... but usually name/email are required.
-                // Keeping it always rendered for now unless user really blanked everything.
-                if (!data.email && !data.phone && !data.location && (!data.socialLinks || data.socialLinks.length === 0)) return null;
-               return (
-                   <View style={containerStyle} key="contact">
-                     <View style={titleContainerStyle}>
-                         <Text style={titleTextStyle}>{t.contact}</Text>
-                     </View>
-                     {data.email && <Text style={styles.contactItem}>{data.email}</Text>}
-                     {data.phone && <Text style={styles.contactItem}>{data.phone}</Text>}
-                     {data.location && <Text style={styles.contactItem}>{data.location}</Text>}
-                     {data.socialLinks && data.socialLinks.map((link, i) => (
-                         <Text key={i} style={styles.contactItem}>{breakString(link.url)}</Text>
-                     ))}
-                  </View>
-                );
+                // Handled in header for Executive Template
+               return null;
           default:
               return null;
       }
   }
 
-  // Force static sections to avoid missing content due to bad AI data
   const mainSections = data.mainSections || ['summary', 'experience', 'projects', 'education'];
   const sidebarSections = data.sidebarSections || ['contact', 'languages', 'skills', 'certifications'];
 
+  // Filter out contact from sidebar since we render it in the header
+  const sidebarToRender = sidebarSections.filter(s => s !== 'contact');
+
   return (
     <Page size="A4" style={styles.page}>
-         <View style={styles.sidebarBackground} fixed />
-        <View style={styles.sidebar}>
-            {data.picture && (
+        <View style={styles.header}>
+             {data.picture && (
                 <View style={styles.profileImageContainer}>
                     <Image 
                         src={data.picture} 
                         style={[styles.profileImage, {
-                            width: 110 * (data.pictureZoom || 1),
-                            height: 110 * (data.pictureZoom || 1),
+                            width: 100 * (data.pictureZoom || 1),
+                            height: 100 * (data.pictureZoom || 1),
                         }]} 
                         // @ts-expect-error - Image alt prop requirement conflict with PDF renderer
                         alt="Profile Picture"
                     />
                 </View>
             )}
-            {sidebarSections.map(section => renderSection(section, true))}
+            <View style={styles.headerTextContainer}>
+                <Text style={styles.name}>{data.fullName}</Text>
+                <Text style={styles.jobTitle}>
+                    {data.title || data.experience?.[0]?.role || "Professional Profile"}
+                </Text>
+                <View style={styles.headerContact}>
+                    {data.email && <Text style={styles.headerContactText}>{data.email}</Text>}
+                    {data.phone && <Text style={styles.headerContactText}>{data.phone}</Text>}
+                    {data.location && <Text style={styles.headerContactText}>{data.location}</Text>}
+                    {data.socialLinks && data.socialLinks.map((link, i) => (
+                        <Text key={i} style={styles.headerContactText}>{breakString(link.url)}</Text>
+                    ))}
+                </View>
+            </View>
         </View>
-        <View style={styles.main}>
-            <Text style={styles.name}>{data.fullName}</Text>
-            <Text style={styles.jobTitle}>
-                {data.title || data.experience?.[0]?.role || "Professional Profile"}
-            </Text>
-            {mainSections.map(section => renderSection(section, false))}
+
+        <View style={styles.body}>
+            <View style={styles.sidebar}>
+                {sidebarToRender.map(section => renderSection(section, true))}
+            </View>
+            <View style={styles.main}>
+                {mainSections.map(section => renderSection(section, false))}
+            </View>
         </View>
     </Page>
   );

@@ -165,6 +165,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                 </View>
               ) : null;
           case 'experience':
+              if (!data.experience || data.experience.length === 0) return null;
               return (
                 <View key="experience" style={{ marginBottom: 20 }}>
                   <Text style={styles.sectionTitle}>{t?.workExperience || "WORK EXPERIENCE"}</Text>
@@ -213,10 +214,11 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                           );
                       })}
                     </View>
-                  ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No experience entries found</Text>}
+                  ))) : null}
                 </View>
               );
           case 'projects':
+              if (!data.projects || data.projects.length === 0) return null;
               return (
                 <View key="projects" style={{ marginBottom: 20 }}>
                     <Text style={styles.sectionTitle}>{t.projects}</Text>
@@ -229,10 +231,11 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                             </View>
                             <Text style={{fontSize: fs(10), lineHeight: 1.6, color: '#333'}}>{proj.description}</Text>
                         </View>
-                    ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No projects listed</Text>}
+                    ))) : null}
                 </View>
               );
           case 'education':
+              if (!data.education || data.education.length === 0) return null;
               return (
                 <View key="education" style={{ marginBottom: 20 }}>
                   <Text style={styles.sectionTitle}>{t.education}</Text>
@@ -249,10 +252,11 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                             {edu.school}{edu.location ? ` | ${edu.location}` : ''}
                         </Text>
                     </View>
-                  ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No education listed</Text>}
+                  ))) : null}
                 </View>
               );
            case 'languages':
+                if (!data.languages || data.languages.length === 0) return null;
                 return (
                   <View key="languages" style={{ marginBottom: 20 }}>
                      <Text style={styles.sectionTitle}>{t.languages}</Text>
@@ -262,11 +266,12 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                             <View key={i}>
                                 <Text style={{ fontSize: fs(10), fontWeight: 'bold' }}>{lang.language}: <Text style={{fontWeight: 'normal', color: '#666'}}>{lang.proficiency}</Text></Text>
                             </View>
-                        ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No languages listed</Text>}
+                        ))) : null}
                      </View>
                   </View>
                 );
            case 'skills':
+                 if (!data.skills || data.skills.length === 0) return null;
                  return (
                      <View key="skills" style={{ marginBottom: 50 }}>
                          <Text style={styles.sectionTitle}>{t.skills}</Text>
@@ -274,11 +279,12 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                              {data.skills && data.skills.length > 0 ? (
                                  data.skills.map((skill, i) => (
                                  <Text key={i} style={styles.skillTag}>{skill}</Text>
-                             ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No skills listed</Text>}
+                             ))) : null}
                          </View>
                      </View>
                  );
            case 'certifications':
+                 if (!data.certifications || data.certifications.length === 0) return null;
                  return (
                      <View key="certifications" style={{ marginBottom: sp(25), marginTop: 20 }}>
                          <Text style={styles.sectionTitle}>{t.certifications}</Text>
@@ -288,7 +294,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
                                  <Text style={{ fontSize: fs(10), fontWeight: 'bold' }}>{cert.name}</Text>
                                  <Text style={{ fontSize: fs(10), color: '#666' }}>{cert.issuer} {cert.date ? `(${cert.date})` : ''}</Text>
                              </View>
-                         ))) : <Text style={{fontSize: fs(10), fontStyle:'italic', color:'#666'}}>No certifications</Text>}
+                         ))) : null}
                      </View>
                  );
            case 'contact':
