@@ -24,10 +24,13 @@ export const CreativeTemplate = ({ data, themeColor, fontFamily, translations: t
       backgroundColor: '#ffffff',
       fontFamily: fontFamily,
       position: 'relative',
+      paddingTop: sp(30),
+      paddingBottom: sp(30),
     },
     header: {
       backgroundColor: themeColor,
       padding: sp(30),
+      marginTop: sp(-30),
       color: '#ffffff',
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -37,7 +40,6 @@ export const CreativeTemplate = ({ data, themeColor, fontFamily, translations: t
       flexDirection: 'column',
       position: 'relative',
       paddingTop: sp(20),
-      paddingBottom: sp(30),
     },
     sidebarBackground: {
       display: 'none'

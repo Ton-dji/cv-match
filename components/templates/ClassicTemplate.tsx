@@ -166,7 +166,7 @@ export const ClassicTemplate = ({ data, themeColor, fontFamily, translations: t,
           case 'summary':
               return data.summary ? (
                 <View key="summary" style={styles.sectionContent}>
-                     <Text style={styles.sectionTitle}>Profile Overview</Text>
+                     <Text style={styles.sectionTitle}>{t.summary || "PROFILE OVERVIEW"}</Text>
                     <Text style={styles.summaryText}>{data.summary}</Text>
                 </View>
               ) : null;

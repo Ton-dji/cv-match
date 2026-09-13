@@ -20,11 +20,14 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
       backgroundColor: '#FFFFFF',
       fontFamily: fontFamily,
       position: 'relative',
+      paddingTop: sp(30),
+      paddingBottom: sp(30),
     },
     header: {
       backgroundColor: themeColor,
       color: '#FFFFFF',
       padding: sp(30),
+      marginTop: sp(-30),
       flexDirection: 'row',
       alignItems: 'center',
     },
@@ -211,7 +214,7 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
                 <View style={containerStyle} key="summary">
                     {isSidebar && (
                       <View style={titleContainerStyle}>
-                        <Text style={titleTextStyle}>Profile</Text>
+                        <Text style={titleTextStyle}>{t.summary || "PROFILE"}</Text>
                       </View>
                     )}
                     <Text style={styles.summaryText}>{data.summary}</Text>

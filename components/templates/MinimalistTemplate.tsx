@@ -160,7 +160,7 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
           case 'summary':
               return data.summary ? (
                 <View key="summary" style={{ marginBottom: 10 }}>
-                    <Text style={styles.sectionTitle}>Profile</Text> {/* Often called Profile in minimalist */}
+                    <Text style={styles.sectionTitle}>{t.summary || "PROFILE"}</Text>
                     <Text style={styles.summaryText}>{data.summary}</Text>
                 </View>
               ) : null;
