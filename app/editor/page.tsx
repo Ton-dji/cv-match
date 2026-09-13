@@ -226,7 +226,7 @@ export default function MatchEditor() {
              
              {/* Tabs - Sticky Bottom on Mobile, Top on Desktop */}
              <div className="fixed bottom-0 left-0 right-0 z-30 lg:static lg:mb-4 bg-white lg:bg-transparent border-t lg:border-t-0 border-slate-200 p-3 lg:p-0 flex justify-center lg:justify-between items-center w-full shadow-[0_-4px_6px_-1px_rgb(0,0,0,0.05)] lg:shadow-none">
-               <div className="bg-slate-100/80 lg:bg-white rounded-full lg:rounded-lg p-1 border border-slate-200 inline-flex shadow-sm w-full lg:w-auto max-w-xl justify-between overflow-x-auto">
+               <div className="bg-slate-100/80 lg:bg-white rounded-full lg:rounded-lg p-1 border border-slate-200 flex shadow-sm w-full justify-between overflow-x-auto">
                   <button 
                     onClick={() => setActiveTab('editor')}
                     className={`flex-1 lg:flex-none whitespace-nowrap px-4 py-2 lg:py-1.5 text-sm font-medium rounded-full lg:rounded-md transition-all ${activeTab === 'editor' ? 'bg-indigo-100 text-indigo-700 shadow-sm' : 'text-slate-600 hover:bg-slate-50'}`}

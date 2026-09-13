@@ -400,8 +400,8 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
   }
 
   // Force static sections to avoid missing content due to bad AI data
-  const mainSections = ['summary', 'experience', 'projects', 'education'];
-  const sidebarSections = ['contact', 'languages', 'skills', 'certifications'];
+  const mainSections = data.mainSections || ['summary', 'experience', 'projects', 'education'];
+  const sidebarSections = data.sidebarSections || ['contact', 'languages', 'skills', 'certifications'];
 
   return (
     <Page size="A4" style={styles.page}>

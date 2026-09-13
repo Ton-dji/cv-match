@@ -80,7 +80,9 @@ const formTranslations: Record<string, Record<string, string>> = {
     singleColumnDesc: 'In Minimalist mode, "Main" and "Sidebar" sections are merged into one single list. You can still order them below.',
     mainColumn: "Main Column",
     sidebarOther: "Sidebar / Other",
-    contact: "Contact"
+    contact: "Contact",
+    keyTasks: "Key Tasks / Highlights",
+    addTask: "Add Task"
   },
   French: {
     personalInfo: "Informations Personnelles",
@@ -138,7 +140,9 @@ const formTranslations: Record<string, Record<string, string>> = {
     singleColumnDesc: 'En mode Minimaliste, les sections "Principale" et "Barre latérale" sont fusionnées.',
     mainColumn: "Colonne Principale",
     sidebarOther: "Barre Latérale / Autre",
-    contact: "Contact"
+    contact: "Contact",
+    keyTasks: "Tâches Principales / Points Forts",
+    addTask: "Ajouter une Tâche"
   },
   Spanish: {
     personalInfo: "Información Personal",
@@ -196,7 +200,9 @@ const formTranslations: Record<string, Record<string, string>> = {
     singleColumnDesc: 'En el modo Minimalista, las secciones "Principal" y "Barra Lateral" se fusionan en una sola lista.',
     mainColumn: "Columna Principal",
     sidebarOther: "Barre Lateral / Otros",
-    contact: "Contacto"
+    contact: "Contacto",
+    keyTasks: "Tareas Clave / Destacados",
+    addTask: "Añadir Tarea"
   }
 };
 
@@ -699,7 +705,7 @@ export function CVForm({ data, onChange, readOnly = false, language, themeName }
               {/* Highlights Section */}
               <div className="space-y-2">
                  <div className="flex justify-between items-center">
-                    <label className="text-sm font-medium text-muted-foreground">Key Tasks / Highlights</label>
+                    <label className="text-sm font-medium text-muted-foreground">{t.keyTasks}</label>
                     {!readOnly && (
                        <Button 
                          variant="outline" 
@@ -710,7 +716,7 @@ export function CVForm({ data, onChange, readOnly = false, language, themeName }
                             updateExperienceItem(exp.id, 'highlights' as any, [...currentHighlights, ''] as any);
                          }}
                        >
-                         <Plus className="w-3 h-3 mr-1"/> Add Task
+                         <Plus className="w-3 h-3 mr-1"/> {t.addTask}
                        </Button>
                     )}
                  </div>

@@ -301,8 +301,8 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
 
   // Minimalist uses a linear flow, merging main/sidebar into one list
   // excluding contact which is in header
-  const mainSections = ['summary', 'experience', 'projects', 'education'];
-  const sidebarSections = ['contact', 'languages', 'skills', 'certifications'];
+  const mainSections = data.mainSections || ['summary', 'experience', 'projects', 'education'];
+  const sidebarSections = data.sidebarSections || ['contact', 'languages', 'skills', 'certifications'];
   const allSections = [...mainSections, ...sidebarSections].filter(s => s !== 'contact');
 
   return (
