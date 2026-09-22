@@ -60,8 +60,63 @@ export const CVDocument = ({ data, language = "English", themeName = "Modern" }:
   const themeColor = data.themeColor || defaultThemes[themeName]?.color || defaultThemes.Modern.color;
   const fontFamily = data.fontFamily || defaultThemes[themeName]?.font || defaultThemes.Modern.font;
 
+  const translateLevel = (level: string, targetLang: string) => {
+    if (!level) return '';
+    const l = level.toLowerCase();
+    let key = 'native';
+    if (l.includes('native') || l.includes('nativ') || l.includes('natif')) key = 'native';
+    else if (l.includes('fluent') || l.includes('fluid') || l.includes('courant') || l.includes('biling')) key = 'fluent';
+    else if (l.includes('intermediate') || l.includes('intermedio') || l.includes('intermédiaire')) key = 'intermediate';
+    else if (l.includes('basic') || l.includes('básico') || l.includes('basiq') || l.includes('begin')) key = 'basic';
+    else return level;
+
+    if (targetLang === 'French') {
+        const map: any = { native: 'Natif', fluent: 'Courant', intermediate: 'Intermédiaire', basic: 'Basique' };
+        return map[key];
+    }
+    if (targetLang === 'Spanish') {
+        const map: any = { native: 'Nativo', fluent: 'Fluido', intermediate: 'Intermedio', basic: 'Básico' };
+        return map[key];
+    }
+    const map: any = { native: 'Native', fluent: 'Fluent', intermediate: 'Intermediate', basic: 'Basic' };
+    return map[key] || level;
+  };
+
+  const translateLanguageName = (name: string, targetLang: string) => {
+    if (!name) return '';
+    const n = name.toLowerCase().trim();
+    let key = 'english';
+    if (n === 'english' || n === 'inglés' || n === 'anglais') key = 'english';
+    else if (n === 'spanish' || n === 'español' || n === 'espagnol') key = 'spanish';
+    else if (n === 'french' || n === 'francés' || n === 'français') key = 'french';
+    else if (n === 'german' || n === 'alemán' || n === 'allemand') key = 'german';
+    else if (n === 'italian' || n === 'italiano' || n === 'italien') key = 'italian';
+    else if (n === 'portuguese' || n === 'portugués' || n === 'portugais') key = 'portuguese';
+    else return name;
+
+    if (targetLang === 'French') {
+        const map: any = { english: 'Anglais', spanish: 'Espagnol', french: 'Français', german: 'Allemand', italian: 'Italien', portuguese: 'Portugais' };
+        return map[key];
+    }
+    if (targetLang === 'Spanish') {
+        const map: any = { english: 'Inglés', spanish: 'Español', french: 'Francés', german: 'Alemán', italian: 'Italiano', portuguese: 'Portugués' };
+        return map[key];
+    }
+    const map: any = { english: 'English', spanish: 'Spanish', french: 'French', german: 'German', italian: 'Italian', portuguese: 'Portuguese' };
+    return map[key] || name;
+  };
+
+  const translatedData = {
+    ...data,
+    languages: data.languages?.map(lang => ({
+      ...lang,
+      language: translateLanguageName(lang.language, language),
+      proficiency: translateLevel(lang.proficiency, language)
+    })) || []
+  };
+
   const renderTemplate = () => {
-      const props = { data, themeColor, fontFamily, translations: t, language };
+      const props = { data: translatedData, themeColor, fontFamily, translations: t, language };
       
       switch (themeName) {
           case 'Classic':
