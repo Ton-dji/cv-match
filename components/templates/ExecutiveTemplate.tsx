@@ -118,17 +118,23 @@ export const ExecutiveTemplate = ({ data, themeColor, fontFamily, translations: 
     roleRow: {
       flexDirection: 'row',
       justifyContent: 'space-between',
-      alignItems: 'baseline',
+      alignItems: 'flex-start',
       marginBottom: sp(3),
+      gap: sp(10),
     },
     roleTitle: {
       fontSize: fs(11),
       fontWeight: 'bold',
       color: '#1e293b',
+      flex: 1,
+      marginRight: sp(10),
     },
     dateText: {
       fontSize: fs(9),
       color: '#64748b',
+      minWidth: 85,
+      textAlign: 'right',
+      marginTop: sp(2),
     },
     companyText: {
       fontSize: fs(10),

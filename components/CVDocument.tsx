@@ -106,8 +106,53 @@ export const CVDocument = ({ data, language = "English", themeName = "Modern" }:
     return map[key] || name;
   };
 
+  const formatPhone = (phone: string) => {
+    if (!phone) return '';
+    const cleaned = phone.replace(/\s+/g, '');
+    if (cleaned.match(/^\+\d{11}$/)) {
+        return cleaned.replace(/(\+\d{2})(\d{3})(\d{3})(\d{3})/, '$1 $2 $3 $4');
+    }
+    return phone;
+  };
+
+  const formatDate = (date: string) => {
+    if (!date) return '';
+    const parts = date.split('-');
+    if (parts.length === 2 && parts[0].length === 4) {
+       return `${parts[1]}/${parts[0]}`;
+    }
+    return date;
+  };
+
+  const formatDescription = (desc: string) => {
+     if (!desc) return '';
+     return desc.split('\n').map(line => {
+         let clean = line.trim();
+         if (!clean) return '';
+         const firstChar = clean.charAt(0);
+         // only capitalize if it's a letter to avoid messing up bullet formats if any slip through
+         if (/[a-zA-ZáéíóúÁÉÍÓÚñÑ]/.test(firstChar)) {
+             clean = firstChar.toUpperCase() + clean.slice(1);
+         }
+         return clean;
+     }).join('\n');
+  };
+
   const translatedData = {
     ...data,
+    phone: formatPhone(data.phone || ''),
+    experience: data.experience?.map(exp => ({
+       ...exp,
+       startDate: formatDate(exp.startDate),
+       endDate: formatDate(exp.endDate),
+       description: formatDescription(exp.description)
+    })) || [],
+    education: data.education?.map(edu => ({
+       ...edu,
+       startDate: formatDate(edu.startDate),
+       endDate: formatDate(edu.endDate),
+       description: formatDescription(edu.description)
+    })) || [],
     languages: data.languages?.map(lang => ({
       ...lang,
       language: translateLanguageName(lang.language, language),

@@ -83,6 +83,9 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
       letterSpacing: 2,
       marginBottom: sp(10),
       marginTop: sp(10),
+      borderBottomWidth: 1,
+      borderBottomColor: '#eeeeee',
+      paddingBottom: sp(4),
     },
     experienceBlock: {
       marginBottom: sp(10),
@@ -92,15 +95,21 @@ export const MinimalistTemplate = ({ data, themeColor, fontFamily, translations:
       justifyContent: 'space-between',
       alignItems: 'flex-start',
       marginBottom: sp(4),
+      gap: sp(10),
     },
     roleTitle: {
       fontSize: fs(12),
       fontWeight: 'bold',
       color: '#000000',
+      flex: 1,
+      marginRight: sp(10),
     },
     dateText: {
       fontSize: fs(10),
       color: '#666666',
+      minWidth: 85,
+      textAlign: 'right',
+      marginTop: sp(2),
     },
     companyText: {
       fontSize: fs(10),
