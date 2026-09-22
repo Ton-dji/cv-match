@@ -115,8 +115,17 @@ export const CVDocument = ({ data, language = "English", themeName = "Modern" }:
     return phone;
   };
 
-  const formatDate = (date: string) => {
+  const formatDate = (date: string, targetLang: string) => {
     if (!date) return '';
+    const d = date.trim().toLowerCase();
+    
+    // Intercept present keywords
+    if (d === 'present' || d === 'presente' || d === 'présent' || d === 'actualidad') {
+        if (targetLang === 'Spanish') return 'Actualidad';
+        if (targetLang === 'French') return 'Présent';
+        return 'Present';
+    }
+
     const parts = date.split('-');
     if (parts.length === 2 && parts[0].length === 4) {
        return `${parts[1]}/${parts[0]}`;
@@ -143,14 +152,14 @@ export const CVDocument = ({ data, language = "English", themeName = "Modern" }:
     phone: formatPhone(data.phone || ''),
     experience: data.experience?.map(exp => ({
        ...exp,
-       startDate: formatDate(exp.startDate),
-       endDate: formatDate(exp.endDate),
+       startDate: formatDate(exp.startDate, language),
+       endDate: formatDate(exp.endDate, language),
        description: formatDescription(exp.description)
     })) || [],
     education: data.education?.map(edu => ({
        ...edu,
-       startDate: formatDate(edu.startDate),
-       endDate: formatDate(edu.endDate),
+       startDate: formatDate(edu.startDate, language),
+       endDate: formatDate(edu.endDate, language),
        description: formatDescription(edu.description)
     })) || [],
     languages: data.languages?.map(lang => ({
