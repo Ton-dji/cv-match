@@ -2,11 +2,12 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { PDFViewer } from '@react-pdf/renderer';
+import { PDFViewer, BlobProvider } from '@react-pdf/renderer';
 import { CVDocument } from './CVDocument';
 import { MasterProfile } from '@/store/useProfileStore';
 import CVDownloadButton from './CVDownloadButton';
-import { FileText, Smartphone } from 'lucide-react';
+import { FileText, Smartphone, Loader2 } from 'lucide-react';
+import MobilePDFViewer from './MobilePDFViewer';
 
 interface CVPreviewProps {
   data: MasterProfile;
@@ -28,18 +29,32 @@ export default function CVPreview({ data, language, themeName }: CVPreviewProps)
 
   if (isMobile) {
     return (
-      <div className="w-full h-full min-h-[400px] flex flex-col items-center justify-center bg-slate-100 rounded-xl border-2 border-dashed border-slate-300 p-6 text-center">
-        <Smartphone className="w-12 h-12 text-slate-400 mb-4" />
-        <h3 className="text-lg font-bold text-slate-700 mb-2">Live Preview Unavailable on Mobile</h3>
-        <p className="text-sm text-slate-500 mb-6 max-w-xs">
-          Mobile browsers do not support live PDF previews. Please download the document to view your tailored CV.
-        </p>
-        <CVDownloadButton 
-          data={data} 
-          fileName={`CV_${data.fullName?.replace(/\s+/g, '_') || 'Tailored'}`} 
-          language={language}
-          themeName={themeName as any}
-        />
+      <div className="w-full h-full min-h-[500px] flex flex-col items-center justify-start bg-slate-100 p-2">
+        <BlobProvider document={<CVDocument data={data} language={language} themeName={themeName as any} />}>
+          {({ url, loading }) => {
+            if (loading) {
+              return (
+                <div className="flex flex-col items-center justify-center mt-20 min-h-[300px]">
+                  <Loader2 className="h-8 w-8 animate-spin text-indigo-500 mb-2" />
+                  <p className="text-sm text-slate-500">Generando previsualización...</p>
+                </div>
+              );
+            }
+            if (!url) {
+              return <p className="text-slate-500 mt-20">Error al cargar el PDF.</p>;
+            }
+            return <MobilePDFViewer url={url} />;
+          }}
+        </BlobProvider>
+        
+        <div className="mt-4 mb-6 w-full px-4 flex justify-center">
+            <CVDownloadButton 
+              data={data} 
+              fileName={`CV_${data.fullName?.replace(/\s+/g, '_') || 'Tailored'}`} 
+              language={language}
+              themeName={themeName as any}
+            />
+        </div>
       </div>
     );
   }
