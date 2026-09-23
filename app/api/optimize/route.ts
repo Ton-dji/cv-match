@@ -35,6 +35,19 @@ export async function POST(req: NextRequest) {
 
     const cleanProfile = { ...masterProfile };
     delete cleanProfile.picture;
+    
+    if (cleanProfile.experience) {
+        cleanProfile.experience = cleanProfile.experience.map((exp: any) => {
+            let combinedDesc = exp.description || "";
+            if (exp.highlights && exp.highlights.length > 0) {
+                const highlightsText = exp.highlights.map((h: string) => `• ${h}`).join("\n");
+                combinedDesc += combinedDesc ? `\n${highlightsText}` : highlightsText;
+            }
+            const cleanExp = { ...exp, description: combinedDesc };
+            delete cleanExp.highlights;
+            return cleanExp;
+        });
+    }
 
     const prompt = `
       Act as an expert Senior Recruiter and Professional CV Writer.
@@ -69,6 +82,7 @@ export async function POST(req: NextRequest) {
       10. **Translation**: Ensure high-quality native-level translation for '${targetLanguage}'.
 
       CRITICAL INSTRUCTIONS FOR AUTHENTICITY:
+      - CONSOLIDATE all experience bullet points and tasks into the single "description" string field (separated by newlines). DO NOT output a "highlights" array to avoid duplicating tasks in the UI.
       - DO NOT make the CV a 100% perfect match for the Job Description. Real human CVs are rarely perfect matches.
       - Retain some of the original phrasing and experiences that might not perfectly align with the JD to maintain an authentic, human-written feel.
       - DO NOT force keywords into every single bullet point.
@@ -90,8 +104,7 @@ export async function POST(req: NextRequest) {
            "location": "...", 
            "startDate": "...", 
            "endDate": "...", 
-           "description": "...", 
-           "highlights": ["Task 1", "Task 2"] // Array of bullet points
+           "description": "..."
         } ],
         "education": [ { "id": "...", "degree": "...", "school": "...", "location": "...", "startDate": "...", "endDate": "..." } ],
         "skills": [ "..." ],
@@ -139,6 +152,14 @@ export async function POST(req: NextRequest) {
             where: { id: session.user.id },
             data: { credits: Math.max(0, dbUser.credits - 1) },
           });
+        }
+
+        if (optimizedCV.experience) {
+            optimizedCV.experience = optimizedCV.experience.map((exp: any) => {
+                const cleanExp = { ...exp };
+                delete cleanExp.highlights;
+                return cleanExp;
+            });
         }
 
         return NextResponse.json(optimizedCV);
