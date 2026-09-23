@@ -55,9 +55,10 @@ export async function POST(req: NextRequest) {
       1. **Title**: Update the 'title' field to align with the role/title specified in the Job Description, but DO NOT copy it exactly word-for-word. Make it slightly unique or modified so it doesn't look too obvious, while still remaining highly relevant for ATS. Translate to the Target Language.
       2. **Professional Summary**: Write a compelling 3-4 line summary. Focus on value proposition and fit for the role. Avoid generic fluff.
       3. **Experience**:
-         - Rewrite bullet points to focus on RESULTS and IMPACT (Quantitative metrics where possible).
+         - Retain and rewrite existing bullet points to focus on RESULTS and IMPACT (Quantitative metrics where possible).
+         - ONLY ADD NEW bullet points for tasks/skills that are highly relevant to the Job Description AND are NOT already covered by the existing experience. DO NOT create repetitive or duplicate bullet points.
          - Start bullet points with a strong action noun/substantive (e.g., "Gestión", "Desarrollo", "Creación") rather than conjugated verbs (avoid past tense or 3rd person).
-         - NATURALLY weave in keywords from the JD, but do not stuffing.
+         - NATURALLY weave in keywords from the JD, but avoid stuffing.
          - TRANSLATE strictly to the Target Language.
       4. **Skills**: Reorder and prioritize skills most relevant to the JD. Remove irrelevant filler skills.
       5. **Languages**: Keep all. Translate proficiency levels.
